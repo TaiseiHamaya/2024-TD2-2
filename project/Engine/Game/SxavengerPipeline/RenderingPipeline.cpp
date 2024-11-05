@@ -34,8 +34,12 @@ void RenderingPipeline::CreateDesc() {
 	deferredPiplineDesc_.rtvFormats.clear();
 	deferredPiplineDesc_.SetRTVFormats(SystematicRenderingFrame::kCountOfGBuffer, SystematicRenderingFrame::formats_.data());
 
+	deferredPiplineDesc_.SetDSVFormat(DXGI_FORMAT_D32_FLOAT_S8X24_UINT);
+
 	forwardPipelineDesc_ = {};
 	forwardPipelineDesc_.CreateDefaultDesc();
+
+	forwardPipelineDesc_.SetDSVFormat(DXGI_FORMAT_D32_FLOAT_S8X24_UINT);
 }
 
 void RenderingPipeline::CreateForward() {
@@ -59,6 +63,30 @@ void RenderingPipeline::CreateForward() {
 		pipelines_[kDefaultVS_AlbedoPS]->CreateRootSignature(deviceObj, desc);
 		pipelines_[kDefaultVS_AlbedoPS]->CreatePipeline(deviceObj, blobs_[kDefaultVS_AlbedoPS].get(), forwardPipelineDesc_);
 	}
+
+	{
+		blobs_[kDefaultMS_AlbedoPS] = std::make_unique<GraphicsBlob>();
+		blobs_[kDefaultMS_AlbedoPS]->Create(L"behavior/default.as.hlsl", GRAPHICS_AMPLIFICATION);
+		blobs_[kDefaultMS_AlbedoPS]->Create(L"behavior/default.ms.hlsl", GRAPHICS_MESH);
+		blobs_[kDefaultMS_AlbedoPS]->Create(L"behavior/albedo.ps.hlsl",  GRAPHICS_PIXEL);
+
+		pipelines_[kDefaultMS_AlbedoPS] = std::make_unique<GraphicsPipeline>();
+
+		GraphicsRootSignatureDesc desc = {};
+		desc.SetVirtualSRV(0, VISIBILITY_ALL, 10); //!< vertices
+		desc.SetVirtualSRV(1, VISIBILITY_ALL, 11); //!< indices
+		desc.SetVirtualSRV(2, VISIBILITY_ALL, 12); //!< meshlets
+		desc.SetVirtualSRV(3, VISIBILITY_ALL, 13); //!< primitives
+		desc.SetVirtualSRV(4, VISIBILITY_ALL, 14); //!< cullData
+		desc.SetCBV(5, VISIBILITY_ALL, 10);        //!< camera
+		desc.SetCBV(6, VISIBILITY_ALL, 11);        //!< meshInfo
+		desc.SetVirtualSRV(7, VISIBILITY_ALL, 15); //!< transform
+		desc.SetSRV(8, VISIBILITY_PIXEL, 0);       //!< Albedo
+		desc.SetSampler(MODE_WRAP, VISIBILITY_PIXEL, 0);
+
+		pipelines_[kDefaultMS_AlbedoPS]->CreateRootSignature(deviceObj, desc);
+		pipelines_[kDefaultMS_AlbedoPS]->CreatePipeline(deviceObj, blobs_[kDefaultMS_AlbedoPS].get(), forwardPipelineDesc_);
+	}
 }
 
 void RenderingPipeline::CreateDeferred() {
@@ -81,6 +109,30 @@ void RenderingPipeline::CreateDeferred() {
 
 		pipelines_[kDefaultVS_AlbedoPS_Deferred]->CreateRootSignature(deviceObj, desc);
 		pipelines_[kDefaultVS_AlbedoPS_Deferred]->CreatePipeline(deviceObj, blobs_[kDefaultVS_AlbedoPS_Deferred].get(), deferredPiplineDesc_);
+	}
+
+	{
+		blobs_[kDefaultMS_AlbedoPS_Deferred] = std::make_unique<GraphicsBlob>();
+		blobs_[kDefaultMS_AlbedoPS_Deferred]->Create(L"behavior/default.as.hlsl",        GRAPHICS_AMPLIFICATION);
+		blobs_[kDefaultMS_AlbedoPS_Deferred]->Create(L"behavior/default.ms.hlsl",        GRAPHICS_MESH);
+		blobs_[kDefaultMS_AlbedoPS_Deferred]->Create(L"behavior/albedoDeferred.ps.hlsl", GRAPHICS_PIXEL);
+
+		pipelines_[kDefaultMS_AlbedoPS_Deferred] = std::make_unique<GraphicsPipeline>();
+
+		GraphicsRootSignatureDesc desc = {};
+		desc.SetVirtualSRV(0, VISIBILITY_ALL, 10); //!< vertices
+		desc.SetVirtualSRV(1, VISIBILITY_ALL, 11); //!< indices
+		desc.SetVirtualSRV(2, VISIBILITY_ALL, 12); //!< meshlets
+		desc.SetVirtualSRV(3, VISIBILITY_ALL, 13); //!< primitives
+		desc.SetVirtualSRV(4, VISIBILITY_ALL, 14); //!< cullData
+		desc.SetCBV(5, VISIBILITY_ALL, 10);        //!< camera
+		desc.SetCBV(6, VISIBILITY_ALL, 11);        //!< meshInfo
+		desc.SetVirtualSRV(7, VISIBILITY_ALL, 15); //!< transform
+		desc.SetSRV(8, VISIBILITY_PIXEL, 0);       //!< Albedo
+		desc.SetSampler(MODE_WRAP, VISIBILITY_PIXEL, 0);
+
+		pipelines_[kDefaultMS_AlbedoPS_Deferred]->CreateRootSignature(deviceObj, desc);
+		pipelines_[kDefaultMS_AlbedoPS_Deferred]->CreatePipeline(deviceObj, blobs_[kDefaultMS_AlbedoPS_Deferred].get(), deferredPiplineDesc_);
 	}
 }
 

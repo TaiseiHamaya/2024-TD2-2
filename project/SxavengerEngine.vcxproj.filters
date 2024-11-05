@@ -122,6 +122,12 @@
     <ClCompile Include="Lib\MyMath.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossManager.cpp" />
+    <ClCompile Include="Game\Scene\Scene_Game.cpp" />
+    <ClCompile Include="Engine\Beta\Curve.cpp" />
+    <ClCompile Include="Engine\Game\Behavior\AnimationBehavior.cpp" />
+    <ClCompile Include="Game\AnimationPlayer.cpp" />
+    <ClCompile Include="Engine\Game\SxavengerPipeline\DepthBufferController.cpp" />
+    <ClCompile Include="Engine\Game\SxavengerPipeline\ProcessLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -232,6 +238,12 @@
     <ClInclude Include="Lib\MyMath.h" />
     <ClInclude Include="Lib\ObjectStructure.h" />
     <ClInclude Include="Game\MainGame\Boss\BossManager.h" />
+    <ClInclude Include="Game\Scene\Scene_Game.h" />
+    <ClInclude Include="Engine\Beta\Curve.h" />
+    <ClInclude Include="Engine\Game\Behavior\AnimationBehavior.h" />
+    <ClInclude Include="Game\AnimationPlayer.h" />
+    <ClInclude Include="Engine\Game\SxavengerPipeline\DepthBufferController.h" />
+    <ClInclude Include="Engine\Game\SxavengerPipeline\ProcessLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
