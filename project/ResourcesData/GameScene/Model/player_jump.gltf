@@ -32,12 +32,7 @@
 				1,
 				0
 			],
-			"name":"\u30a2\u30fc\u30de\u30c1\u30e5\u30a2",
-			"translation":[
-				0,
-				0.5,
-				0
-			]
+			"name":"\u30a2\u30fc\u30de\u30c1\u30e5\u30a2"
 		},
 		{
 			"mesh":1,
@@ -162,12 +157,12 @@
 			"count":441,
 			"max":[
 				0.719389021396637,
-				1.103706955909729,
+				0.603706955909729,
 				0.719389021396637
 			],
 			"min":[
 				-0.719389021396637,
-				-0.03734400123357773,
+				-0.5373439788818359,
 				-0.719389021396637
 			],
 			"type":"VEC3"
@@ -245,9 +240,9 @@
 		{
 			"bufferView":11,
 			"componentType":5126,
-			"count":36,
+			"count":41,
 			"max":[
-				0.5833333333333334
+				0.6666666666666666
 			],
 			"min":[
 				0
@@ -257,7 +252,7 @@
 		{
 			"bufferView":12,
 			"componentType":5126,
-			"count":36,
+			"count":41,
 			"type":"VEC3"
 		},
 		{
@@ -265,7 +260,7 @@
 			"componentType":5126,
 			"count":2,
 			"max":[
-				0.5833333333333334
+				0.6666666666666666
 			],
 			"min":[
 				0
@@ -281,7 +276,7 @@
 		{
 			"bufferView":15,
 			"componentType":5126,
-			"count":36,
+			"count":41,
 			"type":"VEC3"
 		}
 	],
@@ -353,33 +348,33 @@
 		},
 		{
 			"buffer":0,
-			"byteLength":144,
+			"byteLength":164,
 			"byteOffset":28444
 		},
 		{
 			"buffer":0,
-			"byteLength":432,
-			"byteOffset":28588
+			"byteLength":492,
+			"byteOffset":28608
 		},
 		{
 			"buffer":0,
 			"byteLength":8,
-			"byteOffset":29020
+			"byteOffset":29100
 		},
 		{
 			"buffer":0,
 			"byteLength":32,
-			"byteOffset":29028
+			"byteOffset":29108
 		},
 		{
 			"buffer":0,
-			"byteLength":432,
-			"byteOffset":29060
+			"byteLength":492,
+			"byteOffset":29140
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":29492,
+			"byteLength":29632,
 			"uri":"player_jump.bin"
 		}
 	]
