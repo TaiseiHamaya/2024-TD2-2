@@ -3,43 +3,31 @@
 //-----------------------------------------------------------------------------------------
 // include
 //-----------------------------------------------------------------------------------------
-//* base
-#include "IScene.h"
-
-//* Game
-#include <Game/ChessBoard.h>
-#include <Game/Sponza.h>
+//* engine
+#include <Engine/Game/Transform.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// Scene_Game class
+// WorldInstance class
 ////////////////////////////////////////////////////////////////////////////////////////////
-class Scene_Game
-	: public IScene {
+class WorldInstance {
 public:
 
 	//=========================================================================================
 	// public methods
 	//=========================================================================================
 
-	Scene_Game() = default;
-	~Scene_Game() override { Term(); }
+	WorldInstance()  = default;
+	~WorldInstance() = default;
 
-	void Init() override;
+	const QuaternionTransform& GetTransform() const { return transform_.transform; }
+	QuaternionTransform& GetTransform() { return transform_.transform; }
 
-	void Term() override;
-
-	void Update() override;
-
-	void Draw() override;
-
-private:
+protected:
 
 	//=========================================================================================
-	// private methods
+	// private variables
 	//=========================================================================================
 
-	//std::unique_ptr<Kipfel> kipfel_;
-	std::unique_ptr<ChessBoard> chessBorad_;
-	std::unique_ptr<Sponza> sponza_;
+	QuaternionTransformBuffer transform_;
 
 };
