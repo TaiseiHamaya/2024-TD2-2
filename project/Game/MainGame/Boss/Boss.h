@@ -3,7 +3,7 @@
 #include <Engine/Game/Behavior/ModelBehavior.h>
 #include <Engine/Game/Collider/Collider.h>
 
-class Boss : public ModelBehavior, Collider {
+class Boss : public ModelBehavior {
 public:
 	Boss() = default;
 	~Boss() = default;
@@ -16,9 +16,8 @@ public:
 	void update();
 	void update_matrix();
 
-public:
-	const Vector3f& GetColliderPosition() const override;
-
 private:
 	Vector3f worldPosition{ kOrigin3 };
+
+	std::unique_ptr<Collider> collider_;
 };

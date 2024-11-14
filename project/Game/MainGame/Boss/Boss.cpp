@@ -13,17 +13,16 @@ void Boss::initialize() {
 	model_->ApplyMeshShader();
 	transform_.UpdateMatrix();
 	renderingFlag_ = kBehaviorRender_Systematic;
+
 	// コライダー設定
-	SetColliderBoundingSphere();
+	collider_ = std::make_unique<Collider>();
+	collider_->SetColliderBoundingSphere();
 }
 
 void Boss::update() {
+	collider_->SetColliderPosition(worldPosition);
 }
 
 void Boss::update_matrix() {
 	transform_.UpdateMatrix();
-}
-
-const Vector3f& Boss::GetColliderPosition() const {
-	return worldPosition;
 }
