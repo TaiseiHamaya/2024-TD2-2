@@ -16,11 +16,13 @@ public:
 	// public methods
 	//=========================================================================================
 
-	WorldInstance()  = default;
+	WorldInstance()  { Create(); }
 	~WorldInstance() = default;
 
-	const QuaternionTransform& GetTransform() const { return transform_.transform; }
-	QuaternionTransform& GetTransform() { return transform_.transform; }
+	void Create();
+
+	const QuaternionTransformBuffer& GetTransformBuffer() const { return transform_; }
+	QuaternionTransformBuffer& GetTransformBuffer() { return transform_; }
 
 protected:
 
