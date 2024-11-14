@@ -1,15 +1,14 @@
 #include "Player.h"
 
 #include <Engine/Game/SxavengerGame.h>
-#include <Engine/System/Input.h>
-#include <Engine/System/Sxavenger.h>
 
 #include <Engine/System/Performance.h>
 
 void Player::initialize() {
-	SetName("Player");
+	SetName("Player" + std::to_string(index));
+	++index;
 
-	ModelBehavior::model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
+	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 
 	transform_.UpdateMatrix();
@@ -17,27 +16,34 @@ void Player::initialize() {
 	renderingFlag_ = kBehaviorRender_Systematic;
 
 	collider_ = std::make_unique<Collider>();
+	collider_->SetColliderBoundingSphere();
+
+	SetToConsole();
 }
 
-void Player::input() {
-	inputStick =
-		SxavengerEngine::GetInput()->
-		GetGamepadInput(0)->
-		GetLStickNormalize();
-	if (Length(inputStick) <= 0.1f) {
-		inputStick = { 0.0f,0.0f };
+void Player::begin() {
+	if (state) {
+		state->begin();
 	}
-
-	collider_->SetColliderPosition(worldPosition);
 }
 
 void Player::update() {
-	Vector3f moveDirection = { inputStick.x, 0.0f, inputStick.y };
-	transform_.transform.translate += moveDirection * Performance::GetDeltaTime(s).time;
+	if (state) {
+		velocity = state->velocity();
+	}
+	transform_.transform.translate += velocity * Performance::GetDeltaTime(s).time;
 }
 
 void Player::update_matrix() {
 	transform_.UpdateMatrix();
 
-	worldPosition = transform_.GetWorldPosition();
+	collider_->SetColliderPosition(transform_.GetWorldPosition());
+}
+
+void Player::operate_update(const Vector2f& input) {
+	if (state) {
+		return;
+	}
+	Vector3f moveDirection = { input.x, 0.0f, input.y };
+	velocity = moveDirection * 3.0f;
 }

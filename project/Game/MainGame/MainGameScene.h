@@ -3,7 +3,7 @@
 #include <Game/Scene/IScene.h>
 
 #include <Game/TestGround.h>
-#include "Player/Player.h"
+#include "Player/PlayerManager.h"
 #include "Boss/BossManager.h"
 
 class MainGameScene : public IScene {
@@ -18,7 +18,7 @@ public:
 
 
 private:
-	std::unique_ptr<Player> player;
+	std::unique_ptr<PlayerManager> player;
 	std::unique_ptr<BossManager> bossManager;
 
 #ifdef _DEBUG

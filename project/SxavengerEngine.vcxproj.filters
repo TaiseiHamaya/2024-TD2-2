@@ -136,6 +136,8 @@
     <ClCompile Include="Game\Sponza.cpp" />
     <ClCompile Include="Engine\Beta\WorldInstance.cpp" />
     <ClCompile Include="Engine\Game\Collider\Collider.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerManager.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerState\BasePlayerState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -259,6 +261,8 @@
     <ClInclude Include="Game\Sponza.h" />
     <ClInclude Include="Engine\Beta\WorldInstance.h" />
     <ClInclude Include="Engine\Game\Collider\Collider.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerManager.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerState\BasePlayerState.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

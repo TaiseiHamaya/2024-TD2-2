@@ -10,9 +10,8 @@ void MainGameScene::Init() {
 	groundTest->Init();
 	groundTest->SetToConsole();
 
-	player = std::make_unique<Player>();
+	player = std::make_unique<PlayerManager>();
 	player->initialize();
-	player->SetToConsole();
 
 	bossManager = std::make_unique<BossManager>();
 	bossManager->initialize();
@@ -24,14 +23,12 @@ void MainGameScene::Term() {
 }
 
 void MainGameScene::Update() {
-	player->input();
+	player->begin();
 	player->update();
 	bossManager->update();
 
 	player->update_matrix();
 	bossManager->update_matrix();
-
-
 }
 
 void MainGameScene::Draw() {

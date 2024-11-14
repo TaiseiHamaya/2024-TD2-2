@@ -7,9 +7,13 @@ void BossManager::initialize() {
 }
 
 void BossManager::update() {
-	boss->update();
+	if (boss) {
+		boss->update();
+	}
 }
 
 void BossManager::update_matrix() {
-	boss->update_matrix();
+	if (boss) {
+		boss->update_matrix();
+	}
 }
