@@ -10,7 +10,7 @@
 
 class Player : public ModelBehavior {
 public:
-	void initialize();
+	void initialize(const Vector3f& translate = kOrigin3);
 
 	void begin();
 	void update();
@@ -19,6 +19,8 @@ public:
 	void operate_update(const Vector2f& input);
 
 public:
+	Vector3f world_point() const;
+	const QuaternionTransform& get_transform() const { return transform_.transform; };
 	void set_state(std::unique_ptr<BasePlayerState> state_) { state = std::move(state_); };
 
 private:

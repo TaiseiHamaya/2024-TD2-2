@@ -4,13 +4,14 @@
 
 #include <Engine/System/Performance.h>
 
-void Player::initialize() {
+void Player::initialize(const Vector3f& translate) {
 	SetName("Player" + std::to_string(index));
 	++index;
 
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 
+	transform_.transform.translate = translate;
 	transform_.UpdateMatrix();
 
 	renderingFlag_ = kBehaviorRender_Systematic;
@@ -46,4 +47,8 @@ void Player::operate_update(const Vector2f& input) {
 	}
 	Vector3f moveDirection = { input.x, 0.0f, input.y };
 	velocity = moveDirection * 3.0f;
+}
+
+Vector3f Player::world_point() const {
+	return transform_.GetWorldPosition();
 }

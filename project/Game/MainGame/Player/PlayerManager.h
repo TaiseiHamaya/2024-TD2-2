@@ -1,10 +1,12 @@
 #pragma once
 
+#include <Engine/System/Performance.h>
+
 #include <list>
 
 #include "Player.h"
 
-class PlayerManager {
+class PlayerManager : public BaseBehavior {
 public:
 
 
@@ -23,8 +25,22 @@ private:
 	/// </summary>
 	void gather();
 
+	/// <summary>
+	/// プレイヤー分離放出
+	/// </summary>
+	void eject();
+
+#ifdef _DEBUG
 public:
-	Vector2f inputStick;
+	void SetAttributeImGui() override;
+#endif // _DEBUG
+
+public:
+	bool isAiming;
+	bool isEject;
+	DeltaTimePoint aimingTimer;
+	Vector2f inputStickL;
+	Vector2f inputStickR;
 	std::list<Player> players;
 	std::list<Player>::iterator operatePlayer;
 };
