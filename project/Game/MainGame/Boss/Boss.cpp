@@ -21,6 +21,7 @@ void Boss::initialize() {
 
 void Boss::update() {
 	collider_->SetColliderPosition(worldPosition);
+
 }
 
 void Boss::update_matrix() {
