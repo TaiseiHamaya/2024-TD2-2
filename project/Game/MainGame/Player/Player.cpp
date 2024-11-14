@@ -15,6 +15,8 @@ void Player::initialize() {
 	transform_.UpdateMatrix();
 
 	renderingFlag_ = kBehaviorRender_Systematic;
+
+	collider_ = std::make_unique<Collider>();
 }
 
 void Player::input() {
@@ -25,6 +27,8 @@ void Player::input() {
 	if (Length(inputStick) <= 0.1f) {
 		inputStick = { 0.0f,0.0f };
 	}
+
+	collider_->SetColliderPosition(worldPosition);
 }
 
 void Player::update() {
@@ -36,8 +40,4 @@ void Player::update_matrix() {
 	transform_.UpdateMatrix();
 
 	worldPosition = transform_.GetWorldPosition();
-}
-
-const Vector3f& Player::GetColliderPosition() const {
-	return worldPosition;
 }

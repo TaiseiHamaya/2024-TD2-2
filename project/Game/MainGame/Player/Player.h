@@ -5,7 +5,7 @@
 
 #include <Lib/Geometry/Vector2.h>
 
-class Player : public ModelBehavior, Collider {
+class Player : public ModelBehavior {
 public:
 	void initialize();
 
@@ -13,10 +13,9 @@ public:
 	void update();
 	void update_matrix();
 
-public:
-	const Vector3f& GetColliderPosition() const override;
-
 private:
 	Vector3f worldPosition{ kOrigin3 };
 	Vector2f inputStick;
+
+	std::unique_ptr<Collider> collider_;
 };
