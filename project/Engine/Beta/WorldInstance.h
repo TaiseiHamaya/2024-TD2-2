@@ -21,8 +21,7 @@ public:
 
 	void Create();
 
-	const QuaternionTransformBuffer& GetTransformBuffer() const { return transform_; }
-	QuaternionTransformBuffer& GetTransformBuffer() { return transform_; }
+	QuaternionTransformBuffer transform_;
 
 protected:
 
@@ -30,6 +29,6 @@ protected:
 	// private variables
 	//=========================================================================================
 
-	QuaternionTransformBuffer transform_;
+	
 
 };
