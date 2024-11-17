@@ -138,6 +138,7 @@
     <ClCompile Include="Engine\Game\Collider\Collider.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerManager.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\BasePlayerState.cpp" />
+    <ClCompile Include="Lib\Easing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -263,6 +264,7 @@
     <ClInclude Include="Engine\Game\Collider\Collider.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerManager.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\BasePlayerState.h" />
+    <ClInclude Include="Lib\Easing.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
