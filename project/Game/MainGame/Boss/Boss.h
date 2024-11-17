@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Engine/Game/Behavior/ModelBehavior.h>
+#include <Engine/Game/Behavior/AnimationBehavior.h>
 #include <Engine/Game/Collider/Collider.h>
 
-class Boss : public ModelBehavior {
+class Boss : public AnimationBehavior {
 public:
 	Boss() = default;
 	~Boss() = default;

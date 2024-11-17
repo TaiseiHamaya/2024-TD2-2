@@ -9,8 +9,11 @@ void Boss::initialize() {
 
 	SetName("Boss");
 	// モデル設定
-	ModelBehavior::model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
-	model_->ApplyMeshShader();
+	AnimationBehavior::model_ = SxavengerGame::LoadModel("ResourcesData/GameScene/Model", "enemy_stay.gltf");
+	//model_->ApplyMeshShader();
+
+	CreateAnimation();
+
 	transform_.UpdateMatrix();
 	renderingFlag_ = kBehaviorRender_Systematic;
 
@@ -22,6 +25,10 @@ void Boss::initialize() {
 void Boss::update() {
 	collider_->SetColliderPosition(worldPosition);
 
+	AnimationBehavior::animationTime_.AddDeltaTime();
+	UpdateAnimator(0, true);
+	UpdateAnimator(1, true);
+	UpdateAnimator(2, true);
 }
 
 void Boss::update_matrix() {
