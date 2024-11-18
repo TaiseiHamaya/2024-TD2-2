@@ -16,8 +16,12 @@ public:
 	void update();
 	void update_matrix();
 
+	void SetAttributeImGui();
+
 private:
 	Vector3f worldPosition{ kOrigin3 };
 
 	std::unique_ptr<Collider> collider_;
+
+	uint32_t animationIndex_;
 };
