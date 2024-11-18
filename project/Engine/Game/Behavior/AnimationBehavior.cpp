@@ -57,6 +57,7 @@ void AnimationBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 			commandList->SetGraphicsRootShaderResourceView(1, transform_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(2, uvTransform_.GetVirtualAddress());
 			commandList->SetGraphicsRootDescriptorTable(3, model_->GetTextureHandle(i));
+			commandList->SetGraphicsRootConstantBufferView(4, color_.GetGPUVirtualAddress());
 
 			model_->GetMesh(i).DrawCall();
 		}
