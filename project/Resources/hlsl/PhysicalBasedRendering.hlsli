@@ -82,7 +82,7 @@ float3 CookTorrance(PBRMaterial material, float3 normal, float3 toCameraDir, flo
 	float3 specular = (d * g2 * fr) / (4.0f * NdotV * NdotL);
 	float3 diffuse  = CalculateDiffuse(material, baseColor);
 
-	return (diffuse + specular) * NdotL;
+	return (diffuse + specular) * NdotL * 2.0f;
 	
 }
 

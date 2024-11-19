@@ -50,8 +50,8 @@ void main(uint3 dispatchThreadId : SV_DispatchThreadID) {
 	color.a = albedo.a;
 
 	float3 toCamera = normalize(gCamera.position.xyz - position.xyz);
-
-	color.rgb = GGX(material, normal, toCamera, -lightDirection) * albedo.rgb;
+	
+	color.rgb = albedo.rgb * lerp(0.04f, albedo.rgb, CookTorrance(material, normal, toCamera, -lightDirection));
 	
 	gXclipse[currentId] = color;
 }
