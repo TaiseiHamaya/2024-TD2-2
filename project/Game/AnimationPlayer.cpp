@@ -28,6 +28,7 @@ void AnimationPlayer::Init() {
 
 	test2_ = std::make_unique<Collider>();
 	test2_->SetColliderBoundingAABB();
+
 }
 
 void AnimationPlayer::Term() {
