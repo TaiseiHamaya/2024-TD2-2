@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Engine/Game/Behavior/ModelBehavior.h>
+#include <Engine/Game/Behavior/AnimationBehavior.h>
 #include <Engine/Game/Collider/Collider.h>
 
-class Boss : public ModelBehavior {
+class Boss : public AnimationBehavior {
 public:
 	Boss() = default;
 	~Boss() = default;
@@ -20,4 +20,7 @@ private:
 	Vector3f worldPosition{ kOrigin3 };
 
 	std::unique_ptr<Collider> collider_;
+
+	std::unique_ptr<Animator> animator_;
+	DeltaTimePoint animationTime_;
 };
