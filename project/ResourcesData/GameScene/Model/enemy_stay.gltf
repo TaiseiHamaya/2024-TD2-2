@@ -14,7 +14,7 @@
 	],
 	"nodes":[
 		{
-			"name":"\u30dc\u30fc\u30f3",
+			"name":"\u30dc\u30fc\u30f33",
 			"translation":[
 				0,
 				-2.9802322387695312e-08,
@@ -45,7 +45,7 @@
 			]
 		},
 		{
-			"name":"\u30dc\u30fc\u30f3",
+			"name":"\u30dc\u30fc\u30f32",
 			"rotation":[
 				-0.7071067690849304,
 				0,
@@ -232,7 +232,7 @@
 			"children":[
 				18
 			],
-			"name":"\u30dc\u30fc\u30f3"
+			"name":"\u30dc\u30fc\u30f34"
 		},
 		{
 			"mesh":2,
@@ -252,7 +252,7 @@
 			]
 		},
 		{
-			"name":"\u30dc\u30fc\u30f3",
+			"name":"\u30dc\u30fc\u30f31",
 			"rotation":[
 				-0.7071067690849304,
 				0,
