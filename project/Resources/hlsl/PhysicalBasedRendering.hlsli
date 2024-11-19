@@ -55,7 +55,7 @@ float G2_Smith(float NdotL, float NdotV, float m2) {
 //! @brief diffuse
 float3 CalculateDiffuse(PBRMaterial material, float3 baseColor = float3(1.0f, 1.0f, 1.0f)) {
 	float3 kd = baseColor * (1.0f - material.metallic);
-	return kd * (1.0f / (pi_v * 0.5f));
+	return kd * (1.0f / pi_v);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
