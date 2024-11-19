@@ -1,8 +1,9 @@
 #pragma once
 
+#include <string>
+
 #include <Lib/Geometry/Vector3.h>
 
-class Player;
 class QuaternionTransformBuffer;
 
 class BasePlayerState {
@@ -11,11 +12,14 @@ public:
 	virtual ~BasePlayerState() = default;
 
 public:
-	virtual void initialize(Player* target);
-
 	virtual void begin() = 0;
 	virtual Vector3f velocity() = 0;
 
+	//virtual constexpr bool allow_interruption() = 0;
+
+public:
+	bool is_end() const { return isEnd; };
+
 protected:
-	Player* player;
+	bool isEnd{ false };
 };

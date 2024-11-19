@@ -17,17 +17,23 @@ public:
 	void update_matrix();
 
 	void operate_update(const Vector2f& input);
+	void ungather();
 
 public:
 	Vector3f world_point() const;
-	const QuaternionTransform& get_transform() const { return transform_.transform; };
-	void set_state(std::unique_ptr<BasePlayerState> state_) { state = std::move(state_); };
+	const QuaternionTransformBuffer& get_transform() const { return transform_; };
+	void push_state(std::unique_ptr<BasePlayerState> state_) { stateQue.emplace_back(std::move(state_)); };
+	bool empty_state();
 
 private:
 
+public:
+	void SystemAttributeImGui() override;
+
 private:
+	float size;
 	Vector3f velocity{ kOrigin3 };
-	std::unique_ptr<BasePlayerState> state;
+	std::list<std::unique_ptr<BasePlayerState>> stateQue;
 
 	std::unique_ptr<Collider> collider_;
 

@@ -3,6 +3,7 @@
 #include <Engine/System/Performance.h>
 
 #include <list>
+#include <bitset>
 
 #include "Player.h"
 
@@ -24,6 +25,7 @@ private:
 	/// 集合命令
 	/// </summary>
 	void gather();
+	void ungather();
 
 	/// <summary>
 	/// プレイヤー分離放出
@@ -38,6 +40,7 @@ public:
 public:
 	bool isAiming;
 	bool isEject;
+	std::bitset<2> gatherBitset{0};
 	DeltaTimePoint aimingTimer;
 	Vector2f inputStickL;
 	Vector2f inputStickR;

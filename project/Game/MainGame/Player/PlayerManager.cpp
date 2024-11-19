@@ -3,6 +3,9 @@
 #include <Engine/System/Input.h>
 #include <Engine/System/Sxavenger.h>
 
+#include "PlayerState/PlayerStateEjection.h"
+#include "PlayerState/PlayerStateGather.h"
+
 void PlayerManager::initialize() {
 	players.emplace_back();
 	operatePlayer = players.begin();
@@ -12,7 +15,12 @@ void PlayerManager::initialize() {
 }
 
 void PlayerManager::begin() {
-	input();
+	isEject = false;
+	isAiming = false;
+	gatherBitset <<= 1;
+	if (operatePlayer->empty_state()) {
+		input();
+	}
 	if (isAiming) {
 		aimingTimer.AddDeltaTime();
 	}
@@ -28,6 +36,13 @@ void PlayerManager::begin() {
 void PlayerManager::update() {
 	if (isEject) {
 		eject();
+	}
+	else if(gatherBitset == 0b01 && !isAiming) {
+		inputStickL = {0.0f, 0.0f};
+		gather();
+	}
+	else if (gatherBitset == 0b10) {
+		ungather();
 	}
 
 	// 操作プレイヤーの更新
@@ -63,26 +78,50 @@ void PlayerManager::input() {
 	auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
 	isAiming = gamepad->IsPressButton(ejectButton);
 	isEject = gamepad->IsReleaseButton(ejectButton);
+
+	gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
 }
 
 void PlayerManager::gather() {
+	const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 	for (Player& player : players) {
 		// 操作プレイヤーと同じ場合は処理しない
 		if (std::to_address(operatePlayer) == &player) {
 			continue;
 		}
-		//player.set_state();
+		player.push_state(
+			std::make_unique<PlayerState::Gather>(
+				&player.get_transform(), targetAddress
+			)
+		);
+	}
+}
+
+void PlayerManager::ungather() {
+	for (Player& player : players) {
+		// 操作プレイヤーと同じ場合は処理しない
+		if (std::to_address(operatePlayer) == &player) {
+			continue;
+		}
+		player.ungather();
 	}
 }
 
 void PlayerManager::eject() {
 	Vector3 forward = { inputStickR.x, 0.0f, inputStickR.y };
 	float distance = 1;
+	// 開始位置
 	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
-		RotateVector(forward, operatePlayer->get_transform().rotate) * distance;
+		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 
-	Player& player = players.emplace_back();
-	player.initialize(separatedPlayerPosition);
+	if (Length(forward) >= 0.1f) {
+		// 追加
+		Player& player = players.emplace_back();
+		player.initialize(separatedPlayerPosition);
+		player.push_state(
+			std::make_unique<PlayerState::Ejection>(Normalize(forward))
+		);
+	}
 }
 
 #ifdef _DEBUG
