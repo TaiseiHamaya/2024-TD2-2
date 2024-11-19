@@ -36,7 +36,6 @@ void AnimationPlayer::Term() {
 
 void AnimationPlayer::Update() {
 	animationTime_.AddDeltaTime();
-
 	animator_->Update(animationTime_, 0, true);
 
 	test_->SetColliderPosition(transform_.GetWorldPosition());
