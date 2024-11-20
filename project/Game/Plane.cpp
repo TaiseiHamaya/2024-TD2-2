@@ -21,5 +21,8 @@ void Plane::Init() {
 	renderingFlag_ = kBehaviorRender_Raytracing | kBehaviorRender_Systematic;
 }
 
+void Plane::Term() {
+}
+
 void Plane::SetAttributeImGui() {
 }
