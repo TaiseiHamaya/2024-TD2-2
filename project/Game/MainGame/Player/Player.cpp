@@ -9,6 +9,8 @@ void Player::initialize(const Vector3f& translate) {
 	SetName("Player" + std::to_string(index));
 	++index;
 
+	TryLoadJson();
+
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 

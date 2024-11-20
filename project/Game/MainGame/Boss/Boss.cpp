@@ -14,6 +14,8 @@ void Boss::initialize() {
 	transform_.UpdateMatrix();
 	renderingFlag_ = kBehaviorRender_Systematic;
 
+	TryLoadJson();
+
 	// コライダー設定
 	collider_ = std::make_unique<Collider>();
 	collider_->SetColliderBoundingSphere();

@@ -4,6 +4,7 @@
 
 void TestGround::Init() {
 	SetName("TestGround");
+	TryLoadJson();
 
 	ModelBehavior::model_ = SxavengerGame::LoadModel("Resources/model/TestModel", "Grid.obj");
 	model_->ApplyMeshShader();
