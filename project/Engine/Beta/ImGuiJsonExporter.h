@@ -27,9 +27,9 @@ public:
 
 	//* stash option *//
 
-	bool TryLoad(const std::string& filename = "");
+	bool TryLoadFromJson(const std::string& filename = "");
 
-	void Output(const std::string& filename = "");
+	void OutputToJson(const std::string& filename = "");
 
 	void Clear();
 

@@ -16,7 +16,7 @@ const std::string ImGuiJsonExporter::kDirectory_ = "ImGuiJsonExporter/";
 // ImGuiJsonExporter class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-bool ImGuiJsonExporter::TryLoad(const std::string& filename) {
+bool ImGuiJsonExporter::TryLoadFromJson(const std::string& filename) {
 	std::string filepath = kDirectory_;
 
 	if (filename.empty()) {
@@ -29,7 +29,7 @@ bool ImGuiJsonExporter::TryLoad(const std::string& filename) {
 	return JsonAdapter::TryLoadJson(filepath, stash_);
 }
 
-void ImGuiJsonExporter::Output(const std::string& filename) {
+void ImGuiJsonExporter::OutputToJson(const std::string& filename) {
 	std::string filepath = kDirectory_;
 
 	if (filename.empty()) {
