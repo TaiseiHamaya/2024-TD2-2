@@ -6,6 +6,9 @@
 //* base
 #include <Engine/Game/Behavior/ModelBehavior.h>
 
+//* engine
+#include <Engine/Beta/ImGuiJsonExporter.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Plane class
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -17,9 +20,15 @@ public:
 	// public methods
 	//=========================================================================================
 
+	Plane()  = default;
+	~Plane() { Term(); }
+
 	void Init();
+
+	void Term();
 
 	void SetAttributeImGui() override;
 
 private:
+
 };
