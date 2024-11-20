@@ -58,8 +58,10 @@ void ModelBehavior::SystemAttributeImGui() {
 		ImGui::TreePop();
 	}
 
-	if (ImGui::Button("output json")) {
-		OutputJson();
+	if (ImGui::TreeNode("json")) {
+		if (ImGui::Button("output json")) {
+			OutputJson();
+		}
 	}
 }
 
