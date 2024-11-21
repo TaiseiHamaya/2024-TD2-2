@@ -20,6 +20,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 enum ColliderType {
 	ColliderType_NONE = 0,
+	ColliderTypePlayer = 1 << 1,
+	ColliderTypeBoss = 1 << 2,
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,6 +68,8 @@ public:
 	void SetOnCollisionExit(const OnCollisionFunction& func) { onCollisionExitFunc_ = func; }
 
 	//* collision states *//
+
+	void SetupCallbackOnCollision();
 
 	void CallbackOnCollision();
 

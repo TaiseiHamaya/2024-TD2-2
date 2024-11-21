@@ -2,9 +2,14 @@
 
 #include <Engine/System/Input.h>
 #include <Engine/System/Sxavenger.h>
+#include <Engine/Beta/ImGuiJsonExporter.h>
 
 #include "PlayerState/PlayerStateEjection.h"
 #include "PlayerState/PlayerStateGather.h"
+
+PlayerManager::~PlayerManager() {
+	exporter_.OutputToJson();
+}
 
 void PlayerManager::initialize() {
 	players.emplace_back();
@@ -13,6 +18,8 @@ void PlayerManager::initialize() {
 	canEject = true;
 
 	SetToConsole("PlayerManager");
+
+	exporter_.TryLoadFromJson();
 }
 
 void PlayerManager::begin() {
@@ -64,19 +71,35 @@ void PlayerManager::marge_collision() {
 	}
 	for (auto lhs = players.begin(); lhs != std::prev(players.end()); ++lhs) {
 		for (auto rhs = std::next(lhs); rhs != players.end(); ++rhs) {
-			if (false) {
+			if (
+				lhs->get_collider()->GetStates(rhs->get_collider().get()).test(0) &&
+				rhs->get_collider()->GetStates(lhs->get_collider().get()).test(0)
+				) {
 				Vector3f margeTranslate =
 					lhs->get_transform().GetWorldPosition() +
 					rhs->get_transform().GetWorldPosition();
 				margeTranslate /= 2.0f;
-				lhs = players.erase(lhs);
+				float mergedSize =
+					lhs->get_scaling() * ModelSize +
+					rhs->get_scaling() * ModelSize;
+
 				rhs = players.erase(rhs);
+				lhs = players.erase(lhs);
 
 				auto& newPlayer = players.emplace_back();
-				newPlayer.initialize(margeTranslate, 1.0f);
+				newPlayer.initialize(margeTranslate, create_scaling(mergedSize));
+				if (rhs == players.end()) {
+					break;
+				}
 			}
 		}
+		if (lhs == players.end()) {
+			break;
+		}
 	}
+
+	// 次の操作キャラクターの設定
+	search_operate_player();
 }
 
 void PlayerManager::input() {
@@ -136,10 +159,6 @@ void PlayerManager::ungather() {
 
 void PlayerManager::eject() {
 	Vector3 forward = { inputStickR.x, 0.0f, inputStickR.y };
-	float distance = 1;
-	// 開始位置
-	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
-		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 
 	if (Length(forward) < 0.1f) {
 		return;
@@ -151,6 +170,10 @@ void PlayerManager::eject() {
 	float ejectSize = magnification * SizeParSec;
 	// 距離算出
 	float ejectDistance = EjectMaxDistance - magnification * EjectLengthParSecond;
+	float distance = playerSize / 2;
+	// 開始位置
+	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
+		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 	// 追加
 	Player& newPlayer = players.emplace_back();
 	newPlayer.initialize(separatedPlayerPosition, create_scaling(ejectSize));
@@ -170,6 +193,15 @@ void PlayerManager::eject() {
 	operatePlayer->set_scaling(create_scaling(playerSize - ejectSize));
 
 	// 次の操作キャラクターの設定
+	search_operate_player();
+}
+
+float PlayerManager::create_scaling(float size) {
+	float result = size / ModelSize;
+	return result;
+}
+
+void PlayerManager::search_operate_player() {
 	float nextOperateSize = -1;
 	for (Player& player : players) {
 		float size = player.get_scaling() * ModelSize;
@@ -180,15 +212,19 @@ void PlayerManager::eject() {
 	}
 }
 
-float PlayerManager::create_scaling(float size) {
-	float result = size / ModelSize;
-	return result;
-}
-
 #ifdef _DEBUG
 #include <imgui.h>
 void PlayerManager::SetAttributeImGui() {
 	ImGui::Text("%d", players.size());
 	ImGui::Text("%f", aimingTimer.time);
+	ImGui::Separator();
+	exporter_.DragFloat("MaxSize", &maxSize, 0.05f);
+	exporter_.DragFloat("MinSize", &minSize, 0.05f);
+	exporter_.DragFloat("ModelSize", &ModelSize, 0.05f);
+	exporter_.DragFloat("DefaultSize", &DefaultSize, 0.05f);
+	exporter_.DragFloat("SizeParSec", &SizeParSec, 0.05f);
+
+	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
+	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
 }
 #endif // _DEBUG

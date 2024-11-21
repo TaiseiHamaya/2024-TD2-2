@@ -10,10 +10,10 @@ void Player::initialize(const Vector3f& translate, float scaling_) {
 
 	collider_ = std::make_unique<Collider>();
 	collider_->SetColliderBoundingSphere();
+	collider_->SetTypeId(ColliderType::ColliderTypePlayer);
+	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayer | ColliderType::ColliderTypeBoss);
 
 	++index;
-
-	TryLoadJson();
 
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();

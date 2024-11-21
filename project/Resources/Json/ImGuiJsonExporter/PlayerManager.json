@@ -1,0 +1,23 @@
+{
+	"DefaultSize": [
+		5.0
+	],
+	"EjectLengthParSecond": [
+		3.0
+	],
+	"EjectMaxDistance": [
+		3.0
+	],
+	"MaxSize": [
+		5.0
+	],
+	"MinSize": [
+		0.5
+	],
+	"ModelSize": [
+		2.0
+	],
+	"SizeParSec": [
+		8.0
+	]
+}

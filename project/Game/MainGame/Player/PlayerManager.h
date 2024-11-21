@@ -9,7 +9,8 @@
 
 class PlayerManager : public BaseBehavior {
 public:
-
+	PlayerManager() = default;
+	~PlayerManager();
 
 public:
 	void initialize();
@@ -35,6 +36,8 @@ private:
 	void eject();
 
 	float create_scaling(float size);
+
+	void search_operate_player();
 
 #ifdef _DEBUG
 public:
