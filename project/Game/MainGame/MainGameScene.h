@@ -5,6 +5,7 @@
 #include <Game/TestGround.h>
 #include "Player/PlayerManager.h"
 #include "Boss/BossManager.h"
+#include "Field.h"
 
 class MainGameScene : public IScene {
 public:
@@ -20,6 +21,7 @@ public:
 private:
 	std::unique_ptr<PlayerManager> playerManager;
 	std::unique_ptr<BossManager> bossManager;
+	std::unique_ptr<Field> field_;
 
 #ifdef _DEBUG
 	std::unique_ptr<TestGround> groundTest;

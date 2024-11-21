@@ -57,6 +57,8 @@ public:
 
 	const Matrix4x4 GetViewProjMatrix() const { return (*buffer_)[0].viewMatrix * (*buffer_)[0].projMatrix; }
 
+	const Matrix4x4& GetProjInverseMatrix() const { return (*buffer_)[0].projInverseMatrix; }
+
 	//* buffer address *//
 
 	const D3D12_GPU_VIRTUAL_ADDRESS GetGPUVirtualAddress() const { return buffer_->GetGPUVirtualAddress(); }

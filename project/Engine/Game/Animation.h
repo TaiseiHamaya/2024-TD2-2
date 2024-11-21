@@ -147,7 +147,7 @@ public:
 
 	uint32_t GetAnimationSize() const { return static_cast<uint32_t>(animations_.size()); }
 
-	float GetAnimationDuration(uint32_t animationIndex) const;
+	DeltaTimePoint GetAnimationDuration(uint32_t animationIndex) const;
 
 
 private:

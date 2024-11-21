@@ -166,9 +166,9 @@ void Animator::BindIABuffer(uint32_t meshIndex) {
 	commandList->IASetIndexBuffer(&ibv);
 }
 
-float Animator::GetAnimationDuration(uint32_t animationIndex) const {
+DeltaTimePoint Animator::GetAnimationDuration(uint32_t animationIndex) const {
 	Assert(animationIndex < animations_.size());
-	return animations_.at(animationIndex).duration;
+	return { animations_.at(animationIndex).duration };
 }
 
 void Animator::LoadAnimation() {

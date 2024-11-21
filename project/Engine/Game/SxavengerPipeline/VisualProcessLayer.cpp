@@ -62,3 +62,11 @@ void VisualProcessDoF::SetLayerImGui() {
 	ImGui::DragFloat("focus length", &(*parameter_)[0].focusLength, 0.01f);
 	ImGui::DragFloat("f", &(*parameter_)[0].f, 0.01f);
 }
+
+void VisualProcessDoF::SetForcus(const Camera3D* camera, const Vector3f& position) {
+
+	Vector3f clip = Matrix::Transform(position, camera->GetViewProjMatrix());
+	Vector3f viewDepth = Matrix::Transform({ 0.0f, 0.0f, clip.z }, camera->GetProjInverseMatrix());
+
+	(*parameter_)[0].focusLength = viewDepth.z;
+}
