@@ -142,6 +142,7 @@
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateGather.cpp" />
     <ClCompile Include="Lib\Easing.cpp" />
     <ClCompile Include="Engine\Beta\ImGuiJsonExporter.cpp" />
+    <ClCompile Include="Game\MainGame\Field.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -272,6 +273,7 @@
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateGather.h" />
     <ClInclude Include="Lib\Easing.h" />
     <ClInclude Include="Engine\Beta\ImGuiJsonExporter.h" />
+    <ClInclude Include="Game\MainGame\Field.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
