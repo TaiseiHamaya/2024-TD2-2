@@ -71,16 +71,22 @@ void PlayerManager::marge_collision() {
 	}
 	for (auto lhs = players.begin(); lhs != std::prev(players.end()); ++lhs) {
 		for (auto rhs = std::next(lhs); rhs != players.end(); ++rhs) {
-			if (false) {
+			if (
+				lhs->get_collider()->GetStates(rhs->get_collider().get()).test(0) &&
+				rhs->get_collider()->GetStates(lhs->get_collider().get()).test(0)
+				) {
 				Vector3f margeTranslate =
 					lhs->get_transform().GetWorldPosition() +
 					rhs->get_transform().GetWorldPosition();
 				margeTranslate /= 2.0f;
+				float mergedSize =
+					lhs->get_scaling() * ModelSize +
+					rhs->get_scaling() * ModelSize;
 				lhs = players.erase(lhs);
 				rhs = players.erase(rhs);
 
 				auto& newPlayer = players.emplace_back();
-				newPlayer.initialize(margeTranslate, 1.0f);
+				newPlayer.initialize(margeTranslate, create_scaling(mergedSize));
 			}
 		}
 	}
