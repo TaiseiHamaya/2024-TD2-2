@@ -7,9 +7,6 @@
 #include <Lib/Geometry/MathLib.h>
 
 void MainGameScene::Init() {
-	groundTest = std::make_unique<TestGround>();
-	groundTest->Init();
-	groundTest->SetToConsole();
 
 	playerManager = std::make_unique<PlayerManager>();
 	playerManager->initialize();
