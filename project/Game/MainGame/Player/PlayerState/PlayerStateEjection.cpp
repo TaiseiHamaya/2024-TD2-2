@@ -1,11 +1,12 @@
 #include "PlayerStateEjection.h"
 
-PlayerState::Ejection::Ejection(const Vector3f& direction_) : direction(direction_) {
+PlayerState::Ejection::Ejection(const Vector3f& direction_, float ejectDistance) :
+	direction(direction_), Time(ejectDistance / 10.0f){
 }
 
 void PlayerState::Ejection::begin() {
 	timer.AddDeltaTime();
-	if (timer.time >= 1.0f) {
+	if (timer.time >= Time) {
 		isEnd = true;
 	}
 }

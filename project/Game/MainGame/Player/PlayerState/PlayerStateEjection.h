@@ -8,7 +8,7 @@ namespace PlayerState {
 
 class Ejection final : public BasePlayerState {
 public:
-	Ejection(const Vector3f& direction);
+	Ejection(const Vector3f& direction, float ejectDistance);
 	~Ejection() = default;
 
 public:
@@ -16,6 +16,7 @@ public:
 	Vector3f velocity();
 
 private:
+	float Time;
 	DeltaTimePoint timer;
 	Vector3f direction;
 };

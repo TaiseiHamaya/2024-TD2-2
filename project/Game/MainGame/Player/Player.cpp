@@ -5,20 +5,22 @@
 
 #include "PlayerState/PlayerStateGather.h"
 
-void Player::initialize(const Vector3f& translate) {
+void Player::initialize(const Vector3f& translate, float scaling_) {
 	SetName("Player" + std::to_string(index));
+
+	collider_ = std::make_unique<Collider>();
+	collider_->SetColliderBoundingSphere();
+
 	++index;
 
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 
+	set_scaling(scaling_);
 	transform_.transform.translate = translate;
 	transform_.UpdateMatrix();
 
 	renderingFlag_ = kBehaviorRender_Systematic;
-
-	collider_ = std::make_unique<Collider>();
-	collider_->SetColliderBoundingSphere();
 
 	SetToConsole();
 }
@@ -76,6 +78,12 @@ Vector3f Player::world_point() const {
 
 bool Player::empty_state() {
 	return stateQue.empty();
+}
+
+void Player::set_scaling(float scale_) {
+	scaling = scale_;
+	transform_.transform.scale = { scaling,scaling,scaling };
+	collider_->SetColliderBoundingSphere({ .radius = scaling });
 }
 
 void Player::SystemAttributeImGui() {

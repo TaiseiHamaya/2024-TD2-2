@@ -8,20 +8,18 @@
 
 void PlayerManager::initialize() {
 	players.emplace_back();
-	operatePlayer = players.begin();
-	operatePlayer->initialize();
+	operatePlayer = std::to_address(players.begin());
+	operatePlayer->initialize(kOrigin3, DefaultSize / ModelSize);
+	canEject = true;
 
 	SetToConsole("PlayerManager");
 }
 
 void PlayerManager::begin() {
-	isEject = false;
-	isAiming = false;
+	ejectBitset <<= 1;
 	gatherBitset <<= 1;
-	if (operatePlayer->empty_state()) {
-		input();
-	}
-	if (isAiming) {
+	input();
+	if (ejectBitset.any()) {
 		aimingTimer.AddDeltaTime();
 	}
 	else {
@@ -34,11 +32,11 @@ void PlayerManager::begin() {
 }
 
 void PlayerManager::update() {
-	if (isEject) {
+	if (ejectBitset == 0b10) {
 		eject();
 	}
-	else if(gatherBitset == 0b01 && !isAiming) {
-		inputStickL = {0.0f, 0.0f};
+	if (gatherBitset == 0b01) {
+		inputStickL = { 0.0f, 0.0f };
 		gather();
 	}
 	else if (gatherBitset == 0b10) {
@@ -60,7 +58,31 @@ void PlayerManager::update_matrix() {
 	}
 }
 
+void PlayerManager::marge_collision() {
+	if (players.empty()) {
+		return;
+	}
+	for (auto lhs = players.begin(); lhs != std::prev(players.end()); ++lhs) {
+		for (auto rhs = std::next(lhs); rhs != players.end(); ++rhs) {
+			if (false) {
+				Vector3f margeTranslate =
+					lhs->get_transform().GetWorldPosition() +
+					rhs->get_transform().GetWorldPosition();
+				margeTranslate /= 2.0f;
+				lhs = players.erase(lhs);
+				rhs = players.erase(rhs);
+
+				auto& newPlayer = players.emplace_back();
+				newPlayer.initialize(margeTranslate, 1.0f);
+			}
+		}
+	}
+}
+
 void PlayerManager::input() {
+	if (!operatePlayer->empty_state()) {
+		return;
+	}
 	const GamepadInput* gamepad = SxavengerEngine::GetInput()->GetGamepadInput(0);
 	// 入力情報の取得
 	// スティック入力
@@ -74,19 +96,24 @@ void PlayerManager::input() {
 		inputStickR = { 0.0f,0.0f };
 	}
 
-
-	auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
-	isAiming = gamepad->IsPressButton(ejectButton);
-	isEject = gamepad->IsReleaseButton(ejectButton);
-
 	gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+
+	float playerSize = operatePlayer->get_scaling() * ModelSize;
+	if (!gatherBitset.test(0) && playerSize >= minSize * 2) {
+		auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
+		ejectBitset.set(0, gamepad->IsPressButton(ejectButton));
+	}
+
+	if (gatherBitset.test(0)) {
+		inputStickL *= 0.5f;
+	}
 }
 
 void PlayerManager::gather() {
 	const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 	for (Player& player : players) {
 		// 操作プレイヤーと同じ場合は処理しない
-		if (std::to_address(operatePlayer) == &player) {
+		if (operatePlayer == &player) {
 			continue;
 		}
 		player.push_state(
@@ -100,7 +127,7 @@ void PlayerManager::gather() {
 void PlayerManager::ungather() {
 	for (Player& player : players) {
 		// 操作プレイヤーと同じ場合は処理しない
-		if (std::to_address(operatePlayer) == &player) {
+		if (operatePlayer == &player) {
 			continue;
 		}
 		player.ungather();
@@ -114,14 +141,48 @@ void PlayerManager::eject() {
 	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
 		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 
-	if (Length(forward) >= 0.1f) {
-		// 追加
-		Player& player = players.emplace_back();
-		player.initialize(separatedPlayerPosition);
-		player.push_state(
-			std::make_unique<PlayerState::Ejection>(Normalize(forward))
+	if (Length(forward) < 0.1f) {
+		return;
+	}
+
+	float playerSize = operatePlayer->get_scaling() * ModelSize;
+	float magnification = std::min(aimingTimer.time, (playerSize - minSize) / SizeParSec);
+	// 大きさ算出
+	float ejectSize = magnification * SizeParSec;
+	// 距離算出
+	float ejectDistance = EjectMaxDistance - magnification * EjectLengthParSecond;
+	// 追加
+	Player& newPlayer = players.emplace_back();
+	newPlayer.initialize(separatedPlayerPosition, create_scaling(ejectSize));
+	newPlayer.push_state(
+		std::make_unique<PlayerState::Ejection>(Normalize(forward), ejectDistance)
+	);
+	// 集合命令が入っている場合は、新しいやつにも適用する
+	if (gatherBitset.test(0)) {
+		const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
+		newPlayer.push_state(
+			std::make_unique<PlayerState::Gather>(
+				&newPlayer.get_transform(), targetAddress
+			)
 		);
 	}
+	// 分裂元のサイズ変更
+	operatePlayer->set_scaling(create_scaling(playerSize - ejectSize));
+
+	// 次の操作キャラクターの設定
+	float nextOperateSize = -1;
+	for (Player& player : players) {
+		float size = player.get_scaling() * ModelSize;
+		if (size > nextOperateSize) {
+			nextOperateSize = size;
+			operatePlayer = &player;
+		}
+	}
+}
+
+float PlayerManager::create_scaling(float size) {
+	float result = size / ModelSize;
+	return result;
 }
 
 #ifdef _DEBUG

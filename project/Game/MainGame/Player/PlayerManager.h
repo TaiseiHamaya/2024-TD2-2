@@ -2,8 +2,8 @@
 
 #include <Engine/System/Performance.h>
 
-#include <list>
 #include <bitset>
+#include <list>
 
 #include "Player.h"
 
@@ -17,6 +17,8 @@ public:
 	void begin();
 	void update();
 	void update_matrix();
+
+	void marge_collision();
 
 private:
 	void input();
@@ -32,18 +34,29 @@ private:
 	/// </summary>
 	void eject();
 
+	float create_scaling(float size);
+
 #ifdef _DEBUG
 public:
 	void SetAttributeImGui() override;
 #endif // _DEBUG
 
 public:
-	bool isAiming;
-	bool isEject;
-	std::bitset<2> gatherBitset{0};
+	std::bitset<2> ejectBitset{ 0 };
+	std::bitset<2> gatherBitset{ 0 };
+	bool canEject;
 	DeltaTimePoint aimingTimer;
 	Vector2f inputStickL;
 	Vector2f inputStickR;
 	std::list<Player> players;
-	std::list<Player>::iterator operatePlayer;
+	Player* operatePlayer;
+
+	float maxSize{ 5.0f };
+	float minSize{ 0.5f };
+	float ModelSize{ 2.0f };
+	float DefaultSize{ 5.0f };
+	float SizeParSec{ 1.f };
+
+	float EjectMaxDistance{ 3.0f };
+	float EjectLengthParSecond{ 3.0f };
 };

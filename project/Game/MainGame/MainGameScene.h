@@ -18,7 +18,7 @@ public:
 
 
 private:
-	std::unique_ptr<PlayerManager> player;
+	std::unique_ptr<PlayerManager> playerManager;
 	std::unique_ptr<BossManager> bossManager;
 
 #ifdef _DEBUG

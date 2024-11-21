@@ -2,6 +2,7 @@
 
 #include <Engine/Game/Camera/Camera3D.h>
 #include <Engine/Console/SystemConsole.h>
+#include <Engine/Game/SxavengerGame.h>
 
 #include <Lib/Geometry/MathLib.h>
 
@@ -10,8 +11,8 @@ void MainGameScene::Init() {
 	groundTest->Init();
 	groundTest->SetToConsole();
 
-	player = std::make_unique<PlayerManager>();
-	player->initialize();
+	playerManager = std::make_unique<PlayerManager>();
+	playerManager->initialize();
 
 	bossManager = std::make_unique<BossManager>();
 	bossManager->initialize();
@@ -23,12 +24,16 @@ void MainGameScene::Term() {
 }
 
 void MainGameScene::Update() {
-	player->begin();
-	player->update();
+	playerManager->begin();
+	playerManager->update();
 	bossManager->update();
 
-	player->update_matrix();
+	playerManager->update_matrix();
 	bossManager->update_matrix();
+
+	SxavengerGame::UpdateColliders();
+
+	playerManager->marge_collision();
 }
 
 void MainGameScene::Draw() {

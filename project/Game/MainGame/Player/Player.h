@@ -10,7 +10,7 @@
 
 class Player : public ModelBehavior {
 public:
-	void initialize(const Vector3f& translate = kOrigin3);
+	void initialize(const Vector3f& translate, float scaling);
 
 	void begin();
 	void update();
@@ -24,6 +24,9 @@ public:
 	const QuaternionTransformBuffer& get_transform() const { return transform_; };
 	void push_state(std::unique_ptr<BasePlayerState> state_) { stateQue.emplace_back(std::move(state_)); };
 	bool empty_state();
+	const std::unique_ptr<Collider>& get_collider() const { return collider_; };
+	void set_scaling(float scale_);
+	float get_scaling() const { return scaling; };
 
 private:
 
@@ -31,7 +34,7 @@ public:
 	void SystemAttributeImGui() override;
 
 private:
-	float size;
+	float scaling;
 	Vector3f velocity{ kOrigin3 };
 	std::list<std::unique_ptr<BasePlayerState>> stateQue;
 
