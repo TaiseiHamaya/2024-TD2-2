@@ -1,11 +1,13 @@
 #pragma once
 
-#include <Engine/Game/Behavior/ModelBehavior.h>
+#include <Engine/Game/Behavior/AnimationBehavior.h>
 #include <Engine/Game/Collider/Collider.h>
 
-class Boss : public ModelBehavior {
+class BossBehavior;
+
+class Boss : public AnimationBehavior {
 public:
-	Boss() = default;
+	Boss(int32_t hitpoint);
 	~Boss() { finalize(); }
 
 	Boss(const Boss&) = delete;
@@ -20,10 +22,21 @@ public:
 
 	void SetAttributeImGui() override;
 
+public:
+	void take_damage(int32_t damage);
+
+public:
+	void set_model(std::string file);
+	bool is_dead() const;
+	bool is_destroy() const;
+	void set_invincible(bool val) { isInvincible = val; };
+
 private:
-	Vector3f worldPosition{ kOrigin3 };
+	bool isInvincible{ false };
+	bool isDestroy{false};
+	int32_t hitpoint;
+
+	//std::unique_ptr<BossBehavior> behavior;
 
 	std::unique_ptr<Collider> collider_;
-
-	Vector3f test_ = { 1.0f, 2.0f, 3.0f };
 };
