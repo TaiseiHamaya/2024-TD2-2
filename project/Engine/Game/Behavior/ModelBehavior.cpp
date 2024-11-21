@@ -6,6 +6,7 @@ _DXROBJECT_USING
 //-----------------------------------------------------------------------------------------
 //* engine
 #include <Engine/Console/SystemConsole.h>
+#include <Lib/Adapter/Json/Json.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // ModelBehavior class methods
@@ -55,6 +56,12 @@ void ModelBehavior::SystemAttributeImGui() {
 	if (ImGui::TreeNode("color")) {
 		color_.SetImGuiCommand();
 		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("json")) {
+		if (ImGui::Button("output json")) {
+			OutputJson();
+		}
 	}
 }
 
@@ -151,4 +158,67 @@ void ModelBehavior::DrawRaytracing(_MAYBE_UNUSED DxrObject::TopLevelAS* tlas) {
 	for (uint32_t i = 0; i < model_->GetMeshSize(); ++i) {
 		tlas->SetInstance(model_->GetMesh(i).GetBLAS(), mat, recorders_.at(i).get(), 0);
 	}
+}
+
+void ModelBehavior::OutputJson() {
+
+	Json root = Json::object();
+
+	auto& transform = root["Transform"] = Json::object();
+	transform["scale"]      = JsonAdapter::ToJson(transform_.transform.scale);
+	transform["rotate"]     = JsonAdapter::ToJson(transform_.transform.rotate);
+	transform["translate"]  = JsonAdapter::ToJson(transform_.transform.translate);
+
+	auto& uvTransform = root["UVTransform"] = Json::object();
+	uvTransform["scale"]     = JsonAdapter::ToJson(uvTransform_.transform.scale);
+	uvTransform["rotate"]    = uvTransform_.transform.rotate;
+	uvTransform["translate"] = JsonAdapter::ToJson(uvTransform_.transform.translate);
+
+	auto& material = root["material"] = Json::object();
+	material["roughness"] = material_.material.roughness;
+	material["metallic"]  = material_.material.metallic;
+
+	auto& color = root["color"] = Json::object();
+	color = JsonAdapter::ToJson(color_.color);
+
+	JsonAdapter::WriteJson(kBehaviorDirectory + name_ + ".json", root);
+}
+
+void ModelBehavior::TryLoadJson(const std::string& filename) {
+
+	std::string filepath = kBehaviorDirectory;
+
+	if (filename.empty()) {
+		filepath += name_ + ".json";
+
+	} else {
+		filepath += filename;
+	}
+
+	Json data;
+
+	if (!JsonAdapter::TryLoadJson(filepath, data)) {
+		return; //!< 読み込み失敗したら抜ける
+	}
+
+	const auto& transform = data["Transform"];
+	transform_.transform.scale     = JsonAdapter::ToVector3f(transform["scale"]);
+	transform_.transform.rotate    = JsonAdapter::ToQuaternion(transform["rotate"]);
+	transform_.transform.translate = JsonAdapter::ToVector3f(transform["translate"]);
+	transform_.UpdateMatrix();
+
+	const auto& uvTransform = data["UVTransform"];
+	uvTransform_.transform.scale     = JsonAdapter::ToVector2f(uvTransform["scale"]);
+	uvTransform_.transform.rotate    = uvTransform["rotate"];
+	uvTransform_.transform.translate = JsonAdapter::ToVector2f(uvTransform["translate"]);
+	uvTransform_.Transfer();
+
+	const auto& material = data["material"];
+	material_.material.roughness = material["roughness"];
+	material_.material.metallic  = material["metallic"];
+	material_.Transfer();
+
+	const auto& color = data["color"];
+	color_.color = JsonAdapter::ToColor4f(color);
+	color_.Transfer();
 }

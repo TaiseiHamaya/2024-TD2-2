@@ -40,6 +40,9 @@ public:
 	virtual void DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) override;
 	virtual void DrawRaytracing(_MAYBE_UNUSED DxrObject::TopLevelAS* tlas) override;
 
+	void OutputJson();
+	void TryLoadJson(const std::string& filename = "");
+
 protected:
 
 	//=========================================================================================
@@ -59,3 +62,9 @@ protected:
 	std::vector<std::unique_ptr<DxrObject::BufferRecoreder>> recorders_;
 
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// static variables
+////////////////////////////////////////////////////////////////////////////////////////////
+
+static const std::string kBehaviorDirectory = "behavior/";
