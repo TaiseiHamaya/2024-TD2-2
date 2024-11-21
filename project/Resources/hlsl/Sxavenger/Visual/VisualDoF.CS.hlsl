@@ -32,13 +32,13 @@ RWTexture2D<float4> gOutput : register(u0);
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 float FixedDepth(float depth) {
-	float z = depth * 2.0f - 1.0f;
+	float z = depth;
 
 	// 逆射影行列を使用してビュー空間の位置に戻す
 	float4 clipSpacePos = float4(0.0, 0.0, z, 1.0);
 	float4 viewSpacePos = mul(clipSpacePos, gCamera.projInverseMatrix);
 
-    // viewSpacePos.z / viewSpacePos.w で線形深度を取得
+	// viewSpacePos.z / viewSpacePos.w で線形深度を取得
 	return viewSpacePos.z / viewSpacePos.w;
 }
 
@@ -72,12 +72,14 @@ void main(uint3 dispatchThreadId : SV_DispatchThreadID) {
 	
 	float4 output = (float4)0;
 
+	float fixedForcusLegth = max(gParam.focusLength, 0.0f);
+
 	// ピントからの相対距離を計算
-	float coc = abs(depth - gParam.focusLength) / depth;
+	float coc = abs(depth - fixedForcusLegth) / depth;
 
 	// 絞りに基づくぼかし半径を計算
-	float blurRadius = coc * (gParam.focusLength / gParam.f);
-	float distanceFactor = saturate(abs(depth - gParam.focusLength) / gParam.focusLength);
+	float blurRadius = coc * (fixedForcusLegth / gParam.f);
+	float distanceFactor = saturate(abs(depth - fixedForcusLegth) / fixedForcusLegth);
 	blurRadius *= lerp(1.0, 24.0f, pow(distanceFactor, 2.0)); // 距離に応じてぼかしを増幅
 
 	float4 color = (float4)0;

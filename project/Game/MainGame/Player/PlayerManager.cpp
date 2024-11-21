@@ -1,5 +1,6 @@
 #include "PlayerManager.h"
 
+#include <Engine/Console/SystemConsole.h>
 #include <Engine/System/Input.h>
 #include <Engine/System/Sxavenger.h>
 #include <Engine/Beta/ImGuiJsonExporter.h>
@@ -8,7 +9,6 @@
 #include "PlayerState/PlayerStateGather.h"
 
 PlayerManager::~PlayerManager() {
-	exporter_.OutputToJson();
 }
 
 void PlayerManager::initialize() {
@@ -20,6 +20,11 @@ void PlayerManager::initialize() {
 	SetToConsole("PlayerManager");
 
 	exporter_.TryLoadFromJson();
+
+	dof_ = std::make_unique<VisualProcessDoF>();
+	dof_->Init();
+	dof_->SetToConsole("player forcus dof");
+	dof_->GetParameter().f = 8.0f;
 }
 
 void PlayerManager::begin() {
@@ -57,6 +62,8 @@ void PlayerManager::update() {
 	for (Player& player : players) {
 		player.update();
 	}
+
+	dof_->SetForcus(sSystemConsole->GetSceneCamera(), operatePlayer->get_transform().GetWorldPosition());
 }
 
 void PlayerManager::update_matrix() {
@@ -226,5 +233,9 @@ void PlayerManager::SetAttributeImGui() {
 
 	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
 	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
+
+	if (ImGui::Button("output parameter")) {
+		exporter_.OutputToJson();
+	}
 }
 #endif // _DEBUG

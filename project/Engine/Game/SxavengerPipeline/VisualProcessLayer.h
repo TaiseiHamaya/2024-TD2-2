@@ -6,6 +6,7 @@
 //* engine
 #include <Engine/System/DxObject/DxBufferResource.h>
 #include <Engine/Game/SxavengerPipeline/SxavengerFrame.h>
+#include <Engine/Game/Camera/Camera3D.h>
 
 //* lib
 #include <Lib/CXXAttributeConfig.h>
@@ -25,13 +26,20 @@ public:
 	//=========================================================================================
 
 	BaseVisualProcessLayer()          = default;
-	virtual ~BaseVisualProcessLayer() = default;
+	virtual ~BaseVisualProcessLayer() { Term(); }
+
+	void Term();
 
 	//* interface *//
 
 	virtual void Process(_MAYBE_UNUSED SxavengerFrame* frame) {}
 
 	virtual void SetLayerImGui() {}
+
+	//* cosole option *//
+
+	void SetToConsole();
+	void SetToConsole(const std::string& name);
 
 	//* getter *//
 
@@ -58,6 +66,17 @@ class VisualProcessDoF //!< 被写界深度. Depth of Field.
 	: public BaseVisualProcessLayer {
 public:
 
+	////////////////////////////////////////////////////////////////////////////////////////////
+	// Parameter structure
+	////////////////////////////////////////////////////////////////////////////////////////////
+	struct Parameter {
+		float focusLength;
+		float f;
+		uint32_t isDebugDoF;
+	};
+
+public:
+
 	//=========================================================================================
 	// public methods
 	//=========================================================================================
@@ -75,16 +94,16 @@ public:
 
 	void SetLayerImGui() override;
 
-private:
+	//* dof option *//
 
-	////////////////////////////////////////////////////////////////////////////////////////////
-	// Parameter structure
-	////////////////////////////////////////////////////////////////////////////////////////////
-	struct Parameter {
-		float focusLength;
-		float f;
-		uint32_t isDebugDoF;
-	};
+	void SetForcus(const Camera3D* camera, const Vector3f& position);
+
+	//* getter *//
+
+	const Parameter& GetParameter() const { return (*parameter_)[0]; }
+	Parameter& GetParameter() { return (*parameter_)[0]; }
+
+private:
 
 	//=========================================================================================
 	// private variables

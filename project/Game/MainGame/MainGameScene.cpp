@@ -17,6 +17,10 @@ void MainGameScene::Init() {
 	bossManager = std::make_unique<BossManager>();
 	bossManager->initialize();
 
+	field_ = std::make_unique<Field>();
+	field_->Init();
+	field_->SetToConsole();
+
 	SystemConsole::GetInstance()->GetGameCamera()->SetTransform(kUnit3, Vector3{ 45.0f * kDegToRad ,0.0f,0.0f }, Vector3{ 0,10,-10 });
 }
 
@@ -34,6 +38,8 @@ void MainGameScene::Update() {
 	SxavengerGame::UpdateColliders();
 
 	playerManager->marge_collision();
+
+	field_->Update();
 }
 
 void MainGameScene::Draw() {

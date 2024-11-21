@@ -8,6 +8,23 @@ _DXOBJECT_USING
 #include <Engine/Console/SystemConsole.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+// BaseVisualProcessLayer class methods
+////////////////////////////////////////////////////////////////////////////////////////////
+
+void BaseVisualProcessLayer::Term() {
+	sSystemConsole->RemoveVisualLayer(this);
+}
+
+void BaseVisualProcessLayer::SetToConsole() {
+	sSystemConsole->SetVisualLayer(this);
+}
+
+void BaseVisualProcessLayer::SetToConsole(const std::string& name) {
+	SetName(name);
+	SetToConsole();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
 // VisualProcessDoF class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,4 +61,12 @@ void VisualProcessDoF::SetLayerImGui() {
 	ImGui::CheckboxFlags("debug DoF", &(*parameter_)[0].isDebugDoF, 1);
 	ImGui::DragFloat("focus length", &(*parameter_)[0].focusLength, 0.01f);
 	ImGui::DragFloat("f", &(*parameter_)[0].f, 0.01f);
+}
+
+void VisualProcessDoF::SetForcus(const Camera3D* camera, const Vector3f& position) {
+
+	Vector3f clip = Matrix::Transform(position, camera->GetViewProjMatrix());
+	Vector3f viewDepth = Matrix::Transform({ 0.0f, 0.0f, clip.z }, camera->GetProjInverseMatrix());
+
+	(*parameter_)[0].focusLength = viewDepth.z;
 }

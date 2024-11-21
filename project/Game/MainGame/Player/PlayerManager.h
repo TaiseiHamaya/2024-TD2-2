@@ -2,6 +2,9 @@
 
 #include <Engine/System/Performance.h>
 
+//* engine
+#include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
+
 #include <bitset>
 #include <list>
 
@@ -62,4 +65,6 @@ public:
 
 	float EjectMaxDistance{ 3.0f };
 	float EjectLengthParSecond{ 3.0f };
+
+	std::unique_ptr<VisualProcessDoF> dof_;
 };
