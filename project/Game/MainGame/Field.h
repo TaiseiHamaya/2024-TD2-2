@@ -6,6 +6,9 @@
 //* base
 #include <Engine/Game/Behavior/AnimationBehavior.h>
 
+//* engine
+#include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
+
 //* c++
 #include <list>
 #include <memory>
@@ -29,6 +32,8 @@ public:
 	void Term();
 
 	void Update();
+
+	Vector3f GetPostion() const { return transform_.GetWorldPosition(); }
 
 private:
 
@@ -68,6 +73,10 @@ private:
 	//=========================================================================================
 
 	std::list<std::unique_ptr<FieldTree>> trees_;
+	
+	//=========================================================================================
+	// private methods
+	//=========================================================================================
 
 	void AddTree(uint32_t id, DeltaTimePoint startTime);
 
