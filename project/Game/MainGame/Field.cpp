@@ -28,12 +28,14 @@ void FieldTree::Init(uint32_t id, DeltaTimePoint startTime) {
 	matrix_ = std::make_unique<BufferResource<TransformationMatrix>>(Sxavenger::GetDevicesObj(), kInstanceCount_);
 
 	for (uint32_t i = 0; i < kInstanceCount_; ++i) {
+		scales_[i] = { kUnit3 };
 
 		// stashからの取り出し
 		exporter_.GetFromStash(std::string("position" + std::to_string(i)).c_str(), &positions_[i].x, 3);
+		exporter_.GetFromStash(std::string("scale" + std::to_string(i)).c_str(), &scales_[i].x, 3);
 
 		// matrixに設定
-		(*matrix_)[i].Transfer(Matrix::MakeTranslate(positions_[i]));
+		(*matrix_)[i].Transfer(Matrix::MakeAffine(scales_[i], kOrigin3, positions_[i]));
 	}
 }
 
@@ -76,8 +78,16 @@ void FieldTree::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 
 void FieldTree::SetAttributeImGui() {
 	for (uint32_t i = 0; i < kInstanceCount_; ++i) {
-		if (exporter_.DragFloat3(std::string("position" + std::to_string(i)).c_str(), &positions_[i].x, 0.02f)) {
-			(*matrix_)[i].Transfer(Matrix::MakeTranslate(positions_[i]));
+		if (ImGui::TreeNode(std::string("tramsform // " + std::to_string(i)).c_str())) {
+			bool isChangePosition = exporter_.DragFloat3(std::string("position" + std::to_string(i)).c_str(), &positions_[i].x, 0.02f);
+			bool isChangeScale    =  exporter_.DragFloat3(std::string("scale" + std::to_string(i)).c_str(), &scales_[i].x, 0.02f);
+
+			if (isChangePosition || isChangeScale) {
+				// matrixに設定
+				(*matrix_)[i].Transfer(Matrix::MakeAffine(scales_[i], kOrigin3, positions_[i]));
+			}
+
+			ImGui::TreePop();
 		}
 	}
 
@@ -92,7 +102,7 @@ void FieldTree::SetAttributeImGui() {
 
 void Field::Init() {
 	for (uint32_t i = 0; i < 8; ++i) {
-		AddTree(i, { 0.4f * i });
+		AddTree(i, { 0.2f * i });
 	}
 
 	SetName("field");

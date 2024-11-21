@@ -51,6 +51,7 @@ private:
 	std::unique_ptr<DxObject::BufferResource<TransformationMatrix>> matrix_;
 
 	Vector3f positions_[kInstanceCount_] = {};
+	Vector3f scales_[kInstanceCount_] = {};
 
 };
 
