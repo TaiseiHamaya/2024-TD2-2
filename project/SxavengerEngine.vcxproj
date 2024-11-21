@@ -221,6 +221,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\Kipfel.cpp" />
     <ClCompile Include="Game\MainGame\Boss\Boss.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossManager.cpp" />
+    <ClCompile Include="Game\MainGame\Camera\GameCamera.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
     <ClCompile Include="Game\MainGame\MainGameScene.cpp" />
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
@@ -339,6 +340,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\Kipfel.h" />
     <ClInclude Include="Game\MainGame\Boss\Boss.h" />
     <ClInclude Include="Game\MainGame\Boss\BossManager.h" />
+    <ClInclude Include="Game\MainGame\Camera\GameCamera.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
     <ClInclude Include="Game\MainGame\MainGameScene.h" />
     <ClInclude Include="Game\MainGame\Player\Player.h" />

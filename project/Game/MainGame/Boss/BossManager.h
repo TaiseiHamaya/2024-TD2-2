@@ -17,6 +17,8 @@ public:
 
 	void boss_damage_callback(int32_t damage);
 
+	Boss* GetBoss() const { return boss.get(); }
+
 private:
 	void create_model();
 

@@ -24,6 +24,8 @@ public:
 
 	void marge_collision();
 
+	Player* GetOperator() const { return operatePlayer; }
+
 private:
 	void input();
 
@@ -65,6 +67,4 @@ public:
 
 	float EjectMaxDistance{ 3.0f };
 	float EjectLengthParSecond{ 3.0f };
-
-	std::unique_ptr<VisualProcessDoF> dof_;
 };

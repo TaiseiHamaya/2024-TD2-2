@@ -18,7 +18,11 @@ void MainGameScene::Init() {
 	field_->Init();
 	field_->SetToConsole();
 
-	SystemConsole::GetInstance()->GetGameCamera()->SetTransform(kUnit3, Vector3{ 45.0f * kDegToRad ,0.0f,0.0f }, Vector3{ 0,10,-10 });
+	//SystemConsole::GetInstance()->GetGameCamera()->SetTransform(kUnit3, Vector3{ 45.0f * kDegToRad ,0.0f,0.0f }, Vector3{ 0,10,-10 });
+
+	gameCamera_ = std::make_unique<GameCamera>();
+	gameCamera_->Init();
+	gameCamera_->SetToConsole();
 }
 
 void MainGameScene::Term() {
@@ -36,6 +40,7 @@ void MainGameScene::Update() {
 
 	playerManager->marge_collision();
 
+	gameCamera_->Update(playerManager.get(), bossManager.get());
 	field_->Update();
 }
 

@@ -143,6 +143,7 @@
     <ClCompile Include="Lib\Easing.cpp" />
     <ClCompile Include="Engine\Beta\ImGuiJsonExporter.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
+    <ClCompile Include="Game\MainGame\Camera\GameCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -274,6 +275,7 @@
     <ClInclude Include="Lib\Easing.h" />
     <ClInclude Include="Engine\Beta\ImGuiJsonExporter.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
+    <ClInclude Include="Game\MainGame\Camera\GameCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

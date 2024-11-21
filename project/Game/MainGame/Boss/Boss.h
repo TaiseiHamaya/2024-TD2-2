@@ -22,6 +22,8 @@ public:
 
 	void SetAttributeImGui() override;
 
+	Vector3f GetPosition() const { return transform_.GetWorldPosition(); }
+
 public:
 	void take_damage(int32_t damage);
 
