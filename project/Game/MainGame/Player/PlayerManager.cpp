@@ -9,7 +9,6 @@
 #include "PlayerState/PlayerStateGather.h"
 
 PlayerManager::~PlayerManager() {
-	exporter_.OutputToJson();
 }
 
 void PlayerManager::initialize() {
@@ -234,5 +233,9 @@ void PlayerManager::SetAttributeImGui() {
 
 	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
 	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
+
+	if (ImGui::Button("output parameter")) {
+		exporter_.OutputToJson();
+	}
 }
 #endif // _DEBUG
