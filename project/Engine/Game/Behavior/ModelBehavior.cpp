@@ -62,6 +62,7 @@ void ModelBehavior::SystemAttributeImGui() {
 		if (ImGui::Button("output json")) {
 			OutputJson();
 		}
+		ImGui::TreePop();
 	}
 }
 
