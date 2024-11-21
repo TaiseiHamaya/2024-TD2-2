@@ -82,14 +82,24 @@ void PlayerManager::marge_collision() {
 				float mergedSize =
 					lhs->get_scaling() * ModelSize +
 					rhs->get_scaling() * ModelSize;
-				lhs = players.erase(lhs);
+
 				rhs = players.erase(rhs);
+				lhs = players.erase(lhs);
 
 				auto& newPlayer = players.emplace_back();
 				newPlayer.initialize(margeTranslate, create_scaling(mergedSize));
+				if (rhs == players.end()) {
+					break;
+				}
 			}
 		}
+		if (lhs == players.end()) {
+			break;
+		}
 	}
+
+	// 次の操作キャラクターの設定
+	search_operate_player();
 }
 
 void PlayerManager::input() {
@@ -149,10 +159,6 @@ void PlayerManager::ungather() {
 
 void PlayerManager::eject() {
 	Vector3 forward = { inputStickR.x, 0.0f, inputStickR.y };
-	float distance = 1;
-	// 開始位置
-	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
-		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 
 	if (Length(forward) < 0.1f) {
 		return;
@@ -164,6 +170,10 @@ void PlayerManager::eject() {
 	float ejectSize = magnification * SizeParSec;
 	// 距離算出
 	float ejectDistance = EjectMaxDistance - magnification * EjectLengthParSecond;
+	float distance = playerSize / 2;
+	// 開始位置
+	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
+		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 	// 追加
 	Player& newPlayer = players.emplace_back();
 	newPlayer.initialize(separatedPlayerPosition, create_scaling(ejectSize));
@@ -183,6 +193,15 @@ void PlayerManager::eject() {
 	operatePlayer->set_scaling(create_scaling(playerSize - ejectSize));
 
 	// 次の操作キャラクターの設定
+	search_operate_player();
+}
+
+float PlayerManager::create_scaling(float size) {
+	float result = size / ModelSize;
+	return result;
+}
+
+void PlayerManager::search_operate_player() {
 	float nextOperateSize = -1;
 	for (Player& player : players) {
 		float size = player.get_scaling() * ModelSize;
@@ -191,11 +210,6 @@ void PlayerManager::eject() {
 			operatePlayer = &player;
 		}
 	}
-}
-
-float PlayerManager::create_scaling(float size) {
-	float result = size / ModelSize;
-	return result;
 }
 
 #ifdef _DEBUG

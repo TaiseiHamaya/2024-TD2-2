@@ -37,6 +37,8 @@ private:
 
 	float create_scaling(float size);
 
+	void search_operate_player();
+
 #ifdef _DEBUG
 public:
 	void SetAttributeImGui() override;
