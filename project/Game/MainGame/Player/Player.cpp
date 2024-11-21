@@ -13,8 +13,6 @@ void Player::initialize(const Vector3f& translate, float scaling_) {
 
 	++index;
 
-	TryLoadJson();
-
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 

@@ -2,9 +2,14 @@
 
 #include <Engine/System/Input.h>
 #include <Engine/System/Sxavenger.h>
+#include <Engine/Beta/ImGuiJsonExporter.h>
 
 #include "PlayerState/PlayerStateEjection.h"
 #include "PlayerState/PlayerStateGather.h"
+
+PlayerManager::~PlayerManager() {
+	exporter_.OutputToJson();
+}
 
 void PlayerManager::initialize() {
 	players.emplace_back();
@@ -13,6 +18,8 @@ void PlayerManager::initialize() {
 	canEject = true;
 
 	SetToConsole("PlayerManager");
+
+	exporter_.TryLoadFromJson();
 }
 
 void PlayerManager::begin() {
@@ -190,5 +197,14 @@ float PlayerManager::create_scaling(float size) {
 void PlayerManager::SetAttributeImGui() {
 	ImGui::Text("%d", players.size());
 	ImGui::Text("%f", aimingTimer.time);
+	ImGui::Separator();
+	exporter_.DragFloat("MaxSize", &maxSize, 0.05f);
+	exporter_.DragFloat("MinSize", &minSize, 0.05f);
+	exporter_.DragFloat("ModelSize", &ModelSize, 0.05f);
+	exporter_.DragFloat("DefaultSize", &DefaultSize, 0.05f);
+	exporter_.DragFloat("SizeParSec", &SizeParSec, 0.05f);
+
+	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
+	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
 }
 #endif // _DEBUG

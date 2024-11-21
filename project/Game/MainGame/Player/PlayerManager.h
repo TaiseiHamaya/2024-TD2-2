@@ -9,7 +9,8 @@
 
 class PlayerManager : public BaseBehavior {
 public:
-
+	PlayerManager() = default;
+	~PlayerManager();
 
 public:
 	void initialize();
