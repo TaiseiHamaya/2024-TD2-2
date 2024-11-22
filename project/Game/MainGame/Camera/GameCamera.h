@@ -35,7 +35,7 @@ public:
 
 	void SetAttributeImGui() override;
 
-	//void SetShake(DeltaTimePoint time, divisionPoint_);
+	void SetShake(DeltaTimePoint time, int32_t subdivision, float strength);
 
 private:
 
@@ -48,6 +48,7 @@ private:
 	CineCamera* camera_ = nullptr;
 
 	QuaternionTransformBuffer transform_;
+	QuaternionTransformBuffer offsetTransform_;
 
 	Vector3f target_ = {};
 
@@ -59,9 +60,16 @@ private:
 
 	//* shake *//
 
-	DeltaTimePoint shakeTime_ = {};
-	int32_t subdivision_;
+	DeltaTimePoint shakeTimer_   = {};
+	DeltaTimePoint shakeTime_    = {};
+	DeltaTimePoint divisionTime_ = {};
 	int32_t divisionPoint_ = 0;
+
+	bool switchFlag_ = false;
+
+	Vector2f strength_ = {};
+
+	Vector3f shakeTarget_ = {};
 
 	//* dof *//
 
@@ -69,4 +77,6 @@ private:
 	std::unique_ptr<VisualProcessToon> toon_;
 
 	// 視野角狭め, 座標高め
+
+	void UpdateShake();
 };
