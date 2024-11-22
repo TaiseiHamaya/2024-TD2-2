@@ -136,7 +136,7 @@ void ParitcleCollection::UpdateParticle() {
 		}
 
 		element->transform.translate += element->velocity * Performance::GetDeltaTime(s).time;
-		element->transform.rotate = ToQuaternion(camera->GetTransform().rotate) * MakeAxisAngle({ 0.0f, 1.0f, 0.0f }, pi_v * 2.0f);
+		element->transform.rotate = camera->GetTransform().rotate * MakeAxisAngle({ 0.0f, 1.0f, 0.0f }, pi_v * 2.0f);
 
 		element->color.a = std::lerp(1.0f, 0.0f, element->currentTime.time / element->lifeTime.time);
 

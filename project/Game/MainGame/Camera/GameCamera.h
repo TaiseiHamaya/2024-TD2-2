@@ -35,6 +35,8 @@ public:
 
 	void SetAttributeImGui() override;
 
+	//void SetShake(DeltaTimePoint time, divisionPoint_);
+
 private:
 
 	//=========================================================================================
@@ -50,12 +52,21 @@ private:
 	Vector3f target_ = {};
 
 	Vector3f offset_ = { 0.0f, 8.0f, -4.0f };
-	Vector3f rotate_ = {};
 	float interpolation = 0.02f;
 	float halfway = 0.5f;
 
+	Quaternion targetQuaterion_  = Quaternion::Identity();
+
+	//* shake *//
+
+	DeltaTimePoint shakeTime_ = {};
+	int32_t subdivision_;
+	int32_t divisionPoint_ = 0;
+
+	//* dof *//
 
 	std::unique_ptr<VisualProcessDoF> dof_;
+	std::unique_ptr<VisualProcessToon> toon_;
 
 	// 視野角狭め, 座標高め
 };

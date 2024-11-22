@@ -21,12 +21,10 @@ void GameCamera::Init() {
 	exporter_.TryLoadFromJson();
 
 	exporter_.GetFromStash("offset", &offset_.x, 3);
-	exporter_.GetFromStash("rotate", &rotate_.x, 3);
 	exporter_.GetFromStash("interpolation", &interpolation, 1);
 	exporter_.GetFromStash("halfway", &halfway, 1);
 
 	camera_->GetTransformBuffer().SetParent(&transform_);
-	camera_->GetTransformBuffer().transform.rotate    = rotate_;
 	camera_->GetTransformBuffer().transform.translate = offset_;
 	camera_->UpdateTranslate();
 
@@ -34,6 +32,10 @@ void GameCamera::Init() {
 	dof_->Init();
 	dof_->SetToConsole("player forcus dof");
 	dof_->GetParameter().f = 8.0f;
+
+	/*toon_ = std::make_unique<VisualProcessToon>();
+	toon_->Init();
+	toon_->SetToConsole("test toon");*/
 }
 
 void GameCamera::Term() {
@@ -48,11 +50,12 @@ void GameCamera::Update(PlayerManager* player, BossManager* boss) {
 	target_.y = std::max(Length(bossPosition - playerPosition), 12.0f);
 
 	transform_.transform.translate = Lerp(transform_.transform.translate, target_, interpolation);
-
 	transform_.UpdateMatrix();
 
+	Vector3f direction = Normalize(lerp - camera_->GetTransformBuffer().GetWorldPosition());
+
 	camera_->GetTransformBuffer().transform.rotate
-		= CalculateEuler(Normalize(lerp - camera_->GetTransformBuffer().GetWorldPosition()));
+		= Slerp(camera_->GetTransformBuffer().transform.rotate, ToQuaternion(CalculateEuler(direction)), interpolation);
 	camera_->UpdateTranslate();
 
 	dof_->SetForcus(camera_, player->GetOperator()->get_transform().GetWorldPosition());
@@ -60,13 +63,14 @@ void GameCamera::Update(PlayerManager* player, BossManager* boss) {
 
 void GameCamera::SetAttributeImGui() {
 	exporter_.DragFloat3("offset", &offset_.x, 0.01f);
-	exporter_.DragFloat3("rotate", &rotate_.x, 0.01f);
 	exporter_.DragFloat("interpolation", &interpolation, 0.001f);
 	exporter_.SliderFloat("halfway", &halfway, 0.0f, 1.0f);
 
+	ImGui::DragFloat3("target", &target_.x, 0.01f);
+
 	//camera_->GetTransformBuffer().transform.rotate    = rotate_;
 	camera_->GetTransformBuffer().transform.translate = offset_;
-	camera_->UpdateTranslate();
+	//camera_->UpdateTranslate();
 
 	if (ImGui::Button("output parameter")) {
 		exporter_.OutputToJson();

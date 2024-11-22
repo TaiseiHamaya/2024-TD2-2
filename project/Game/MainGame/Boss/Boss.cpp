@@ -10,7 +10,7 @@ Boss::Boss(int32_t hitpoint_) :
 	SetName("Boss");
 	// モデル設定
 	transform_.UpdateMatrix();
-	set_model("sphere.obj");
+	set_model("enemy_stay.gltf");
 	renderingFlag_ = kBehaviorRender_Systematic;
 
 	TryLoadJson();
@@ -26,6 +26,12 @@ Boss::Boss(int32_t hitpoint_) :
 
 void Boss::update() {
 	//behavior->move(this);
+
+	animationTimer_.AddDeltaTime();
+
+	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
+		animator_->Update(animationTimer_, i, true);
+	}
 }
 
 void Boss::update_matrix() {
@@ -45,8 +51,11 @@ void Boss::take_damage(int32_t damage) {
 }
 
 void Boss::set_model(std::string file) {
-	ModelBehavior::model_ = SxavengerGame::LoadModel("Resources/model/CG2", file);
+	ModelBehavior::model_ = SxavengerGame::LoadModel("resourcesData/gameScene/model", file);
 	model_->ApplyMeshShader();
+
+	animator_ = std::make_unique<Animator>(model_);
+	AnimationBehavior::animator_ = animator_.get();
 }
 
 bool Boss::is_dead() const {

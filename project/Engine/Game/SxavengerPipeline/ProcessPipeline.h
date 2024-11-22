@@ -28,6 +28,7 @@ enum ProcessPipelineType : uint32_t {
 	kVisual_Glayscale,
 	kVisual_LUT,
 	kVisual_DoF,
+	kVisual_Toon,
 
 	kCountOfProcessPipelineType
 };

@@ -115,4 +115,18 @@ void ProcessPipeline::CreateVisual() {
 		pipelines_[kVisual_DoF]->CreatePipeline(desc, blobs_[kVisual_DoF].get());
 	}
 
+	{
+		blobs_[kVisual_Toon] = std::make_unique<CSBlob>();
+		blobs_[kVisual_Toon]->Create(L"sxavenger/visual/visualToon.cs.hlsl");
+
+		pipelines_[kVisual_Toon] = std::make_unique<CSPipeline>();
+
+		CSRootSignatureDesc desc = {};
+		desc.SetCBV(0, 10); //!< Config
+		desc.SetSRV(1, 0);  //!< Input
+		desc.SetUAV(2, 0);  //!< Output
+
+		pipelines_[kVisual_Toon]->CreatePipeline(desc, blobs_[kVisual_Toon].get());
+	}
+
 }

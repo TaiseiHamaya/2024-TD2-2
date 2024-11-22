@@ -41,4 +41,7 @@ private:
 	//std::unique_ptr<BossBehavior> behavior;
 
 	std::unique_ptr<Collider> collider_;
+
+	std::unique_ptr<Animator> animator_;
+	DeltaTimePoint animationTimer_ = {};
 };

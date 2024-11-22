@@ -21,7 +21,7 @@ void Camera3D::Init() {
 	buffer_ = std::make_unique<BufferResource<CameraForGPU>>(Sxavenger::GetDevicesObj(), 1);
 
 	// cameraの設定
-	SetTransform(kUnit3, kOrigin3, {0.0f, 0.0f, -10.0f});
+	SetTransform(kUnit3, Quaternion::Identity(), {0.0f, 0.0f, -10.0f});
 	SetProjection(0.45f, static_cast<float>(kWindowSize.x) / static_cast<float>(kWindowSize.y), 0.1f, 1280.0f);
 
 }
@@ -29,9 +29,9 @@ void Camera3D::Init() {
 void Camera3D::Term() {
 }
 
-void Camera3D::SetTransform(const Vector3f& scale, const Vector3f& rotate, const Vector3f& translate) {
+void Camera3D::SetTransform(const Vector3f& scale, const Quaternion& rotate, const Vector3f& translate) {
 
-	transform_.transform.scale     = scale;
+	transform_.transform.scale     = scale; 
 	transform_.transform.rotate    = rotate;
 	transform_.transform.translate = translate;
 
