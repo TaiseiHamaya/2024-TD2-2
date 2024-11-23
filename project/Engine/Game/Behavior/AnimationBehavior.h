@@ -23,7 +23,7 @@ public:
 	AnimationBehavior()  = default;
 	~AnimationBehavior() = default;
 
-	void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
+	virtual void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
 
 protected:
 

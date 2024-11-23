@@ -33,7 +33,9 @@ public:
 
 	void Update();
 
-	Vector3f GetPostion() const { return transform_.GetWorldPosition(); }
+	void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
+
+	void SetAttributeImGui() override;
 
 private:
 
@@ -44,13 +46,20 @@ private:
 	std::unique_ptr<Animator> animator_;
 	DeltaTimePoint animationTimer_;
 
+	static const uint32_t kInstanceCount_ = 4;
+
+	std::unique_ptr<DxObject::BufferResource<TransformationMatrix>> matrix_;
+
+	Vector3f positions_[kInstanceCount_] = {};
+	Vector3f scales_[kInstanceCount_] = {};
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // Field class
 ////////////////////////////////////////////////////////////////////////////////////////////
 class Field
-	: public BaseBehavior {
+	: public ModelBehavior {
 public:
 
 	//=========================================================================================
