@@ -143,6 +143,13 @@
     <ClCompile Include="Lib\Easing.cpp" />
     <ClCompile Include="Engine\Beta\ImGuiJsonExporter.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\BaseBossBehavior.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorStay.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushStart.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushPlay.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushEnd.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionManager.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionOne.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -274,6 +281,13 @@
     <ClInclude Include="Lib\Easing.h" />
     <ClInclude Include="Engine\Beta\ImGuiJsonExporter.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\BaseBossBehavior.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorStay.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushStart.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushPlay.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Rush\BossBehaviorRushEnd.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionManager.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionOne.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

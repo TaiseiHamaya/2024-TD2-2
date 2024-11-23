@@ -23,8 +23,8 @@ private:
 	std::unique_ptr<BossManager> bossManager;
 	std::unique_ptr<Field> field_;
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	std::unique_ptr<TestGround> groundTest;
-#endif // _DEBUG
+//#endif // _DEBUG
 };
 

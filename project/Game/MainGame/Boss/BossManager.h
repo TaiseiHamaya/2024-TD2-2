@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Boss.h"
+#include "BossActionManager/BossActionManager.h"
+
+class PlayerManager;
 
 class BossManager {
 public:
@@ -11,17 +14,17 @@ public:
 	BossManager& operator=(const BossManager&) = delete;
 
 public:
-	void initialize();
+	void initialize(const PlayerManager* player);
 	void update();
 	void update_matrix();
 
 	void boss_damage_callback(int32_t damage);
 
 private:
-	void create_model();
 
 private:
 	std::unique_ptr<Boss> boss;
+	std::unique_ptr<BossActionManager> bossActionManager;
 	int32_t wave;
 	bool isTransition{ false };
 	int32_t MaxWave;

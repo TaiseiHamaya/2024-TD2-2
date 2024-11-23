@@ -4,6 +4,7 @@
 
 //* engine
 #include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
+#include <Engine/Game/Behavior/BaseBehavior.h>
 
 #include <bitset>
 #include <list>
@@ -48,6 +49,9 @@ public:
 #endif // _DEBUG
 
 public:
+	const Player* get_operate_player() const { return operatePlayer; };
+
+private:
 	std::bitset<2> ejectBitset{ 0 };
 	std::bitset<2> gatherBitset{ 0 };
 	bool canEject;

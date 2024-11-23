@@ -15,7 +15,7 @@ void MainGameScene::Init() {
 	playerManager->initialize();
 
 	bossManager = std::make_unique<BossManager>();
-	bossManager->initialize();
+	bossManager->initialize(playerManager.get());
 
 	field_ = std::make_unique<Field>();
 	field_->Init();
