@@ -101,7 +101,7 @@ void GameCamera::SetShake(DeltaTimePoint time, int32_t subdivision, float streng
 void GameCamera::UpdateShake() {
 
 	if (Sxavenger::IsTriggerKey(DIK_SPACE)) {
-		SetShake({ 2.0f }, 24, 6.0f);
+		SetShake({ 0.3f }, 6, 20.0f);
 	}
 
 	shakeTimer_.SubtractDeltaTime();
