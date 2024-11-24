@@ -36,7 +36,7 @@ void GameCamera::Init() {
 	dof_ = std::make_unique<VisualProcessDoF>();
 	dof_->Init();
 	dof_->SetToConsole("player forcus dof");
-	dof_->GetParameter().f = 8.0f;
+	dof_->GetParameter().f = 40.0f;
 
 	/*toon_ = std::make_unique<VisualProcessToon>();
 	toon_->Init();
@@ -129,12 +129,4 @@ void GameCamera::UpdateShake() {
 	} else {
 		shakeTarget_ = { -fixedStrength.x, -fixedStrength.y, 0.0f };
 	}
-	
-	//shakeTimer_.SubtractDeltaTime();
-	//shakeTimer_.time = std::max(shakeTimer_.time, 0.0f);
-
-	//float strength = 2.0f * (shakeTimer_.time / shakeTime_.time);
-
-	//// test
-	//camera_->GetTransformBuffer().transform.translate = { Random::Generate(-strength, strength), Random::Generate(-strength, strength), 0.0f };
 }

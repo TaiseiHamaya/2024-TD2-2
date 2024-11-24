@@ -45,7 +45,7 @@ private:
 
 	//* external *//
 
-	CineCamera* camera_ = nullptr;
+	CineCamera* camera_ = nullptr; 
 
 	QuaternionTransformBuffer transform_;
 	QuaternionTransformBuffer offsetTransform_;
