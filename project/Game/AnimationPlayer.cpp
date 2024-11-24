@@ -24,15 +24,15 @@ void AnimationPlayer::Init() {
 
 	test_curve.TEST_Create();
 
-	//testA_ = std::make_unique<Collider>();
-	//testA_->SetColliderBoundingCapsule({ .direction = { 1.0f, 0.0f, 0.0f }, .radius = {1.0f}, .length = { 2.0f }});
-	//testA_->SetTypeId(ColliderTypeTest_A);
-	//testA_->SetTargetTypeId(ColliderTypeTest_B);
+	testA_ = std::make_unique<Collider>();
+	testA_->SetColliderBoundingCapsule({ .direction = { 1.0f, 0.0f, 0.0f }, .radius = {1.0f}, .length = { 2.0f }});
+	/*testA_->SetTypeId(ColliderTypeTest_A);
+	testA_->SetTargetTypeId(ColliderTypeTest_B);*/
 
-	//testB_ = std::make_unique<Collider>();
-	//testB_->SetColliderBoundingCapsule({ .direction = { 1.0f, 0.0f, 0.0f }, .radius = {1.0f}, .length = { 2.0f } });
-	//testB_->SetTypeId(ColliderTypeTest_B);
-	//testB_->SetTargetTypeId(ColliderTypeTest_A);
+	testB_ = std::make_unique<Collider>();
+	testB_->SetColliderBoundingCapsule({ .direction = { 1.0f, 0.0f, 0.0f }, .radius = {1.0f}, .length = { 2.0f } });
+	/*testB_->SetTypeId(ColliderTypeTest_B);
+	testB_->SetTargetTypeId(ColliderTypeTest_A);*/
 
 	testB_->SetOnCollisionEnter([&](_MAYBE_UNUSED Collider* const other) {
 		sSystemConsole->Log("enter.");

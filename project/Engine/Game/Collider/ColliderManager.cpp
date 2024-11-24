@@ -67,12 +67,10 @@ void ColliderManager::CheckCollisionPair(Collider* colliderA, Collider* collider
 		return;
 	}
 
-	Assert(colliderA->GetColliderPosition().has_value() && colliderB->GetColliderPosition().has_value(), "collider is not set position.");
-
 	// どちらか片方が当たり判定を必要としてた場合
 	bool isCollision = CollisionDetection::CheckCollision(
-		colliderA->GetColliderPosition().value(), colliderA->GetBounding(),
-		colliderB->GetColliderPosition().value(), colliderB->GetBounding()
+		colliderA->GetColliderPosition(), colliderA->GetBounding(),
+		colliderB->GetColliderPosition(), colliderB->GetBounding()
 	);
 
 	if (isCollision) { //!< 衝突してた場合
@@ -90,11 +88,11 @@ void ColliderManager::DrawCollider(const Collider* const collider, const Color4f
 
 	const auto& bounding = collider->GetBounding();
 
-	if (!collider->GetColliderPosition().has_value()) {
+	if (!collider->GetColliderPositionOptional().has_value()) {
 		return; //!< collider is not set position.
 	}
 
-	const Vector3f& position = collider->GetColliderPosition().value();
+	const Vector3f& position = collider->GetColliderPosition();
 
 	switch (bounding.index()) {
 		case CollisionBoundings::BoundingsType::kSphere:

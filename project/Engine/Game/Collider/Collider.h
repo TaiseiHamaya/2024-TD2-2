@@ -81,7 +81,8 @@ public:
 
 	//* collision getter *//
 
-	const std::optional<Vector3f>& GetColliderPosition() const;
+	const std::optional<Vector3f>& GetColliderPositionOptional() const;
+	const Vector3f& GetColliderPosition() const;
 
 	const CollisionBoundings::Boundings& GetBounding() const { return bounding_; }
 
@@ -116,7 +117,7 @@ private:
 	////////////////////////////////////////////////////////////////////////////////////////////
 	// CollisionState enum
 	////////////////////////////////////////////////////////////////////////////////////////////
-	enum CollisionState : uint32_t {
+	enum CollisionState : uint32_t { //!< TODO: publicに変更
 		kCollisionState_Current = 0,
 		kCollisionState_Prev    = 1,
 	};
