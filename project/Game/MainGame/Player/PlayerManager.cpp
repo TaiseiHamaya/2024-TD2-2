@@ -11,14 +11,22 @@
 PlayerManager::~PlayerManager() = default;
 
 void PlayerManager::initialize() {
+	SetToConsole("PlayerManager");
+
+	exporter_.TryLoadFromJson();
+	exporter_.GetFromStash("MaxSize", &Player::maxSize, 1);
+	exporter_.GetFromStash("MinSize", &Player::minSize, 1);
+	exporter_.GetFromStash("ModelSize", &Player::ModelSize, 1);
+	exporter_.GetFromStash("DefaultSize", &Player::DefaultSize, 1);
+	exporter_.GetFromStash("SizeParSec", &Player::SizeParSec, 1);
+
+	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
+	exporter_.GetFromStash("EjectLengthParSecond", &EjectLengthParSecond, 1);
+
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
 	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
 	canEject = true;
-
-	SetToConsole("PlayerManager");
-
-	exporter_.TryLoadFromJson();
 
 	PlayerState::Gather::playerManager = this;
 }
