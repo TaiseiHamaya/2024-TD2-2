@@ -70,8 +70,13 @@ void Collider::OnCollision(Collider* other) {
 	states_[other].set(kCollisionState_Current); //!< 現在frameで当たった
 }
 
-const std::optional<Vector3f>& Collider::GetColliderPosition() const {
+const std::optional<Vector3f>& Collider::GetColliderPositionOptional() const {
 	return position_;
+}
+
+const Vector3f& Collider::GetColliderPosition() const {
+	Assert(position_.has_value(), "position is not set.");
+	return position_.value();
 }
 
 bool Collider::ShouldCheckForCollision(const Collider* const other) const {
