@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include <Engine/Game/Behavior/ModelBehavior.h>
+#include <Engine/Game/Behavior/AnimationBehavior.h>
 #include <Engine/Game/Collider/Collider.h>
 #include <Lib/Geometry/Vector2.h>
 
 #include "./PlayerState/BasePlayerState.h"
 
-class Player : public ModelBehavior {
+class Player : public AnimationBehavior {
 public:
 	void initialize(const Vector3f& translate, float size);
 
@@ -23,7 +23,7 @@ public:
 public:
 	Vector3f world_point() const;
 	const QuaternionTransformBuffer& get_transform() const { return transform_; };
-	void push_state(std::unique_ptr<BasePlayerState> state_) { stateQue.emplace_back(std::move(state_)); };
+	void push_state(std::unique_ptr<BasePlayerState> state_);
 	bool empty_state();
 	const std::unique_ptr<Collider>& get_hit_collider() const { return hitCollider; };
 	Collider* get_attack_collider() const;
@@ -31,6 +31,7 @@ public:
 	float get_size() const { return size; };
 
 private:
+	void set_model(const std::string& file);
 
 public:
 	void SystemAttributeImGui() override;
@@ -42,6 +43,9 @@ private:
 	std::list<std::unique_ptr<BasePlayerState>> stateQue;
 
 	std::unique_ptr<Collider> hitCollider;
+
+	Animator* animator{ nullptr };
+	DeltaTimePoint animationTimer;
 
 private:
 	inline static uint32_t index = 0;

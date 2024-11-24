@@ -11,7 +11,7 @@ Boss::Boss(int32_t hitpoint_) :
 	hitpoint(hitpoint_) {
 	SetName("Boss");
 	// モデル設定
-	
+
 	transform_.UpdateMatrix();
 	renderingFlag_ = kBehaviorRender_Systematic;
 
@@ -19,7 +19,7 @@ Boss::Boss(int32_t hitpoint_) :
 
 	// コライダー設定
 	collider_ = std::make_unique<Collider>();
-	collider_->SetColliderBoundingSphere();
+	collider_->SetColliderBoundingSphere({ .radius = 3.0f });
 	collider_->SetTypeId(ColliderType::ColliderTypeBossHit);
 	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayerAttack);
 
@@ -35,11 +35,13 @@ void Boss::begin() {
 	if (damagedInvincibleTimer.time <= 0) {
 		isInvincible = false;
 	}
+	if (behavior) {
+		behavior->begin();
+	}
 }
 
 void Boss::update() {
 	if (behavior) {
-		behavior->begin();
 		behavior->move();
 	}
 }
@@ -48,13 +50,13 @@ void Boss::update_matrix() {
 	transform_.UpdateMatrix();
 	collider_->SetColliderPosition(transform_.GetWorldPosition());
 	// アニメーション更新
-	if (!animator) {
+	if (!animator_) {
 		return;
 	}
-	//for (uint32_t i = 0; i < animator->GetAnimationSize(); ++i) {
-	//	animator->Update(behavior->get_timer() , i, true);
-	//}
-	animator->Update(behavior->get_timer(), 0, true);
+	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
+		animator_->Update(behavior->get_timer() , i, true);
+	}
+	//animator_->Update(behavior->get_timer(), 0, true);
 
 	if (behavior) {
 		behavior->update_collider(transform_.GetWorldPosition());
@@ -96,7 +98,7 @@ void Boss::set_model(const std::string& file) {
 		newModels.animator = std::make_unique<Animator>(newModels.model);
 	}
 	model_ = models[file].model;
-	animator = models[file].animator.get();
+	animator_ = models[file].animator.get();
 }
 
 bool Boss::is_dead() const {

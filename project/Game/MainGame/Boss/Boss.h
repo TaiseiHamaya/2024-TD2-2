@@ -40,7 +40,7 @@ public:
 	Collider* get_hit_collider() const;
 	Collider* get_attack_collider() const;
 	QuaternionTransformBuffer& get_transform() { return transform_; };
-	const Animator* const get_animator() const { return animator; };
+	const Animator* const get_animator() const { return animator_; };
 	const QuaternionTransformBuffer& get_transform() const { return transform_; };
 	std::unique_ptr<BaseBossBehavior>& get_behavior() { return behavior; };
 	const std::unique_ptr<BaseBossBehavior>& get_behavior() const { return behavior; };
@@ -48,15 +48,12 @@ public:
 
 private:
 	bool isInvincible{ false };
-	bool isDestroy{false};
+	bool isDestroy{ false };
 	int32_t hitpoint;
 
-	Animator* animator;
+	//Animator* animator;
 	std::unique_ptr<BaseBossBehavior> behavior;
 
 	DeltaTimePoint damagedInvincibleTimer;
 	std::unique_ptr<Collider> collider_;
-
-	std::unique_ptr<Animator> animator_;
-	DeltaTimePoint animationTimer_ = {};
 };

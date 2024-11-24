@@ -1,10 +1,12 @@
 #pragma once
 
 #include <memory>
+#include <string>
 
 #include <Lib/Geometry/Vector3.h>
 
 class Collider;
+class Player;
 class QuaternionTransformBuffer;
 
 class BasePlayerState {
@@ -18,6 +20,8 @@ public:
 	void update_collider(const Vector3f& position);
 
 	//virtual constexpr bool allow_interruption() = 0;
+
+	virtual const std::string get_model_name() const = 0;
 
 public:
 	const std::unique_ptr<Collider>& get_attack_collider() const { return attackCollider; };

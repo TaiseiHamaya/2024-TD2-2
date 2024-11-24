@@ -12,8 +12,10 @@ public:
 	~Knockback() = default;
 
 public:
-	void begin();
-	Vector3f velocity();
+	void begin() override;
+	Vector3f velocity() override;
+
+	const std::string get_model_name() const override { return "player_spike_test.gltf"; };
 
 private:
 	DeltaTimePoint timer;

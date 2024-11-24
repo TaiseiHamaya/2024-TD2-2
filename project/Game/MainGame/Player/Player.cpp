@@ -8,6 +8,8 @@
 void Player::initialize(const Vector3f& translate, float size_) {
 	SetName("Player" + std::to_string(index));
 
+	TryLoadJson("Player.json");
+
 	hitCollider = std::make_unique<Collider>();
 	hitCollider->SetColliderBoundingSphere();
 	hitCollider->SetTypeId(ColliderType::ColliderTypePlayerHit);
@@ -15,18 +17,15 @@ void Player::initialize(const Vector3f& translate, float size_) {
 
 	++index;
 
-	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
-	model_->ApplyMeshShader();
+	set_model("player_move_gltf.gltf");
 
 	set_sizing(size_);
 	transform_.transform.translate = translate;
-	transform_.UpdateMatrix();
+	update_matrix();
 
 	renderingFlag_ = kBehaviorRender_Systematic;
 
 	SetToConsole();
-
-	update_matrix();
 }
 
 void Player::begin() {
@@ -34,12 +33,19 @@ void Player::begin() {
 		stateQue.front()->begin();
 	}
 	velocity = kOrigin3;
+	animationTimer.AddDeltaTime();
 }
 
 void Player::update() {
 	if (!stateQue.empty()) {
 		if (stateQue.front()->is_end()) {
 			stateQue.pop_front();
+			if (stateQue.empty()) {
+				set_model("player_move_gltf.gltf");
+			}
+			else {
+				set_model(stateQue.front()->get_model_name());
+			}
 		}
 	}
 
@@ -56,6 +62,10 @@ void Player::update_matrix() {
 
 	if (!stateQue.empty()) {
 		stateQue.front()->update_collider(transform_.GetWorldPosition());
+	}
+
+	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
+		animator_->Update(animationTimer, i, true);
 	}
 }
 
@@ -88,6 +98,13 @@ Vector3f Player::world_point() const {
 	return transform_.GetWorldPosition();
 }
 
+void Player::push_state(std::unique_ptr<BasePlayerState> state_) {
+	if (stateQue.empty()) {
+		set_model(state_->get_model_name());
+	}
+	stateQue.emplace_back(std::move(state_));
+}
+
 bool Player::empty_state() {
 	return stateQue.empty();
 }
@@ -107,6 +124,23 @@ void Player::set_sizing(float size_) {
 	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
 	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
+}
+
+struct AnimationModelP {
+	Model* model;
+	std::unique_ptr<Animator> animator;
+};
+
+void Player::set_model(const std::string& file) {
+	static std::unordered_map<std::string, AnimationModelP> models;
+	if (!models.contains(file)) {
+		auto& newModels = models.emplace(file, AnimationModelP{}).first->second;
+		newModels.model = SxavengerGame::LoadModel("ResourcesData/GameScene/Model", file);
+		newModels.model->ApplyMeshShader();
+		newModels.animator = std::make_unique<Animator>(newModels.model);
+	}
+	model_ = models[file].model;
+	animator_ = models[file].animator.get();
 }
 
 void Player::SystemAttributeImGui() {
