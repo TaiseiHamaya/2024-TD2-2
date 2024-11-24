@@ -79,4 +79,5 @@ private:
 	// 視野角狭め, 座標高め
 
 	void UpdateShake();
+
 };
