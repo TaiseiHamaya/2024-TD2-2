@@ -13,7 +13,7 @@
 void TitleEnemy::Init() {
 	SetName("titleEnemy");
 
-	AnimationBehavior::model_ = SxavengerGame::LoadModel("resourcesData/GameScene/Model", "enemy_stay.gltf");
+	AnimationBehavior::model_ = SxavengerGame::LoadModel("resourcesData/GameScene/Model", "enemy_title.gltf");
 
 	animator_                    = std::make_unique<Animator>(model_);
 	AnimationBehavior::animator_ = animator_.get();
