@@ -63,7 +63,10 @@ void Player::update_matrix() {
 	hitCollider->SetColliderPosition(colliderPosition);
 
 	for (auto& queue : stateQue) {
-		queue->get_attack_collider()->SetColliderPosition(colliderPosition);
+		Collider* collider = queue->get_attack_collider().get();
+		if (collider) {
+			collider->SetColliderPosition(colliderPosition);
+		}
 	}
 
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
