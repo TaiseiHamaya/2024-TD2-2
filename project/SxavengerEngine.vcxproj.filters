@@ -112,8 +112,6 @@
     <ClCompile Include="Game\Plane.cpp" />
     <ClCompile Include="Game\Scene\IScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
-    <ClCompile Include="Game\Scene\Scene_Game.cpp" />
-    <ClCompile Include="Game\Scene\Scene_Title.cpp" />
     <ClCompile Include="Game\Teapot.cpp" />
     <ClCompile Include="Game\TestGround.cpp" />
     <ClCompile Include="Lib\Adapter\Json\Json.cpp" />
@@ -153,6 +151,10 @@
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionOne.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateKnockback.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.cpp" />
+    <ClCompile Include="Game\TitleScene\TitleScene.cpp" />
+    <ClCompile Include="Game\TitleScene\TitleEnemy.cpp" />
+    <ClCompile Include="Game\TitleScene\TitlePlayer.cpp" />
+    <ClCompile Include="Game\TitleScene\TitleBoard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -249,8 +251,6 @@
     <ClInclude Include="Game\Plane.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\SceneManager.h" />
-    <ClInclude Include="Game\Scene\Scene_Game.h" />
-    <ClInclude Include="Game\Scene\Scene_Title.h" />
     <ClInclude Include="Game\Teapot.h" />
     <ClInclude Include="Game\TestGround.h" />
     <ClInclude Include="Lib\Adapter\Json\Json.h" />
@@ -294,6 +294,10 @@
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionOne.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateKnockback.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.h" />
+    <ClInclude Include="Game\TitleScene\TitleScene.h" />
+    <ClInclude Include="Game\TitleScene\TitlePlayer.h" />
+    <ClInclude Include="Game\TitleScene\TitleEnemy.h" />
+    <ClInclude Include="Game\TitleScene\TitleBoard.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

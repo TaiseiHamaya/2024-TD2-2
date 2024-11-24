@@ -9,6 +9,7 @@
 #include "Game/MainGame/Player/PlayerState/PlayerStateKnockback.h"
 
 void MainGameScene::Init() {
+	sSystemConsole->GetGameCamera()->Reset();
 
 	playerManager = std::make_unique<PlayerManager>();
 	playerManager->initialize();

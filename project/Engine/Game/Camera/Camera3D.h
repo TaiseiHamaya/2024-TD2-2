@@ -36,6 +36,8 @@ public:
 
 	void Term();
 
+	void Reset();
+
 	//* camera setter *//
 
 	void SetTransform(const Vector3f& scale, const Quaternion& rotate, const Vector3f& translate);
