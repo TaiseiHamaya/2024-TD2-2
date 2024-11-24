@@ -45,6 +45,8 @@ void MainGameScene::Update() {
 	field_->Update();
 	// 衝突処理
 	collision();
+
+	gameCamera_->Update(playerManager.get(), bossManager.get());
 }
 
 void MainGameScene::Draw() {
