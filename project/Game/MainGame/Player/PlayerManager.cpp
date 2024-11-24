@@ -19,6 +19,8 @@ void PlayerManager::initialize() {
 	SetToConsole("PlayerManager");
 
 	exporter_.TryLoadFromJson();
+
+	PlayerState::Gather::playerManager = this;
 }
 
 void PlayerManager::begin() {
@@ -131,7 +133,6 @@ void PlayerManager::input() {
 }
 
 void PlayerManager::gather() {
-	const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 	for (Player& player : players) {
 		// 操作プレイヤーと同じ場合は処理しない
 		if (operatePlayer == &player) {
@@ -139,7 +140,7 @@ void PlayerManager::gather() {
 		}
 		player.push_state(
 			std::make_unique<PlayerState::Gather>(
-				&player.get_transform(), targetAddress
+				&player.get_transform()
 			)
 		);
 	}
@@ -180,10 +181,9 @@ void PlayerManager::eject() {
 	);
 	// 集合命令が入っている場合は、新しいやつにも適用する
 	if (gatherBitset.test(0)) {
-		const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 		newPlayer.push_state(
 			std::make_unique<PlayerState::Gather>(
-				&newPlayer.get_transform(), targetAddress
+				&newPlayer.get_transform()
 			)
 		);
 	}
