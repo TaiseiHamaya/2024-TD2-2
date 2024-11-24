@@ -8,10 +8,10 @@
 void Player::initialize(const Vector3f& translate, float scaling_) {
 	SetName("Player" + std::to_string(index));
 
-	collider_ = std::make_unique<Collider>();
-	collider_->SetColliderBoundingSphere();
-	collider_->SetTypeId(ColliderType::ColliderTypePlayer);
-	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayer | ColliderType::ColliderTypeBossHit);
+	hitCollider = std::make_unique<Collider>();
+	hitCollider->SetColliderBoundingSphere();
+	hitCollider->SetTypeId(ColliderType::ColliderTypePlayerHit);
+	hitCollider->SetTargetTypeId(ColliderType::ColliderTypeBossAttack | ColliderType::ColliderTypePlayerHit);
 
 	++index;
 
@@ -25,6 +25,8 @@ void Player::initialize(const Vector3f& translate, float scaling_) {
 	renderingFlag_ = kBehaviorRender_Systematic;
 
 	SetToConsole();
+
+	update_matrix();
 }
 
 void Player::begin() {
@@ -50,7 +52,11 @@ void Player::update() {
 void Player::update_matrix() {
 	transform_.UpdateMatrix();
 
-	collider_->SetColliderPosition(transform_.GetWorldPosition());
+	hitCollider->SetColliderPosition(transform_.GetWorldPosition());
+
+	if (!stateQue.empty()) {
+		stateQue.front()->update_collider(transform_.GetWorldPosition());
+	}
 }
 
 void Player::operate_update(const Vector2f& input) {
@@ -82,10 +88,20 @@ bool Player::empty_state() {
 	return stateQue.empty();
 }
 
+Collider* Player::get_attack_collider() const {
+	if (stateQue.empty()) {
+		return nullptr;
+	}
+	else {
+		auto& front = stateQue.front();
+		return front->get_attack_collider().get();
+	}
+}
+
 void Player::set_scaling(float scale_) {
 	scaling = scale_;
 	transform_.transform.scale = { scaling,scaling,scaling };
-	collider_->SetColliderBoundingSphere({ .radius = scaling });
+	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
 }
 
 void Player::SystemAttributeImGui() {

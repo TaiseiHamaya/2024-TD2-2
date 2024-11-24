@@ -25,6 +25,7 @@ public:
 public:
 	void update();
 	std::unique_ptr<BaseBossBehavior> next();
+	void cancel_now_action();
 
 protected:
 	virtual std::unique_ptr<BaseBossBehavior> create(const std::string& behaviorName) = 0;

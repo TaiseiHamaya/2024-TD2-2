@@ -11,6 +11,9 @@ public:
 public:
 	void move() override;
 
+public:
+	constexpr bool allow_interruption() override { return true; };
+
 private:
 	float stayTime;
 	const PlayerManager* playerManager;

@@ -11,7 +11,7 @@ BossBehaviorRushPlay::BossBehaviorRushPlay(float RushLength_, float RushSpeed_) 
 	boss->set_model("enemy_rush.gltf");
 	attackCollider = std::make_unique<Collider>();
 	attackCollider->SetTypeId(ColliderTypeBossAttack);
-	attackCollider->SetTargetTypeId(ColliderTypeBossAttack);
+	attackCollider->SetTargetTypeId(ColliderTypePlayerHit);
 	attackCollider->SetColliderBoundingSphere();
 }
 

@@ -20,9 +20,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////
 enum ColliderType {
 	ColliderType_NONE = 1 << 0,
-	ColliderTypePlayer = 1 << 1,
-	ColliderTypeBossHit = 1 << 2,
-	ColliderTypeBossAttack = 1 << 3,
+	ColliderTypePlayerHit = 1 << 1,
+	ColliderTypePlayerAttack = 1 << 2,
+	ColliderTypeBossHit = 1 << 3,
+	ColliderTypeBossAttack = 1 << 4,
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////

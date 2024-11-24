@@ -15,10 +15,17 @@ public:
 
 public:
 	void initialize(const PlayerManager* player);
+	void begin();
 	void update();
 	void update_matrix();
 
-	void boss_damage_callback(int32_t damage);
+	void attack_hit_callback();
+	void damaged_hit_callback(int32_t damage, const Vector3f& playerTranslate);
+
+public:
+	bool is_Invincible() const;
+	Collider* get_attack_collider() const;
+	Collider* get_hit_collider() const;
 
 private:
 

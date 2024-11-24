@@ -24,7 +24,8 @@ public:
 	const QuaternionTransformBuffer& get_transform() const { return transform_; };
 	void push_state(std::unique_ptr<BasePlayerState> state_) { stateQue.emplace_back(std::move(state_)); };
 	bool empty_state();
-	const std::unique_ptr<Collider>& get_collider() const { return collider_; };
+	const std::unique_ptr<Collider>& get_hit_collider() const { return hitCollider; };
+	Collider* get_attack_collider() const;
 	void set_scaling(float scale_);
 	float get_scaling() const { return scaling; };
 
@@ -38,7 +39,7 @@ private:
 	Vector3f velocity{ kOrigin3 };
 	std::list<std::unique_ptr<BasePlayerState>> stateQue;
 
-	std::unique_ptr<Collider> collider_;
+	std::unique_ptr<Collider> hitCollider;
 
 private:
 	inline static uint32_t index = 0;

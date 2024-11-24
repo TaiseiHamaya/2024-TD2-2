@@ -23,6 +23,10 @@ std::unique_ptr<BaseBossBehavior> BossActionManager::next() {
 	return std::move(result);
 }
 
+void BossActionManager::cancel_now_action() {
+	nowFlow = nullptr;
+}
+
 ActionFlow* BossActionManager::select_action_flow() {
 	std::vector<uint32_t> actionIndex;
 	for (uint32_t i = 0; auto & flow : flows) {

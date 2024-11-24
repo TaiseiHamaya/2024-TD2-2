@@ -2,6 +2,7 @@
 
 PlayerState::Ejection::Ejection(const Vector3f& direction_, float ejectDistance) :
 	direction(direction_), Time(ejectDistance / 10.0f){
+	create_collider();
 }
 
 void PlayerState::Ejection::begin() {

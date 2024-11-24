@@ -49,6 +49,8 @@ public:
 #endif // _DEBUG
 
 public:
+	std::list<Player>& get_players() { return players; };
+	const std::list<Player>& get_players() const { return players; };
 	const Player* get_operate_player() const { return operatePlayer; };
 
 private:

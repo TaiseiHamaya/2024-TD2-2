@@ -79,8 +79,8 @@ void PlayerManager::marge_collision() {
 	for (auto lhs = players.begin(); lhs != std::prev(players.end()); ++lhs) {
 		for (auto rhs = std::next(lhs); rhs != players.end(); ++rhs) {
 			if (
-				lhs->get_collider()->GetStates(rhs->get_collider().get()).test(0) &&
-				rhs->get_collider()->GetStates(lhs->get_collider().get()).test(0)
+				lhs->get_hit_collider()->GetStates(rhs->get_hit_collider().get()).test(0) &&
+				rhs->get_hit_collider()->GetStates(lhs->get_hit_collider().get()).test(0)
 				) {
 				Vector3f margeTranslate =
 					lhs->get_transform().GetWorldPosition() +

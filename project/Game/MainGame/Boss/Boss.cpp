@@ -11,6 +11,7 @@ Boss::Boss(int32_t hitpoint_) :
 	hitpoint(hitpoint_) {
 	SetName("Boss");
 	// モデル設定
+	
 	transform_.UpdateMatrix();
 	renderingFlag_ = kBehaviorRender_Systematic;
 
@@ -20,13 +21,20 @@ Boss::Boss(int32_t hitpoint_) :
 	collider_ = std::make_unique<Collider>();
 	collider_->SetColliderBoundingSphere();
 	collider_->SetTypeId(ColliderType::ColliderTypeBossHit);
-	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayer);
+	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayerAttack);
 
 	exporter_.TryLoadFromJson();
 }
 
 Boss::~Boss() noexcept {
 	finalize();
+}
+
+void Boss::begin() {
+	damagedInvincibleTimer.SubtractDeltaTime();
+	if (damagedInvincibleTimer.time <= 0) {
+		isInvincible = false;
+	}
 }
 
 void Boss::update() {
@@ -47,6 +55,10 @@ void Boss::update_matrix() {
 	//	animator->Update(behavior->get_timer() , i, true);
 	//}
 	animator->Update(behavior->get_timer(), 0, true);
+
+	if (behavior) {
+		behavior->update_collider(transform_.GetWorldPosition());
+	}
 }
 
 void Boss::finalize() {
@@ -55,6 +67,7 @@ void Boss::finalize() {
 
 void Boss::SetAttributeImGui() {
 	ImGui::Text("%f", behavior->get_timer().time);
+	ImGui::Text("%d", hitpoint);
 }
 
 bool Boss::is_end_behavior() const {
@@ -90,6 +103,26 @@ bool Boss::is_dead() const {
 	return hitpoint <= 0;
 }
 
+bool Boss::is_invincible() const {
+	return isInvincible;
+}
+
 bool Boss::is_destroy() const {
 	return isDestroy;
+}
+
+Collider* Boss::get_hit_collider() const {
+	return collider_.get();
+}
+
+Collider* Boss::get_attack_collider() const {
+	if (behavior) {
+		return behavior->get_attack_collider().get();
+	}
+	return nullptr;
+}
+
+void Boss::hit_callback() {
+	isInvincible = true;
+	damagedInvincibleTimer.time = 1.0f;
 }

@@ -19,6 +19,12 @@ public:
 
 
 private:
+	void collision();
+
+	void collision_boss_attack();
+	void collision_player_attack();
+
+private:
 	std::unique_ptr<PlayerManager> playerManager;
 	std::unique_ptr<BossManager> bossManager;
 	std::unique_ptr<Field> field_;

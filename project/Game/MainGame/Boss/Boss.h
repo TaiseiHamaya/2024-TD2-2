@@ -16,6 +16,7 @@ public:
 	Boss& operator=(const Boss&) = delete;
 
 public:
+	void begin();
 	void update();
 	void update_matrix();
 
@@ -31,12 +32,17 @@ public:
 	void take_damage(int32_t damage);
 	void set_model(const std::string& file);
 	bool is_dead() const;
+	bool is_invincible() const;
 	bool is_destroy() const;
 	void set_invincible(bool val) { isInvincible = val; };
-	const std::unique_ptr<Collider>& get_hit_collider() const { return collider_; };
+	Collider* get_hit_collider() const;
+	Collider* get_attack_collider() const;
 	QuaternionTransformBuffer& get_transform() { return transform_; };
 	const Animator* const get_animator() const { return animator; };
 	const QuaternionTransformBuffer& get_transform() const { return transform_; };
+	std::unique_ptr<BaseBossBehavior>& get_behavior() { return behavior; };
+	const std::unique_ptr<BaseBossBehavior>& get_behavior() const { return behavior; };
+	void hit_callback();
 
 private:
 	bool isInvincible{ false };
@@ -46,5 +52,6 @@ private:
 	Animator* animator;
 	std::unique_ptr<BaseBossBehavior> behavior;
 
+	DeltaTimePoint damagedInvincibleTimer;
 	std::unique_ptr<Collider> collider_;
 };
