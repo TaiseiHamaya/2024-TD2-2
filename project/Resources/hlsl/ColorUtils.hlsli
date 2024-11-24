@@ -43,3 +43,13 @@ float3 OverlayBlend(float3 baseColor, float3 blendColor) {
 	result.b = baseColor.b < 0.5 ? (2.0 * baseColor.b * blendColor.b) : (1.0 - 2.0 * (1.0 - baseColor.b) * (1.0 - blendColor.b));
 	return result;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// ToonShading methods
+////////////////////////////////////////////////////////////////////////////////////////////
+
+float3 ToonShading(float3 color, float tone) {
+	float3 result;
+	result = round(color * tone) / tone;
+	return result;
+}

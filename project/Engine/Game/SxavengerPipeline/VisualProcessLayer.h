@@ -112,3 +112,30 @@ private:
 	std::unique_ptr<DxObject::BufferResource<Parameter>> parameter_;
 
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// VisualProcessToon class
+////////////////////////////////////////////////////////////////////////////////////////////
+class VisualProcessToon
+	: public BaseVisualProcessLayer{
+public:
+
+	//=========================================================================================
+	// public methods
+	//=========================================================================================
+
+	VisualProcessToon() = default;
+	~VisualProcessToon() = default;
+
+	void Init();
+
+	void Term();
+
+	//* interface *//
+
+	void Process(_MAYBE_UNUSED SxavengerFrame* frame) override;
+
+	void SetLayerImGui() override;
+
+private:
+};

@@ -27,6 +27,8 @@ public:
 	Collider* get_attack_collider() const;
 	Collider* get_hit_collider() const;
 
+	Boss* GetBoss() const { return boss.get(); }
+
 private:
 
 private:

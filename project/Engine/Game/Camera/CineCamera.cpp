@@ -19,7 +19,7 @@ void CineCamera::Init() {
 	// bufferの設定
 	buffer_ = std::make_unique<BufferResource<CameraForGPU>>(Sxavenger::GetDevicesObj(), 1);
 
-	SetTransform(kUnit3, kOrigin3, { 0.0f, 0.0f, -10.0f });
+	SetTransform(kUnit3, Quaternion::Identity(), {0.0f, 0.0f, -10.0f});
 	SetProjection({16.0f, 9.0f}, 20.0f, 0.01f, 1000.0f);
 }
 

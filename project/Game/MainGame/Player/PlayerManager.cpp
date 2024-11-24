@@ -19,11 +19,6 @@ void PlayerManager::initialize() {
 	SetToConsole("PlayerManager");
 
 	exporter_.TryLoadFromJson();
-
-	dof_ = std::make_unique<VisualProcessDoF>();
-	dof_->Init();
-	dof_->SetToConsole("player forcus dof");
-	dof_->GetParameter().f = 8.0f;
 }
 
 void PlayerManager::begin() {
@@ -61,8 +56,6 @@ void PlayerManager::update() {
 	for (Player& player : players) {
 		player.update();
 	}
-
-	dof_->SetForcus(sSystemConsole->GetSceneCamera(), operatePlayer->get_transform().GetWorldPosition());
 }
 
 void PlayerManager::update_matrix() {

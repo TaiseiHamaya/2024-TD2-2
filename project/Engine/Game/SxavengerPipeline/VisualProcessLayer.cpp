@@ -70,3 +70,30 @@ void VisualProcessDoF::SetForcus(const Camera3D* camera, const Vector3f& positio
 
 	(*parameter_)[0].focusLength = viewDepth.z;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+// VisualProcessToon class
+////////////////////////////////////////////////////////////////////////////////////////////
+
+void VisualProcessToon::Init() {
+}
+
+void VisualProcessToon::Term() {
+}
+
+void VisualProcessToon::Process(_MAYBE_UNUSED SxavengerFrame* frame) {
+	frame->GetVisual()->NextResultBufferIndex();
+
+	auto commandList = Sxavenger::GetCommandList();
+
+	sSystemConsole->SetProcessPipeline(kVisual_Toon);
+
+	commandList->SetComputeRootConstantBufferView(0, frame->GetConfigVirtualAddress());
+	commandList->SetComputeRootDescriptorTable(1, frame->GetVisual()->GetPrevBuffer(1)->GetGPUHandleSRV());
+	commandList->SetComputeRootDescriptorTable(2, frame->GetVisual()->GetResultBuffer()->GetGPUHandleUAV());
+
+	sSystemConsole->Dispatch(frame->GetSize());
+}
+
+void VisualProcessToon::SetLayerImGui() {
+}

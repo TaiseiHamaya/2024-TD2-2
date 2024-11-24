@@ -38,7 +38,7 @@ public:
 
 	//* camera setter *//
 
-	void SetTransform(const Vector3f& scale, const Vector3f& rotate, const Vector3f& translate);
+	void SetTransform(const Vector3f& scale, const Quaternion& rotate, const Vector3f& translate);
 
 	void UpdateTranslate();
 
@@ -48,10 +48,10 @@ public:
 
 	const Vector3f GetWorldPosition() { return transform_.GetWorldPosition(); }
 
-	const EulerTransform& GetTransform() const { return transform_.transform; }
+	const QuaternionTransform& GetTransform() const { return transform_.transform; }
 
-	const EulerTransformBuffer& GetTransformBuffer() const { return transform_; }
-	EulerTransformBuffer& GetTransformBuffer() { return transform_; }
+	const QuaternionTransformBuffer& GetTransformBuffer() const { return transform_; }
+	QuaternionTransformBuffer& GetTransformBuffer() { return transform_; }
 
 	//* camera getter *//
 
@@ -90,7 +90,7 @@ protected:
 
 	//* camera transform *//
 
-	EulerTransformBuffer transform_;
+	QuaternionTransformBuffer transform_;
 
 	//* buffer *//
 

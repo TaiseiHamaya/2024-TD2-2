@@ -24,6 +24,8 @@ public:
 
 	void SetAttributeImGui() override;
 
+	Vector3f GetPosition() const { return transform_.GetWorldPosition(); }
+
 public:
 	bool is_end_behavior() const;
 	void set_behavior(std::unique_ptr<BaseBossBehavior> behavior_);
@@ -54,4 +56,7 @@ private:
 
 	DeltaTimePoint damagedInvincibleTimer;
 	std::unique_ptr<Collider> collider_;
+
+	std::unique_ptr<Animator> animator_;
+	DeltaTimePoint animationTimer_ = {};
 };

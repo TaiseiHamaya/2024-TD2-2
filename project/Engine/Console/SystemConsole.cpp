@@ -215,7 +215,7 @@ void SystemConsole::DrawScene() {
 	sceneFrame_->TransitionAdaptiveToVisual(); //!< Transition
 
 	//* visual
-	ProcessConsole::ProcessVisual(sceneFrame_.get());
+	//ProcessConsole::ProcessVisual(sceneFrame_.get());
 	sceneFrame_->TransitionVisualToAdaptive(); //!< Transition
 
 	//* late adaptive

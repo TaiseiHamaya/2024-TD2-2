@@ -68,8 +68,7 @@ void DebugCamera3D::CalculateView() {
 	transform_.transform.translate = point + pivot_;
 
 	// rotate
-	transform_.transform.rotate.x = lat_;
-	transform_.transform.rotate.y = lon_;
+	transform_.transform.rotate = ToQuaternion({ lat_, lon_, 0.0f });
 
 	Camera3D::UpdateTranslate();
 	

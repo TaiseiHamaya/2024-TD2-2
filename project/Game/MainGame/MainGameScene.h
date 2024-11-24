@@ -5,6 +5,7 @@
 #include "Player/PlayerManager.h"
 #include "Boss/BossManager.h"
 #include "Field.h"
+#include "Camera/GameCamera.h"
 
 class MainGameScene : public IScene {
 public:
@@ -27,6 +28,6 @@ private:
 	std::unique_ptr<PlayerManager> playerManager;
 	std::unique_ptr<BossManager> bossManager;
 	std::unique_ptr<Field> field_;
-
+	std::unique_ptr<GameCamera> gameCamera_;
 };
 
