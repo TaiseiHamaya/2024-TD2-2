@@ -39,8 +39,6 @@ private:
 	/// </summary>
 	void eject();
 
-	float create_scaling(float size);
-
 	void search_operate_player();
 
 #ifdef _DEBUG
@@ -62,12 +60,6 @@ private:
 	Vector2f inputStickR;
 	std::list<Player> players;
 	Player* operatePlayer;
-
-	float maxSize{ 5.0f };
-	float minSize{ 0.5f };
-	float ModelSize{ 2.0f };
-	float DefaultSize{ 5.0f };
-	float SizeParSec{ 1.f };
 
 	float EjectMaxDistance{ 3.0f };
 	float EjectLengthParSecond{ 3.0f };

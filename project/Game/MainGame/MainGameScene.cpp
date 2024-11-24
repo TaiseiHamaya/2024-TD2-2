@@ -75,6 +75,7 @@ void MainGameScene::collision_boss_attack() {
 			player.push_state(
 				std::make_unique<PlayerState::Knockback>(direction)
 			);
+			player.take_damage();
 
 			// 敵側の処理
 			bossManager->attack_hit_callback();

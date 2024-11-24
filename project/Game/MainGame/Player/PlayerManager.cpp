@@ -8,13 +8,12 @@
 #include "PlayerState/PlayerStateEjection.h"
 #include "PlayerState/PlayerStateGather.h"
 
-PlayerManager::~PlayerManager() {
-}
+PlayerManager::~PlayerManager() = default;
 
 void PlayerManager::initialize() {
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
-	operatePlayer->initialize(kOrigin3, DefaultSize / ModelSize);
+	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
 	canEject = true;
 
 	SetToConsole("PlayerManager");
@@ -87,14 +86,13 @@ void PlayerManager::marge_collision() {
 					rhs->get_transform().GetWorldPosition();
 				margeTranslate /= 2.0f;
 				float mergedSize =
-					lhs->get_scaling() * ModelSize +
-					rhs->get_scaling() * ModelSize;
+					lhs->get_size() + rhs->get_size();
 
 				rhs = players.erase(rhs);
 				lhs = players.erase(lhs);
 
 				auto& newPlayer = players.emplace_back();
-				newPlayer.initialize(margeTranslate, create_scaling(mergedSize));
+				newPlayer.initialize(margeTranslate, mergedSize);
 				if (rhs == players.end()) {
 					break;
 				}
@@ -128,8 +126,8 @@ void PlayerManager::input() {
 
 	gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
 
-	float playerSize = operatePlayer->get_scaling() * ModelSize;
-	if (!gatherBitset.test(0) && playerSize >= minSize * 2) {
+	float playerSize = operatePlayer->get_size();
+	if (!gatherBitset.test(0) && playerSize >= Player::minSize * 2) {
 		auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
 		ejectBitset.set(0, gamepad->IsPressButton(ejectButton));
 	}
@@ -171,10 +169,10 @@ void PlayerManager::eject() {
 		return;
 	}
 
-	float playerSize = operatePlayer->get_scaling() * ModelSize;
-	float magnification = std::min(aimingTimer.time, (playerSize - minSize) / SizeParSec);
+	float playerSize = operatePlayer->get_size();
+	float magnification = std::min(aimingTimer.time, (playerSize - Player::minSize) / Player::SizeParSec);
 	// 大きさ算出
-	float ejectSize = magnification * SizeParSec;
+	float ejectSize = magnification * Player::SizeParSec;
 	// 距離算出
 	float ejectDistance = EjectMaxDistance - magnification * EjectLengthParSecond;
 	float distance = playerSize / 2;
@@ -183,7 +181,7 @@ void PlayerManager::eject() {
 		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
 	// 追加
 	Player& newPlayer = players.emplace_back();
-	newPlayer.initialize(separatedPlayerPosition, create_scaling(ejectSize));
+	newPlayer.initialize(separatedPlayerPosition, ejectSize);
 	newPlayer.push_state(
 		std::make_unique<PlayerState::Ejection>(Normalize(forward), ejectDistance)
 	);
@@ -197,21 +195,16 @@ void PlayerManager::eject() {
 		);
 	}
 	// 分裂元のサイズ変更
-	operatePlayer->set_scaling(create_scaling(playerSize - ejectSize));
+	operatePlayer->set_sizing(playerSize - ejectSize);
 
 	// 次の操作キャラクターの設定
 	search_operate_player();
 }
 
-float PlayerManager::create_scaling(float size) {
-	float result = size / ModelSize;
-	return result;
-}
-
 void PlayerManager::search_operate_player() {
 	float nextOperateSize = -1;
 	for (Player& player : players) {
-		float size = player.get_scaling() * ModelSize;
+		float size = player.get_size();
 		if (size > nextOperateSize) {
 			nextOperateSize = size;
 			operatePlayer = &player;
@@ -225,11 +218,11 @@ void PlayerManager::SetAttributeImGui() {
 	ImGui::Text("%d", players.size());
 	ImGui::Text("%f", aimingTimer.time);
 	ImGui::Separator();
-	exporter_.DragFloat("MaxSize", &maxSize, 0.05f);
-	exporter_.DragFloat("MinSize", &minSize, 0.05f);
-	exporter_.DragFloat("ModelSize", &ModelSize, 0.05f);
-	exporter_.DragFloat("DefaultSize", &DefaultSize, 0.05f);
-	exporter_.DragFloat("SizeParSec", &SizeParSec, 0.05f);
+	exporter_.DragFloat("MaxSize", &Player::maxSize, 0.05f);
+	exporter_.DragFloat("MinSize", &Player::minSize, 0.05f);
+	exporter_.DragFloat("ModelSize", &Player::ModelSize, 0.05f);
+	exporter_.DragFloat("DefaultSize", &Player::DefaultSize, 0.05f);
+	exporter_.DragFloat("SizeParSec", &Player::SizeParSec, 0.05f);
 
 	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
 	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);

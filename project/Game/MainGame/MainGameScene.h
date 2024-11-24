@@ -2,7 +2,6 @@
 
 #include <Game/Scene/IScene.h>
 
-#include <Game/TestGround.h>
 #include "Player/PlayerManager.h"
 #include "Boss/BossManager.h"
 #include "Field.h"

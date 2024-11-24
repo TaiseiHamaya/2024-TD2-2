@@ -5,7 +5,7 @@
 
 #include "PlayerState/PlayerStateGather.h"
 
-void Player::initialize(const Vector3f& translate, float scaling_) {
+void Player::initialize(const Vector3f& translate, float size_) {
 	SetName("Player" + std::to_string(index));
 
 	hitCollider = std::make_unique<Collider>();
@@ -18,7 +18,7 @@ void Player::initialize(const Vector3f& translate, float scaling_) {
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 
-	set_scaling(scaling_);
+	set_sizing(size_);
 	transform_.transform.translate = translate;
 	transform_.UpdateMatrix();
 
@@ -80,6 +80,10 @@ void Player::ungather() {
 	}
 }
 
+void Player::take_damage() {
+	set_sizing(size - 0.5f);
+}
+
 Vector3f Player::world_point() const {
 	return transform_.GetWorldPosition();
 }
@@ -98,8 +102,9 @@ Collider* Player::get_attack_collider() const {
 	}
 }
 
-void Player::set_scaling(float scale_) {
-	scaling = scale_;
+void Player::set_sizing(float size_) {
+	size = size_;
+	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
 	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
 }
@@ -107,4 +112,9 @@ void Player::set_scaling(float scale_) {
 void Player::SystemAttributeImGui() {
 	ModelBehavior::SystemAttributeImGui();
 	ImGui::DragFloat3("Velocity", &velocity.x, 0.1f);
+}
+
+float Player::CreateScale(float size) {
+	float result = size / ModelSize;
+	return result;
 }

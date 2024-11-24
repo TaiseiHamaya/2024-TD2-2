@@ -4,6 +4,7 @@
 
 PlayerState::Gather::Gather(const QuaternionTransformBuffer* thisTransform_, const QuaternionTransformBuffer* target_) :
 	thisTransform(thisTransform_), target(target_) {
+	create_collider();
 }
 
 void PlayerState::Gather::begin() {
