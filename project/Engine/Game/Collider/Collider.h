@@ -19,9 +19,11 @@
 // ColliderType enum
 ////////////////////////////////////////////////////////////////////////////////////////////
 enum ColliderType {
-	ColliderType_NONE = 0,
-	ColliderTypePlayer = 1 << 1,
-	ColliderTypeBoss = 1 << 2,
+	ColliderType_NONE = 1 << 0,
+	ColliderTypePlayerHit = 1 << 1,
+	ColliderTypePlayerAttack = 1 << 2,
+	ColliderTypeBossHit = 1 << 3,
+	ColliderTypeBossAttack = 1 << 4,
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////

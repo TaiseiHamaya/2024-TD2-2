@@ -5,26 +5,28 @@
 
 #include "PlayerState/PlayerStateGather.h"
 
-void Player::initialize(const Vector3f& translate, float scaling_) {
+void Player::initialize(const Vector3f& translate, float size_) {
 	SetName("Player" + std::to_string(index));
 
-	collider_ = std::make_unique<Collider>();
-	collider_->SetColliderBoundingSphere();
-	collider_->SetTypeId(ColliderType::ColliderTypePlayer);
-	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayer | ColliderType::ColliderTypeBoss);
+	hitCollider = std::make_unique<Collider>();
+	hitCollider->SetColliderBoundingSphere();
+	hitCollider->SetTypeId(ColliderType::ColliderTypePlayerHit);
+	hitCollider->SetTargetTypeId(ColliderType::ColliderTypeBossAttack | ColliderType::ColliderTypePlayerHit);
 
 	++index;
 
 	model_ = SxavengerGame::LoadModel("Resources/model/CG2", "sphere.obj");
 	model_->ApplyMeshShader();
 
-	set_scaling(scaling_);
+	set_sizing(size_);
 	transform_.transform.translate = translate;
 	transform_.UpdateMatrix();
 
 	renderingFlag_ = kBehaviorRender_Systematic;
 
 	SetToConsole();
+
+	update_matrix();
 }
 
 void Player::begin() {
@@ -50,7 +52,11 @@ void Player::update() {
 void Player::update_matrix() {
 	transform_.UpdateMatrix();
 
-	collider_->SetColliderPosition(transform_.GetWorldPosition());
+	hitCollider->SetColliderPosition(transform_.GetWorldPosition());
+
+	if (!stateQue.empty()) {
+		stateQue.front()->update_collider(transform_.GetWorldPosition());
+	}
 }
 
 void Player::operate_update(const Vector2f& input) {
@@ -74,6 +80,10 @@ void Player::ungather() {
 	}
 }
 
+void Player::take_damage() {
+	set_sizing(size - 0.5f);
+}
+
 Vector3f Player::world_point() const {
 	return transform_.GetWorldPosition();
 }
@@ -82,13 +92,29 @@ bool Player::empty_state() {
 	return stateQue.empty();
 }
 
-void Player::set_scaling(float scale_) {
-	scaling = scale_;
+Collider* Player::get_attack_collider() const {
+	if (stateQue.empty()) {
+		return nullptr;
+	}
+	else {
+		auto& front = stateQue.front();
+		return front->get_attack_collider().get();
+	}
+}
+
+void Player::set_sizing(float size_) {
+	size = size_;
+	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
-	collider_->SetColliderBoundingSphere({ .radius = scaling });
+	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
 }
 
 void Player::SystemAttributeImGui() {
 	ModelBehavior::SystemAttributeImGui();
 	ImGui::DragFloat3("Velocity", &velocity.x, 0.1f);
+}
+
+float Player::CreateScale(float size) {
+	float result = size / ModelSize;
+	return result;
 }

@@ -4,6 +4,7 @@
 
 //* engine
 #include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
+#include <Engine/Game/Behavior/BaseBehavior.h>
 
 #include <bitset>
 #include <list>
@@ -40,8 +41,6 @@ private:
 	/// </summary>
 	void eject();
 
-	float create_scaling(float size);
-
 	void search_operate_player();
 
 #ifdef _DEBUG
@@ -50,6 +49,11 @@ public:
 #endif // _DEBUG
 
 public:
+	std::list<Player>& get_players() { return players; };
+	const std::list<Player>& get_players() const { return players; };
+	const Player* get_operate_player() const { return operatePlayer; };
+
+private:
 	std::bitset<2> ejectBitset{ 0 };
 	std::bitset<2> gatherBitset{ 0 };
 	bool canEject;
@@ -58,12 +62,6 @@ public:
 	Vector2f inputStickR;
 	std::list<Player> players;
 	Player* operatePlayer;
-
-	float maxSize{ 5.0f };
-	float minSize{ 0.5f };
-	float ModelSize{ 2.0f };
-	float DefaultSize{ 5.0f };
-	float SizeParSec{ 1.f };
 
 	float EjectMaxDistance{ 3.0f };
 	float EjectLengthParSecond{ 3.0f };

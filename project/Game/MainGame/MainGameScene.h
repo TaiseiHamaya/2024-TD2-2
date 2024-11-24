@@ -2,7 +2,6 @@
 
 #include <Game/Scene/IScene.h>
 
-#include <Game/TestGround.h>
 #include "Player/PlayerManager.h"
 #include "Boss/BossManager.h"
 #include "Field.h"
@@ -18,6 +17,12 @@ public:
 
 	void Draw() override;
 
+
+private:
+	void collision();
+
+	void collision_boss_attack();
+	void collision_player_attack();
 
 private:
 	std::unique_ptr<PlayerManager> playerManager;
