@@ -42,4 +42,5 @@ void Cursol::Update(const Vector3f& position) {
 
 void Cursol::UpdateMatrix() {
 	transform_.UpdateMatrix();
+
 }
