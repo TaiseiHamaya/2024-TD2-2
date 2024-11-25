@@ -3,12 +3,13 @@
 #include "BasePlayerState.h"
 
 class QuaternionTransformBuffer;
+class PlayerManager;
 
 namespace PlayerState {
 
 class Gather final : public BasePlayerState {
 public:
-	Gather(const QuaternionTransformBuffer* thisTransform_, const QuaternionTransformBuffer* target_);
+	Gather(const QuaternionTransformBuffer* thisTransform_);
 	~Gather() = default;
 
 public:
@@ -19,7 +20,9 @@ public:
 
 private:
 	const QuaternionTransformBuffer* thisTransform;
-	const QuaternionTransformBuffer* target;
+
+public:
+	inline static const PlayerManager* playerManager{ nullptr };
 };
 
 }

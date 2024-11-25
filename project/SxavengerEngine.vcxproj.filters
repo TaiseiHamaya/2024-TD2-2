@@ -158,6 +158,9 @@
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpFly.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpJump.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\EffectLaunding.cpp" />
+    <ClCompile Include="Engine\Game\Behavior\ModelInstanceBehavior.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -304,6 +307,9 @@
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpStomp.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpFly.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.h" />
+    <ClInclude Include="Game\MainGame\Effect\EffectLaunding.h" />
+    <ClInclude Include="Engine\Game\Behavior\ModelInstanceBehavior.h" />
+    <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

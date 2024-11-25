@@ -121,6 +121,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.cpp" />
+    <ClCompile Include="Engine\Game\Behavior\ModelInstanceBehavior.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionOne.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionManager.cpp" />
@@ -234,6 +235,8 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Boss\Boss.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossManager.cpp" />
     <ClCompile Include="Game\MainGame\Camera\GameCamera.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\EffectLaunding.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
     <ClCompile Include="Game\MainGame\MainGameScene.cpp" />
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
@@ -267,6 +270,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.h" />
+    <ClInclude Include="Engine\Game\Behavior\ModelInstanceBehavior.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionOne.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionManager.h" />
@@ -368,6 +372,8 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Boss\Boss.h" />
     <ClInclude Include="Game\MainGame\Boss\BossManager.h" />
     <ClInclude Include="Game\MainGame\Camera\GameCamera.h" />
+    <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
+    <ClInclude Include="Game\MainGame\Effect\EffectLaunding.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
     <ClInclude Include="Game\MainGame\MainGameScene.h" />
     <ClInclude Include="Game\MainGame\Player\Player.h" />
