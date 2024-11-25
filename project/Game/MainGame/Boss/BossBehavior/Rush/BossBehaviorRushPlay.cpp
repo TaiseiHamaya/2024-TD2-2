@@ -12,7 +12,7 @@ BossBehaviorRushPlay::BossBehaviorRushPlay(float RushLength_, float RushSpeed_) 
 	attackCollider = std::make_unique<Collider>();
 	attackCollider->SetTypeId(ColliderTypeBossAttack);
 	attackCollider->SetTargetTypeId(ColliderTypePlayerHit);
-	attackCollider->SetColliderBoundingSphere();
+	attackCollider->SetColliderBoundingSphere({ .radius = 3.0f });
 }
 
 void BossBehaviorRushPlay::move() {

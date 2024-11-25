@@ -8,7 +8,9 @@ BossBehaviorRushEnd::BossBehaviorRushEnd() {
 
 void BossBehaviorRushEnd::move() {
 	const Animator* const animator = boss->get_animator();
-	if (animator->GetAnimationDuration(0) <= timer) {
+	DeltaTimePoint AnimationTime = animator->GetAnimationDuration(0);
+	if (AnimationTime <= timer) {
+		timer = AnimationTime;
 		isEnd = true;
 	}
 }
