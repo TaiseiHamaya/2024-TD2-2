@@ -1,5 +1,5 @@
-#include "ModelBehavior.h"
-_DXROBJECT_USING
+#include "ModelInstanceBehavior.h"
+_DXOBJECT_USING
 
 //-----------------------------------------------------------------------------------------
 // include
@@ -9,37 +9,25 @@ _DXROBJECT_USING
 #include <Lib/Adapter/Json/Json.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// ModelBehavior class methods
+// ModelInstanceBehavior class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void ModelBehavior::Init() {
-	transform_.Create();
-	uvTransform_.Create();
+void ModelInstanceBehavior::Init() {
 	material_.Create();
+	uvTransform_.Create();
 	color_.Create();
 }
 
-void ModelBehavior::Term() {
+void ModelInstanceBehavior::Term() {
 }
 
-void ModelBehavior::CreateRaytracingRecorder() {
-	recorders_.resize(model_->GetMeshSize());
-
-	for (uint32_t i = 0; i < model_->GetMeshSize(); ++i) {
-		recorders_[i] = std::make_unique<BufferRecoreder>();
-		recorders_[i]->Create(sSystemConsole->GetRaytracingPipeline()->GetExport(kHitgroup_Behavior, 0));
-
-		recorders_[i]->SetAddress(0, model_->GetMesh(i).GetVertexBuffer()->GetGPUVirtualAddress()); //!< Vertices
-		recorders_[i]->SetAddress(1, model_->GetMesh(i).GetIndexBuffer()->GetGPUVirtualAddress());  //!< Indices
-		recorders_[i]->SetAddress(2, uvTransform_.GetVirtualAddress());                             //!< UVTransform
-		recorders_[i]->SetHandle(3, model_->GetTextureHandle(i));                                   //!< Albedo
-		recorders_[i]->SetAddress(4, material_.GetGPUVirtualAddress());                             //!< PBRMaterial
-	}
+void ModelInstanceBehavior::CreateInstance(uint32_t size) {
+	matrix_ = std::make_unique<BufferResource<TransformationMatrix>>(Sxavenger::GetDevicesObj(), size);
 }
 
-void ModelBehavior::SystemAttributeImGui() {
-	if (ImGui::TreeNode("transform")) {
-		transform_.SetImGuiCommand();
+void ModelInstanceBehavior::SystemAttributeImGui() {
+	if (ImGui::TreeNode("instance")) {
+		ImGui::Text("count: %d", matrix_->GetIndexSize());
 		ImGui::TreePop();
 	}
 
@@ -66,10 +54,12 @@ void ModelBehavior::SystemAttributeImGui() {
 	}
 }
 
-void ModelBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
+void ModelInstanceBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 	if (model_ == nullptr) {
 		return; //!< modelが設定されていない
 	}
+
+	Assert(matrix_ != nullptr, "matrix instance buffer is not create.");
 
 	auto commandList = Sxavenger::GetCommandList();
 
@@ -80,13 +70,13 @@ void ModelBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 			//!< meshlet生成がされているのでmesh shaderで描画
 
 			commandList->SetGraphicsRootConstantBufferView(5, camera->GetGPUVirtualAddress());
-			commandList->SetGraphicsRootShaderResourceView(7, transform_.GetGPUVirtualAddress());
+			commandList->SetGraphicsRootShaderResourceView(7, matrix_->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(8, uvTransform_.GetVirtualAddress());
 			commandList->SetGraphicsRootDescriptorTable(9, model_->GetTextureHandle(i));
 			commandList->SetGraphicsRootConstantBufferView(10, material_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(11, color_.GetGPUVirtualAddress());
 
-			model_->GetMesh(i).Dispatch(0, 1, 2, 3, 4, 6);
+			model_->GetMesh(i).Dispatch(0, 1, 2, 3, 4, 6, matrix_->GetIndexSize());
 
 		} else {
 			
@@ -96,21 +86,23 @@ void ModelBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 			model_->GetMesh(i).BindIABuffer();
 
 			commandList->SetGraphicsRootConstantBufferView(0, camera->GetGPUVirtualAddress());
-			commandList->SetGraphicsRootShaderResourceView(1, transform_.GetGPUVirtualAddress());
+			commandList->SetGraphicsRootShaderResourceView(1, matrix_->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(2, uvTransform_.GetVirtualAddress());
 			commandList->SetGraphicsRootDescriptorTable(3, model_->GetTextureHandle(i));
 			commandList->SetGraphicsRootConstantBufferView(4, material_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(5, color_.GetGPUVirtualAddress());
 
-			model_->GetMesh(i).DrawCall();
+			model_->GetMesh(i).DrawCall(matrix_->GetIndexSize());
 		}
 	}
 }
 
-void ModelBehavior::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
+void ModelInstanceBehavior::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
 	if (model_ == nullptr) {
 		return; //!< modelが設定されていない
 	}
+
+	Assert(matrix_ != nullptr, "matrix instance buffer is not create.");
 
 	auto commandList = Sxavenger::GetCommandList();
 
@@ -121,12 +113,12 @@ void ModelBehavior::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
 			//!< meshlet生成がされているのでmesh shaderで描画
 
 			commandList->SetGraphicsRootConstantBufferView(5, camera->GetGPUVirtualAddress());
-			commandList->SetGraphicsRootShaderResourceView(7, transform_.GetGPUVirtualAddress());
+			commandList->SetGraphicsRootShaderResourceView(7, matrix_->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(8, uvTransform_.GetVirtualAddress());
 			commandList->SetGraphicsRootDescriptorTable(9, model_->GetTextureHandle(i));
 			commandList->SetGraphicsRootConstantBufferView(10, color_.GetGPUVirtualAddress());
 
-			model_->GetMesh(i).Dispatch(0, 1, 2, 3, 4, 6);
+			model_->GetMesh(i).Dispatch(0, 1, 2, 3, 4, 6, matrix_->GetIndexSize());
 
 		} else {
 			
@@ -136,38 +128,19 @@ void ModelBehavior::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
 			model_->GetMesh(i).BindIABuffer();
 
 			commandList->SetGraphicsRootConstantBufferView(0, camera->GetGPUVirtualAddress());
-			commandList->SetGraphicsRootShaderResourceView(1, transform_.GetGPUVirtualAddress());
+			commandList->SetGraphicsRootShaderResourceView(1, matrix_->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(2, uvTransform_.GetVirtualAddress());
 			commandList->SetGraphicsRootDescriptorTable(3, model_->GetTextureHandle(i));
 			commandList->SetGraphicsRootConstantBufferView(4, color_.GetGPUVirtualAddress());
 
-			model_->GetMesh(i).DrawCall();
+			model_->GetMesh(i).DrawCall(matrix_->GetIndexSize());
 		}
 	}
 }
 
-void ModelBehavior::DrawRaytracing(_MAYBE_UNUSED DxrObject::TopLevelAS* tlas) {
-	if (model_ == nullptr) {
-		return; //!< modelが設定されていない
-	}
-
-	Matrix4x4 mat = transform_.GetWorldMatrix();
-
-	Assert(model_->GetMeshSize() <= recorders_.size(), "raytracing recorder not created.");
-
-	for (uint32_t i = 0; i < model_->GetMeshSize(); ++i) {
-		tlas->SetInstance(model_->GetMesh(i).GetBLAS(), mat, recorders_.at(i).get(), 0);
-	}
-}
-
-void ModelBehavior::OutputJson() {
+void ModelInstanceBehavior::OutputJson() {
 
 	Json root = Json::object();
-
-	auto& transform = root["Transform"] = Json::object();
-	transform["scale"]      = JsonAdapter::ToJson(transform_.transform.scale);
-	transform["rotate"]     = JsonAdapter::ToJson(transform_.transform.rotate);
-	transform["translate"]  = JsonAdapter::ToJson(transform_.transform.translate);
 
 	auto& uvTransform = root["UVTransform"] = Json::object();
 	uvTransform["scale"]     = JsonAdapter::ToJson(uvTransform_.transform.scale);
@@ -184,7 +157,7 @@ void ModelBehavior::OutputJson() {
 	JsonAdapter::WriteJson(kBehaviorDirectory + name_ + ".json", root);
 }
 
-void ModelBehavior::TryLoadJson(const std::string& filename) {
+void ModelInstanceBehavior::TryLoadJson(const std::string& filename) {
 
 	std::string filepath = kBehaviorDirectory;
 
@@ -200,12 +173,6 @@ void ModelBehavior::TryLoadJson(const std::string& filename) {
 	if (!JsonAdapter::TryLoadJson(filepath, data)) {
 		return; //!< 読み込み失敗したら抜ける
 	}
-
-	const auto& transform = data["Transform"];
-	transform_.transform.scale     = JsonAdapter::ToVector3f(transform["scale"]);
-	transform_.transform.rotate    = JsonAdapter::ToQuaternion(transform["rotate"]);
-	transform_.transform.translate = JsonAdapter::ToVector3f(transform["translate"]);
-	transform_.UpdateMatrix();
 
 	const auto& uvTransform = data["UVTransform"];
 	uvTransform_.transform.scale     = JsonAdapter::ToVector2f(uvTransform["scale"]);

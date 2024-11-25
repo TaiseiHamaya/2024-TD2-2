@@ -96,7 +96,7 @@ private:
 	//* buffer *//
 
 	static const uint32_t kMaxInstanceCount_ = 16;
-	uint32_t instanceIndex_ = 0;
+	uint32_t instanceCount_ = 0;
 
 	std::unique_ptr<DxObject::BufferResource<TransformationMatrix>> transformBuffer_;
 	std::unique_ptr<DxObject::BufferResource<ParticleInfo>> infoBuffer_;

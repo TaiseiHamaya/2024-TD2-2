@@ -7,15 +7,15 @@
 #include "BaseBehavior.h"
 
 //* engine
-#include <Engine/System/DxrObject/DxrBufferRecorder.h>
+//#include <Engine/System/DxrObject/DxrBufferRecorder.h>
 #include <Engine/Game/Model.h>
 #include <Engine/Game/Transform.h>
 #include <Engine/Game/Material.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// ModelBehavior class
+// ModelInstanceBehavior class
 ////////////////////////////////////////////////////////////////////////////////////////////
-class ModelBehavior
+class ModelInstanceBehavior
 	: public BaseBehavior {
 public:
 
@@ -23,14 +23,14 @@ public:
 	// public methods
 	//=========================================================================================
 
-	ModelBehavior() { Init(); }
-	~ModelBehavior() { Term(); }
+	ModelInstanceBehavior() { Init(); }
+	~ModelInstanceBehavior() { Term(); }
 
 	void Init();
 
 	void Term();
 
-	virtual void CreateRaytracingRecorder();
+	void CreateInstance(uint32_t size);
 
 	//* derivative behaivor methods *//
 
@@ -38,7 +38,8 @@ public:
 
 	virtual void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
 	virtual void DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) override;
-	virtual void DrawRaytracing(_MAYBE_UNUSED DxrObject::TopLevelAS* tlas) override;
+
+	//* external *//
 
 	void OutputJson();
 	void TryLoadJson(const std::string& filename = "");
@@ -49,16 +50,15 @@ protected:
 	// protected variables
 	//=========================================================================================
 
-	//* IA
+	//* IA *//
 	Model* model_ = nullptr;
 
-	//* Buffer
-	QuaternionTransformBuffer transform_;
+	//* buffer *//
+	std::unique_ptr<DxObject::BufferResource<TransformationMatrix>> matrix_;
+
 	PBRMaterialBuffer material_;
 	UVTransformBuffer uvTransform_;
 	ColorBuffer color_;
 
-	//* raytracing
-	std::vector<std::unique_ptr<DxrObject::BufferRecoreder>> recorders_;
 
 };
