@@ -46,7 +46,7 @@ std::unique_ptr<BaseBossBehavior> BossActionThird::create(const std::string& beh
 		return std::make_unique<BossBehaviorTongueStart>(); // 
 	}
 	else if (behaviorName == "TonguePlay") {
-		return std::make_unique<BossBehaviorTonguePlay>(10.0f, 1.0f); // コリジョンの長さ, 回転にかかる時間
+		return std::make_unique<BossBehaviorTonguePlay>(20.0f, 1.0f); // コリジョンの長さ, 回転にかかる時間
 	}
 	else if (behaviorName == "TongueEnd") {
 		return std::make_unique<BossBehaviorTongueEnd>(); // 

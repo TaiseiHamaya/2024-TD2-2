@@ -47,7 +47,7 @@ void BossBehaviorTonguePlay::apply_collider(const Vector3f& direction) {
 	attackCollider->SetColliderBoundingCapsule(
 		{
 			.direction = direction,
-			.radius = 3.0f,
+			.radius = 2.0f,
 			.length = colliderLength
 		}
 	);
