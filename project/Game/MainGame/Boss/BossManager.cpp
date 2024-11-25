@@ -2,6 +2,7 @@
 
 #include "BossActionManager/BossActionOne.h"
 #include "BossActionManager/BossActionSecond.h"
+#include "BossActionManager/BossActionThird.h"
 
 #include "BossBehavior/BossBehaviorStay.h"
 #include "BossBehavior/BossBehaviorKnockback.h"
@@ -9,7 +10,7 @@
 void BossManager::initialize(const PlayerManager* player) {
 	boss = std::make_unique<Boss>(30);
 	boss->SetToConsole();
-	bossActionManager = std::make_unique<BossActionSecond>();
+	bossActionManager = std::make_unique<BossActionThird>();
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
 
