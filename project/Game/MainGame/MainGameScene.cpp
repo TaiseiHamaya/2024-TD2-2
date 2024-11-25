@@ -75,6 +75,7 @@ void MainGameScene::collision_boss_attack() {
 			// プレイヤー側の処理
 			// 向き取得
 			Vector3f direction = player.get_transform().GetWorldPosition() - bossManager->GetBoss()->GetPosition();
+			direction.y = 0;
 			// 正規化
 			direction = Length(direction) >= 0.05f ? Normalize(direction) : Vector3f{ 0, 0, 1 };
 			// ステータス設定
