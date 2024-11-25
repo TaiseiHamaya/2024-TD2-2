@@ -128,7 +128,7 @@ void Player::set_sizing(float size_) {
 	size = size_;
 	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
-	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
+	hitCollider->SetColliderBoundingSphere({ .radius = scaling / 2 });
 }
 
 struct AnimationModelP {

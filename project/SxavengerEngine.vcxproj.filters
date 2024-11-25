@@ -125,7 +125,6 @@
     <ClCompile Include="Lib\MyMath.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossManager.cpp" />
-    <ClCompile Include="Game\Scene\Scene_Game.cpp" />
     <ClCompile Include="Engine\Beta\Curve.cpp" />
     <ClCompile Include="Engine\Game\Behavior\AnimationBehavior.cpp" />
     <ClCompile Include="Game\AnimationPlayer.cpp" />
@@ -155,6 +154,13 @@
     <ClCompile Include="Game\TitleScene\TitleEnemy.cpp" />
     <ClCompile Include="Game\TitleScene\TitlePlayer.cpp" />
     <ClCompile Include="Game\TitleScene\TitleBoard.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpStomp.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpFly.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpJump.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\EffectLaunding.cpp" />
+    <ClCompile Include="Engine\Game\Behavior\ModelInstanceBehavior.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -267,7 +273,6 @@
     <ClInclude Include="Lib\MyMath.h" />
     <ClInclude Include="Lib\ObjectStructure.h" />
     <ClInclude Include="Game\MainGame\Boss\BossManager.h" />
-    <ClInclude Include="Game\Scene\Scene_Game.h" />
     <ClInclude Include="Engine\Beta\Curve.h" />
     <ClInclude Include="Engine\Game\Behavior\AnimationBehavior.h" />
     <ClInclude Include="Game\AnimationPlayer.h" />
@@ -298,6 +303,13 @@
     <ClInclude Include="Game\TitleScene\TitlePlayer.h" />
     <ClInclude Include="Game\TitleScene\TitleEnemy.h" />
     <ClInclude Include="Game\TitleScene\TitleBoard.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpJump.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpStomp.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Jump\BossBehaviorJumpFly.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.h" />
+    <ClInclude Include="Game\MainGame\Effect\EffectLaunding.h" />
+    <ClInclude Include="Engine\Game\Behavior\ModelInstanceBehavior.h" />
+    <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

@@ -15,7 +15,7 @@ public:
 	void begin() override;
 	Vector3f velocity() override;
 
-	const std::string get_model_name() const override { return "player_spike_test.gltf"; };
+	const std::string get_model_name() const override { return "player_knockBack.gltf"; };
 
 private:
 	DeltaTimePoint timer;

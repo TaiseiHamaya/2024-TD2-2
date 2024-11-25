@@ -108,7 +108,6 @@ void ModelBehavior::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 }
 
 void ModelBehavior::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
-
 	if (model_ == nullptr) {
 		return; //!< modelが設定されていない
 	}
