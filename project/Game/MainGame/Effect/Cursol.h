@@ -4,7 +4,7 @@
 // include
 //-----------------------------------------------------------------------------------------
 //* base
-#include <Engine/Game/Behavior/AnimationBehavior.h>
+#include <Engine/Game/Behavior/ModelBehavior.h>
 
 //* engine
 #include <Engine/System/Performance.h>
@@ -13,7 +13,7 @@
 // Cursol class
 ////////////////////////////////////////////////////////////////////////////////////////////
 class Cursol
-	: public AnimationBehavior {
+	: public ModelBehavior {
 public:
 
 	//=========================================================================================
@@ -37,9 +37,6 @@ private:
 	// private variables
 	//=========================================================================================
 
-	Vector3f offset = { 0.0f, 4.0f, 0.0f };
-
-	std::unique_ptr<Animator> animtor_;
-	DeltaTimePoint animationTime_;
+	Vector3f offset = { 0.0f, 0.0f, 0.0f };
 
 };

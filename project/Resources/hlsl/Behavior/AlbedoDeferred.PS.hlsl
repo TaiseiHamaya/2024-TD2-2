@@ -32,6 +32,7 @@ SystematicOutput main(PSInput input) {
 	PBRMaterial material = gMaterial;
 	output.material = ToMaterial(material);
 
+	CheckDiscard(output.albedo);
 	return output;
 }
 
