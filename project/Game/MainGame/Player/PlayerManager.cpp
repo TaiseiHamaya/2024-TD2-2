@@ -28,7 +28,16 @@ void PlayerManager::initialize() {
 	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
 	canEject = true;
 
+	SetToConsole("PlayerManager");
+
+	exporter_.TryLoadFromJson();
+
+	cursol_ = std::make_unique<Cursol>();
+	cursol_->Init();
+	SetChild(cursol_.get());
+
 	PlayerState::Gather::playerManager = this;
+
 }
 
 void PlayerManager::begin() {
@@ -66,12 +75,16 @@ void PlayerManager::update() {
 	for (Player& player : players) {
 		player.update();
 	}
+
+	cursol_->Update(operatePlayer->world_point());
 }
 
 void PlayerManager::update_matrix() {
 	for (Player& player : players) {
 		player.update_matrix();
 	}
+
+	cursol_->UpdateMatrix();
 }
 
 void PlayerManager::marge_collision() {

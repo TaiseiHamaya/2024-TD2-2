@@ -11,6 +11,9 @@
 
 #include "Player.h"
 
+//* game
+#include <Game/MainGame/Effect/Cursol.h>
+
 class PlayerManager : public BaseBehavior {
 public:
 	PlayerManager() = default;
@@ -65,4 +68,6 @@ private:
 
 	float EjectMaxDistance{ 3.0f };
 	float EjectLengthParSecond{ 3.0f };
+
+	std::unique_ptr<Cursol> cursol_;
 };
