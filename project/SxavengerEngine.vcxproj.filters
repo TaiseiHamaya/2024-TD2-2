@@ -161,6 +161,10 @@
     <ClCompile Include="Game\MainGame\Effect\EffectLaunding.cpp" />
     <ClCompile Include="Engine\Game\Behavior\ModelInstanceBehavior.cpp" />
     <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueStart.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionThird.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -310,6 +314,10 @@
     <ClInclude Include="Game\MainGame\Effect\EffectLaunding.h" />
     <ClInclude Include="Engine\Game\Behavior\ModelInstanceBehavior.h" />
     <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueStart.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

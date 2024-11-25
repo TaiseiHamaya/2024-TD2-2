@@ -15,7 +15,7 @@ public:
 public:
 	void begin();
 	virtual void move() = 0;
-	void update_collider(const Vector3f& position);
+	virtual void update_collider(const Vector3f& position);
 
 public:
 	const DeltaTimePoint& get_timer()const { return timer; };
