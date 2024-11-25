@@ -58,10 +58,15 @@ void Player::update() {
 void Player::update_matrix() {
 	transform_.UpdateMatrix();
 
-	hitCollider->SetColliderPosition(transform_.GetWorldPosition());
+	Vector3f colliderPosition = transform_.GetWorldPosition();
 
-	if (!stateQue.empty()) {
-		stateQue.front()->update_collider(transform_.GetWorldPosition());
+	hitCollider->SetColliderPosition(colliderPosition);
+
+	for (auto& queue : stateQue) {
+		Collider* collider = queue->get_attack_collider().get();
+		if (collider) {
+			collider->SetColliderPosition(colliderPosition);
+		}
 	}
 
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
@@ -123,7 +128,7 @@ void Player::set_sizing(float size_) {
 	size = size_;
 	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
-	hitCollider->SetColliderBoundingSphere({ .radius = scaling });
+	hitCollider->SetColliderBoundingSphere({ .radius = scaling / 2 });
 }
 
 struct AnimationModelP {

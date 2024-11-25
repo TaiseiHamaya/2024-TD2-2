@@ -11,6 +11,18 @@
 PlayerManager::~PlayerManager() = default;
 
 void PlayerManager::initialize() {
+	SetToConsole("PlayerManager");
+
+	exporter_.TryLoadFromJson();
+	exporter_.GetFromStash("MaxSize", &Player::maxSize, 1);
+	exporter_.GetFromStash("MinSize", &Player::minSize, 1);
+	exporter_.GetFromStash("ModelSize", &Player::ModelSize, 1);
+	exporter_.GetFromStash("DefaultSize", &Player::DefaultSize, 1);
+	exporter_.GetFromStash("SizeParSec", &Player::SizeParSec, 1);
+
+	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
+	exporter_.GetFromStash("EjectLengthParSecond", &EjectLengthParSecond, 1);
+
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
 	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
@@ -23,6 +35,9 @@ void PlayerManager::initialize() {
 	cursol_ = std::make_unique<Cursol>();
 	cursol_->Init();
 	SetChild(cursol_.get());
+
+	PlayerState::Gather::playerManager = this;
+
 }
 
 void PlayerManager::begin() {
@@ -139,7 +154,6 @@ void PlayerManager::input() {
 }
 
 void PlayerManager::gather() {
-	const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 	for (Player& player : players) {
 		// 操作プレイヤーと同じ場合は処理しない
 		if (operatePlayer == &player) {
@@ -147,7 +161,7 @@ void PlayerManager::gather() {
 		}
 		player.push_state(
 			std::make_unique<PlayerState::Gather>(
-				&player.get_transform(), targetAddress
+				&player.get_transform()
 			)
 		);
 	}
@@ -188,10 +202,9 @@ void PlayerManager::eject() {
 	);
 	// 集合命令が入っている場合は、新しいやつにも適用する
 	if (gatherBitset.test(0)) {
-		const QuaternionTransformBuffer* targetAddress = &operatePlayer->get_transform();
 		newPlayer.push_state(
 			std::make_unique<PlayerState::Gather>(
-				&newPlayer.get_transform(), targetAddress
+				&newPlayer.get_transform()
 			)
 		);
 	}
