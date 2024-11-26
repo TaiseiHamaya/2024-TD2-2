@@ -165,6 +165,7 @@
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionThird.cpp" />
+    <ClCompile Include="Game\MainGame\UI\ControlExplain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
+    <ClInclude Include="Game\MainGame\UI\ControlExplain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

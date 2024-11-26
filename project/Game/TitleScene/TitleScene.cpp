@@ -33,7 +33,7 @@ void TitleScene::Init() {
 	board_->Init();
 	board_->SetToConsole();
 
-	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, { 0.0400979929f, -0.260986567f, -0.00959950872f, 0.902655125f}, {11.3f, 4.0f, -26.6f});
+	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, { 0.0f, -0.281157285f, 0.0f, 0.959661603f }, {15.6f, 5.5f, -31.77f });
 }
 
 void TitleScene::Term() {

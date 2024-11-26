@@ -9,6 +9,9 @@
 //* engine
 #include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
 
+//* game
+#include <Game/MainGame/UI/ControlExplain.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 // TitlePlayer class
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -40,4 +43,6 @@ private:
 
 	std::unique_ptr<VisualProcessDoF> dof_;
 
+	std::unique_ptr<ControlExplain> explain_;
+	uint32_t explainIndex_ = 0;
 };
