@@ -31,7 +31,7 @@ public:
 
 	void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
 
-	void CreateParticle(uint32_t count, const Vector3f& position, const Vector3f& direction);
+	void CreateParticle(const Vector3f& position, const Vector3f& velocity);
 
 private:
 

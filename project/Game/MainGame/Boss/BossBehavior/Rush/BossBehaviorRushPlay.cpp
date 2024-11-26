@@ -1,6 +1,7 @@
 #include "BossBehaviorRushPlay.h"
 
 #include <Lib/Geometry/Quaternion.h>
+#include <Lib/Adapter/Random/Random.h>
 
 #include "../../Boss.h"
 
@@ -23,5 +24,21 @@ void BossBehaviorRushPlay::move() {
 	// 終了条件
 	if (rushAmount >= RushLength || isHitCollision) {
 		isEnd = true;
+	}
+
+	if (animationDurationCount_ < static_cast<uint32_t>(timer.time / (boss->get_animator()->GetAnimationDuration(0).time / 4.0f))) {
+		animationDurationCount_ = static_cast<uint32_t>(timer.time / (boss->get_animator()->GetAnimationDuration(0).time / 4.0f));
+		RushEffect();
+	}
+}
+
+void BossBehaviorRushPlay::RushEffect() {
+	for (uint32_t i = 0; i < 6; ++i) {
+
+		Vector3f velocity = -direction * Random::Generate(12.0f, 24.0f);
+		Quaternion random = MakeAxisAngle({ 0.0f, 1.0f, 0.0f }, Random::Generate(-pi_v / 8.0f, pi_v / 8.0f));
+
+
+		boss->CreateLandingParticle(RotateVector(velocity, random));
 	}
 }

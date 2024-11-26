@@ -10,7 +10,7 @@
 void BossManager::initialize(const PlayerManager* player) {
 	boss = std::make_unique<Boss>(30);
 	boss->SetToConsole();
-	bossActionManager = std::make_unique<BossActionThird>();
+	bossActionManager = std::make_unique<BossActionSecond>();
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
 
