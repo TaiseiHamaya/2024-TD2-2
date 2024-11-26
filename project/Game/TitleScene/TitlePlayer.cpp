@@ -13,7 +13,7 @@
 void TitlePlayer::Init() {
 	SetName("titlePlayer");
 
-	AnimationBehavior::model_ = SxavengerGame::LoadModel("resourcesData/GameScene/Model", "player_move_gltf.gltf");
+	AnimationBehavior::model_ = SxavengerGame::LoadModel("resourcesData/GameScene/Model", "player_move.gltf");
 
 	animator_                    = std::make_unique<Animator>(model_);
 	AnimationBehavior::animator_ = animator_.get();
