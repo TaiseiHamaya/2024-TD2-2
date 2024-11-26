@@ -4,6 +4,8 @@
 #include <Engine/System/Sxavenger.h>
 
 #include <Engine/System/Performance.h>
+#include <Lib/Easing.h>
+#include <Lib/Adapter/Random/Random.h>
 
 #include "BossBehavior/BaseBossBehavior.h"
 
@@ -36,7 +38,8 @@ Boss::~Boss() noexcept {
 
 void Boss::begin() {
 	damagedInvincibleTimer.SubtractDeltaTime();
-	if (damagedInvincibleTimer.time <= 0) {
+	if (damagedInvincibleTimer.time <= 0.0f) {
+		damagedInvincibleTimer.time = 0.0f;
 		isInvincible = false;
 	}
 	if (behavior) {
@@ -50,6 +53,7 @@ void Boss::update() {
 	}
 
 	landing_->Update();
+	HitReactionUpdate();
 }
 
 void Boss::update_matrix() {
@@ -78,8 +82,16 @@ void Boss::SetAttributeImGui() {
 	ImGui::Text("%d", hitpoint);
 }
 
-void Boss::CreateLandingParticle() {
-	landing_->CreateParticle(12, transform_.GetWorldPosition(), { 0.0f, 1.0f, 0.0f });
+void Boss::CreateLandingParticle(const Vector3f& velocity) {
+	landing_->CreateParticle(transform_.GetWorldPosition(), velocity);
+}
+
+void Boss::HitReactionUpdate() {
+	float t = EaseOutExpo(1.0f - damagedInvincibleTimer.time / 1.0f);
+
+	color_.color.g = t;
+	color_.color.b = t;
+	color_.Transfer();
 }
 
 bool Boss::is_end_behavior() const {
