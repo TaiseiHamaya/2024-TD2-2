@@ -9,6 +9,7 @@
 
 //* lib
 #include <Lib/Adapter/Random/Random.h>
+#include <Lib/Easing.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // EffectLanding class methods
@@ -47,8 +48,13 @@ void EffectLanding::Update() {
 
 	for (auto& element : elements_) {
 		// transformの変更
+		element.velocity += Vector3f{ 0.0f, 4.0f, 0.0f } *Performance::GetDeltaTime(s).time;
 		element.transform.translate += element.velocity * Performance::GetDeltaTime(s).time;
-		element.transform.scale      = Lerp(kUnit3, kOrigin3, element.aliveTimer.time / element.aliveTime.time);
+		element.velocity *= 0.99f;
+
+		float t = element.aliveTimer.time / element.aliveTime.time;
+
+		element.transform.scale = Lerp(kUnit3, kOrigin3, EaseOutQuad(t));
 	}
 
 	// 描画設定
@@ -108,14 +114,15 @@ void EffectLanding::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 	}
 }
 
-void EffectLanding::CreateParticle(uint32_t count, const Vector3f& position, const Vector3f& direction) {
-	for (uint32_t i = 0; i < count; ++i) {
-		auto& element = elements_.emplace_back();
-		element.aliveTime = { 2.0f };
+void EffectLanding::CreateParticle(const Vector3f& position, const Vector3f& velocity) {
+	auto& element = elements_.emplace_back();
+	element.aliveTime = { 2.0f };
 
-		element.transform.translate = position;
+	element.transform.translate = position;
+	element.velocity = velocity;
 
-		Quaternion random = ToQuaternion({ Random::Generate(-pi_v / 6.0f, pi_v / 6.0f), Random::Generate(-pi_v / 6.0f, pi_v / 6.0f), 0.0f });
-		element.velocity = RotateVector(direction, random);
-	}
+	element.transform.rotate = Quaternion::Identity();
+	element.transform.rotate *= MakeAxisAngle({1.0f, 0.0f, 0.0f}, Random::Generate(0.0f, pi_v * 2.0f));
+	element.transform.rotate *= MakeAxisAngle({0.0f, 1.0f, 0.0f}, Random::Generate(0.0f, pi_v * 2.0f));
+	element.transform.rotate *= MakeAxisAngle({0.0f, 0.0f, 1.0f}, Random::Generate(0.0f, pi_v * 2.0f));
 }

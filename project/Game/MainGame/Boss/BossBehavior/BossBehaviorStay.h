@@ -17,4 +17,8 @@ public:
 private:
 	float stayTime;
 	const PlayerManager* playerManager;
+
+	uint32_t animationDurationCount_ = 0;
+
+	void CreateStayEffect();
 };

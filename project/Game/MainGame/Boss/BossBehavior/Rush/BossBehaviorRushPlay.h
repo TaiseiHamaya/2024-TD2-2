@@ -18,5 +18,9 @@ private:
 
 	float RushLength;
 	float RushSpeed;
+
+	uint32_t animationDurationCount_ = 0;
+
+	void RushEffect();
 };
 

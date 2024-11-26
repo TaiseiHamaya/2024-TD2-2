@@ -15,5 +15,7 @@ public:
 private:
 	float StompTime;
 	float StartHeight;
+
+	void CreateStompEffect();
 };
 
