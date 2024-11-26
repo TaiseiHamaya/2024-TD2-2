@@ -59,7 +59,7 @@ private:
 	float dynamicHalfway_ = 0.0f;
 	float forcusLength_   = 20.0f;
 
-	DeltaTimePoint zoomTime_  = { 0.4f };
+	DeltaTimePoint zoomTime_  = { 2.0f };
 	DeltaTimePoint zoomTimer_ = {};
 
 	Quaternion targetQuaterion_  = Quaternion::Identity();
@@ -90,6 +90,6 @@ private:
 
 	void UpdateShake();
 	void UpdateTarget(PlayerManager* player, BossManager* boss);
-	void UpdateZoom();
+	void UpdateZoom(PlayerManager* player);
 
 };

@@ -51,7 +51,7 @@ void GameCamera::Update(PlayerManager* player, BossManager* boss) {
 
 	dynamicHalfway_ = halfway;
 
-	UpdateZoom();
+	UpdateZoom(player);
 
 	UpdateTarget(player, boss);
 
@@ -143,19 +143,27 @@ void GameCamera::UpdateTarget(PlayerManager* player, BossManager* boss) {
 		= Slerp(offsetTransform_.transform.rotate, ToQuaternion(CalculateEuler(direction)), interpolation);
 }
 
-void GameCamera::UpdateZoom() {
+void GameCamera::UpdateZoom(PlayerManager* player) {
 
 	auto gamepad = Sxavenger::GetInput()->GetGamepadInput(0);
 	bool isPress = gamepad->IsPressButton(XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER);
 
-	if (isPress) {
+	if (isPress && player->CanShot()) {
 		zoomTimer_.AddDeltaTime();
+		zoomTimer_.time = std::clamp(zoomTimer_.time, 0.0f, zoomTime_.time);
+
+		float t = std::lerp(0.0f, 0.2f, zoomTimer_.time / zoomTime_.time);
+
+		forcusLength_ = std::lerp(forcusLength_, 24.0f, t);
 
 	} else {
+
 		zoomTimer_.SubtractDeltaTime();
+		zoomTimer_.time = std::clamp(zoomTimer_.time, 0.0f, zoomTime_.time);
+
+		float t = std::lerp(0.0f, 0.2f, 1.0f - zoomTimer_.time / zoomTime_.time);
+
+		forcusLength_ = std::lerp(forcusLength_, 20.0f, t);
 	}
-
-	zoomTimer_.time = std::clamp(zoomTimer_.time, 0.0f, zoomTime_.time);
-
-	forcusLength_ = std::lerp(20.0f, 30.0f, EaseOutCirc(zoomTimer_.time / zoomTime_.time));
+	
 }

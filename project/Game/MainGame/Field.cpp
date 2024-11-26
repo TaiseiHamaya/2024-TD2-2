@@ -35,7 +35,7 @@ void FieldTree::Init(uint32_t id, DeltaTimePoint startTime) {
 		exporter_.GetFromStash(std::string("scale" + std::to_string(i)).c_str(), &scales_[i].x, 3);
 
 		// matrixに設定
-		(*matrix_)[i].Transfer(Matrix::MakeAffine(scales_[i], kOrigin3, positions_[i]));
+		(*matrix_)[i].Transfer(Matrix::MakeAffine(scales_[i], {0.0f, pi_v / 2.0f, 0.0f}, positions_[i]));
 	}
 }
 
