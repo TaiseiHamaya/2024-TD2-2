@@ -56,6 +56,12 @@ private:
 	float interpolation = 0.02f;
 	float halfway = 0.5f;
 
+	float dynamicHalfway_ = 0.0f;
+	float forcusLength_   = 20.0f;
+
+	DeltaTimePoint zoomTime_  = { 0.4f };
+	DeltaTimePoint zoomTimer_ = {};
+
 	Quaternion targetQuaterion_  = Quaternion::Identity();
 
 	//* shake *//
@@ -78,6 +84,12 @@ private:
 
 	// 視野角狭め, 座標高め
 
+	//=========================================================================================
+	// private methods
+	//=========================================================================================
+
 	void UpdateShake();
+	void UpdateTarget(PlayerManager* player, BossManager* boss);
+	void UpdateZoom();
 
 };
