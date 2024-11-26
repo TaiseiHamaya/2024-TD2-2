@@ -11,6 +11,10 @@
 #include <Lib/Easing.h>
 #include <Lib/Adapter/Random/Random.h>
 
+//* game
+#include <Game/MainGame/Boss/BossManager.h>
+#include <Game/MainGame/Player/PlayerManager.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 // GameCamera class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -90,9 +94,9 @@ void GameCamera::SetShake(DeltaTimePoint time, int32_t subdivision, float streng
 
 void GameCamera::UpdateShake() {
 
-	if (Sxavenger::IsTriggerKey(DIK_SPACE)) {
+	/*if (Sxavenger::IsTriggerKey(DIK_SPACE)) {
 		SetShake({ 0.3f }, 6, 20.0f);
-	}
+	}*/
 
 	shakeTimer_.SubtractDeltaTime();
 
@@ -155,6 +159,10 @@ void GameCamera::UpdateZoom(PlayerManager* player) {
 		float t = std::lerp(0.0f, 0.2f, zoomTimer_.time / zoomTime_.time);
 
 		forcusLength_ = std::lerp(forcusLength_, 24.0f, t);
+
+		if (zoomTimer_ == zoomTime_) {
+			SetShake({0.1f}, 2, 1.0f);
+		}
 
 	} else {
 

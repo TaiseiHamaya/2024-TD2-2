@@ -7,6 +7,8 @@
 
 #include <Game/MainGame/Effect/EffectLanding.h>
 
+class GameCamera;
+
 class BaseBossBehavior;
 
 class Boss : public AnimationBehavior {
@@ -31,6 +33,9 @@ public:
 	void CreateLandingParticle(const Vector3f& velocity);
 
 	void HitReactionUpdate();
+
+	void SetGacamera(GameCamera* camera) { camera_ = camera; }
+	void ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength);
 
 public:
 	bool is_end_behavior() const;
@@ -64,6 +69,8 @@ private:
 	std::unique_ptr<Collider> collider_;
 
 	std::unique_ptr<EffectLanding> landing_;
+
+	GameCamera* camera_ = nullptr;
 
 	//* hit effect reaction *//
 };
