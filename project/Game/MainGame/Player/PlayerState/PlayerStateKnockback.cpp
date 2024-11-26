@@ -9,7 +9,7 @@ void PlayerState::Knockback::begin() {
 }
 
 Vector3f PlayerState::Knockback::velocity() {
-	constexpr float KNOCKBACK_TIME = 1.0f;
+	constexpr float KNOCKBACK_TIME = 3.0f;
 	constexpr float SPEED = 20.0f;
 	float parametric = std::min(timer.time / KNOCKBACK_TIME, 1.0f);
 	Vector3f result = direction * std::lerp(SPEED, 0.0f, parametric);
