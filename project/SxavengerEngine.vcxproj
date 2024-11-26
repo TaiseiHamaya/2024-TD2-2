@@ -241,6 +241,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Camera\GameCamera.cpp" />
     <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
     <ClCompile Include="Game\MainGame\Effect\EffectLanding.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\Shadow.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
     <ClCompile Include="Game\MainGame\MainGameScene.cpp" />
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
@@ -383,6 +384,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Camera\GameCamera.h" />
     <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
     <ClInclude Include="Game\MainGame\Effect\EffectLanding.h" />
+    <ClInclude Include="Game\MainGame\Effect\Shadow.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
     <ClInclude Include="Game\MainGame\MainGameScene.h" />
     <ClInclude Include="Game\MainGame\Player\Player.h" />

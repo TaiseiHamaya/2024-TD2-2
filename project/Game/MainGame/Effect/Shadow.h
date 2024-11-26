@@ -6,13 +6,10 @@
 //* base
 #include <Engine/Game/Behavior/ModelBehavior.h>
 
-//* engine
-#include <Engine/System/Performance.h>
-
 ////////////////////////////////////////////////////////////////////////////////////////////
-// Cursol class
+// Shadow class
 ////////////////////////////////////////////////////////////////////////////////////////////
-class Cursol
+class Shadow
 	: public ModelBehavior {
 public:
 
@@ -20,21 +17,23 @@ public:
 	// public methods
 	//=========================================================================================
 
-	Cursol()  = default;
-	~Cursol() { Term(); }
+	Shadow()  = default;
+	~Shadow() { Term(); }
 
 	void Init();
 
 	void Term();
 
-	void Update(const Vector3f& position);
+	void Update(float baseHeight, const Vector3f& position);
 
-	void UpdateMatrix();
+	void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
 
 private:
 
 	//=========================================================================================
 	// private variables
 	//=========================================================================================
+
+	Texture* texture_;
 
 };

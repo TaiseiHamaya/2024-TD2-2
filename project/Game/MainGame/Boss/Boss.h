@@ -6,6 +6,7 @@
 #include <memory>
 
 #include <Game/MainGame/Effect/EffectLanding.h>
+#include <Game/MainGame/Effect/Shadow.h>
 
 class GameCamera;
 
@@ -71,6 +72,8 @@ private:
 	std::unique_ptr<EffectLanding> landing_;
 
 	GameCamera* camera_ = nullptr;
+
+	std::unique_ptr<Shadow> shadow_;
 
 	//* hit effect reaction *//
 };

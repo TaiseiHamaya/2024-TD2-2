@@ -31,6 +31,10 @@ Boss::Boss(int32_t hitpoint_) :
 	landing_ = std::make_unique<EffectLanding>();
 	landing_->Init();
 	SetChild(landing_.get());
+
+	shadow_ = std::make_unique<Shadow>();
+	shadow_->Init();
+	SetChild(shadow_.get());
 }
 
 Boss::~Boss() noexcept {
@@ -72,6 +76,8 @@ void Boss::update_matrix() {
 	if (behavior) {
 		behavior->update_collider(transform_.GetWorldPosition());
 	}
+
+	shadow_->Update(0.0f, transform_.GetWorldPosition());
 }
 
 void Boss::finalize() {
