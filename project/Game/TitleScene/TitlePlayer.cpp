@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------------------
 //* engine
 #include <Engine/Game/SxavengerGame.h>
+#include <Engine/Console/SystemConsole.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // TitlePlayer class
@@ -25,8 +26,12 @@ void TitlePlayer::Init() {
 	dof_ = std::make_unique<VisualProcessDoF>();
 	dof_->Init();
 	dof_->SetToConsole("title dof");
-	dof_->GetParameter().focusLength = 15.0f;
+	dof_->GetParameter().focusLength = 22.9f;
 	dof_->GetParameter().f           = 16.0f;
+
+	explain_ = std::make_unique<ControlExplain>();
+	explain_->Init();
+	SetChild(explain_.get());
 }
 
 void TitlePlayer::Term() {
@@ -39,5 +44,13 @@ void TitlePlayer::Update() {
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
 		animator_->Update(animationTime_, i);
 	}
+
+	if (!explain_->IsDisplayExplain()) {
+		explain_->SetExplainParameter({ 2.0f }, explainIndex_);
+		explainIndex_++;
+		explainIndex_ %= explain_->GetExplainSize();
+	}
+
+	explain_->Update(transform_.GetWorldPosition(), sSystemConsole->GetGameCamera()->GetTransform().rotate);
 
 }
