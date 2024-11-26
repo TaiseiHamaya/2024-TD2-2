@@ -22,6 +22,7 @@ void BossBehaviorJumpStomp::move() {
 	if (timer >= boss->get_animator()->GetAnimationDuration(0)) {
 		isEnd = true;
 		CreateStompEffect();
+		boss->ShakeCamera({ 0.3f }, 6, 20.0f);
 	}
 }
 

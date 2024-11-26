@@ -8,10 +8,11 @@
 
 //* engine
 #include <Engine/Game/Camera/CineCamera.h>
+#include <Engine/System/Performance.h>
+#include <Engine/Game/SxavengerPipeline/VisualProcessLayer.h>
 
-//* game
-#include <Game/MainGame/Boss/BossManager.h>
-#include <Game/MainGame/Player/PlayerManager.h>
+class PlayerManager;
+class BossManager;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // GameCamera class
