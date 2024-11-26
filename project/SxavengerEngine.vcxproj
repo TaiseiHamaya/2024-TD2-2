@@ -246,6 +246,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\BasePlayerState.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateEjection.cpp" />
+    <ClCompile Include="Game\MainGame\UI\ControlExplain.cpp" />
     <ClCompile Include="Game\Particle.cpp" />
     <ClCompile Include="Game\Plane.cpp" />
     <ClCompile Include="Game\Scene\IScene.cpp" />
@@ -387,6 +388,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Player\Player.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\BasePlayerState.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateEjection.h" />
+    <ClInclude Include="Game\MainGame\UI\ControlExplain.h" />
     <ClInclude Include="Game\Particle.h" />
     <ClInclude Include="Game\Plane.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
