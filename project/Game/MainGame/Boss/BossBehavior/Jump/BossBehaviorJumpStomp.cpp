@@ -16,9 +16,9 @@ BossBehaviorJumpStomp::BossBehaviorJumpStomp(float StompTime_) :
 
 void BossBehaviorJumpStomp::move() {
 	float parametric = std::min(1.0f, timer.time / StompTime);
-	boss->get_transform().transform.translate.y = std::lerp(StartHeight, 0.0f, EaseInOutBack(parametric));
+	boss->get_transform().transform.translate.y = std::lerp(StartHeight, 0.0f, EaseOutQuad(EaseInOutBack(parametric)));
 
-	if (timer.time >= StompTime) {
+	if (timer >= boss->get_animator()->GetAnimationDuration(0)) {
 		isEnd = true;
 	}
 }
