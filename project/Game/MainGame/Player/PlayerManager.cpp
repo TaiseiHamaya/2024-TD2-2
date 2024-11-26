@@ -138,7 +138,9 @@ void PlayerManager::input() {
 		inputStickR = { 0.0f,0.0f };
 	}
 
-	gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+	if (ejectBitset.none()) {
+		gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+	}
 
 	float playerSize = operatePlayer->get_size();
 	if (!gatherBitset.test(0) && playerSize >= Player::minSize * 2) {
