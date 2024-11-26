@@ -29,6 +29,7 @@ public:
 	Collider* get_attack_collider() const;
 	void set_sizing(float size_);
 	float get_size() const { return size; };
+	bool is_invincible() const;
 
 private:
 	void set_model(const std::string& file);

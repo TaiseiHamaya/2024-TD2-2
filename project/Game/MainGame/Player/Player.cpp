@@ -15,6 +15,8 @@ void Player::initialize(const Vector3f& translate, float size_) {
 	hitCollider->SetTypeId(ColliderType::ColliderTypePlayerHit);
 	hitCollider->SetTargetTypeId(ColliderType::ColliderTypeBossAttack | ColliderType::ColliderTypePlayerHit);
 
+	DefaultInvincibleTime.time = 3.0f;
+
 	++index;
 
 	set_model("player_move.gltf");
@@ -34,6 +36,11 @@ void Player::begin() {
 	}
 	velocity = kOrigin3;
 	animationTimer.AddDeltaTime();
+
+	invincibleTimer.SubtractDeltaTime();
+	if (invincibleTimer.time <= 0) {
+		isInvincible = false;
+	}
 }
 
 void Player::update() {
@@ -97,7 +104,8 @@ void Player::ungather() {
 
 void Player::take_damage() {
 	set_sizing(size - 0.5f);
-	DefaultInvincibleTime;
+	invincibleTimer = DefaultInvincibleTime;
+	isInvincible = true;
 }
 
 Vector3f Player::world_point() const {
@@ -130,6 +138,13 @@ void Player::set_sizing(float size_) {
 	scaling = CreateScale(size);
 	transform_.transform.scale = { scaling,scaling,scaling };
 	hitCollider->SetColliderBoundingSphere({ .radius = scaling / 2 });
+}
+
+bool Player::is_invincible() const {
+	if (isInvincible || get_attack_collider()) {
+		return true;
+	}
+	return false;
 }
 
 struct AnimationModelP {

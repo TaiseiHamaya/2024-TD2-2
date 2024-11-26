@@ -67,7 +67,7 @@ void MainGameScene::collision_boss_attack() {
 	std::list<Player>& players = playerManager->get_players();
 	for (auto& player : players) {
 		// 攻撃コライダがアクティブ時はダメージを受けない
-		if (player.get_attack_collider()) {
+		if (player.is_invincible()) {
 			continue;
 		}
 		// 衝突判定
