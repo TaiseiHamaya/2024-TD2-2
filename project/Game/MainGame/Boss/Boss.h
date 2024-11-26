@@ -28,7 +28,9 @@ public:
 
 	Vector3f GetPosition() const { return transform_.GetWorldPosition(); }
 
-	void CreateLandingParticle();
+	void CreateLandingParticle(const Vector3f& velocity);
+
+	void HitReactionUpdate();
 
 public:
 	bool is_end_behavior() const;
@@ -62,4 +64,6 @@ private:
 	std::unique_ptr<Collider> collider_;
 
 	std::unique_ptr<EffectLanding> landing_;
+
+	//* hit effect reaction *//
 };
