@@ -121,6 +121,11 @@ void PlayerManager::marge_collision() {
 	search_operate_player();
 }
 
+bool PlayerManager::CanShot() const {
+	float playerSize = operatePlayer->get_size();
+	return gatherBitset.none() && playerSize >= Player::minSize * 2;
+}
+
 void PlayerManager::input() {
 	if (!operatePlayer->empty_state()) {
 		return;
@@ -138,10 +143,11 @@ void PlayerManager::input() {
 		inputStickR = { 0.0f,0.0f };
 	}
 
-	gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+	if (ejectBitset.none()) {
+		gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+	}
 
-	float playerSize = operatePlayer->get_size();
-	if (!gatherBitset.test(0) && playerSize >= Player::minSize * 2) {
+	if (CanShot()) {
 		auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
 		ejectBitset.set(0, gamepad->IsPressButton(ejectButton));
 	}

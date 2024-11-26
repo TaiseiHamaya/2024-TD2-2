@@ -24,7 +24,7 @@ void Cursol::Init() {
 	material_.Transfer();
 
 	transform_.transform.scale = { 2.0f, 2.0f, 2.0f };
-	transform_.transform.translate.y = 0.02f;
+	transform_.transform.translate.y = 0.12f;
 	transform_.UpdateMatrix();
 
 }

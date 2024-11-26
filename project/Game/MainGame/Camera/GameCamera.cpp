@@ -8,6 +8,7 @@
 
 //* lib
 #include <Lib/MyMath.h>
+#include <Lib/Easing.h>
 #include <Lib/Adapter/Random/Random.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -47,30 +48,19 @@ void GameCamera::Term() {
 }
 
 void GameCamera::Update(PlayerManager* player, BossManager* boss) {
-	Vector3f playerPosition = player->GetOperator()->get_transform().GetWorldPosition();
-	Vector3f bossPosition   = boss->GetBoss()->GetPosition();
 
-	Vector3f lerp = Lerp(playerPosition, bossPosition, halfway);
-	target_ = lerp;
-	target_.y = std::max(Length(bossPosition - playerPosition), 12.0f);
+	dynamicHalfway_ = halfway;
 
-	transform_.transform.translate = Lerp(transform_.transform.translate, target_, interpolation);
-	transform_.UpdateMatrix();
-	offsetTransform_.UpdateMatrix();
+	UpdateZoom(player);
 
-	Vector3f direction = Normalize(lerp - offsetTransform_.GetWorldPosition());
-
-	offsetTransform_.transform.rotate
-		= Slerp(offsetTransform_.transform.rotate, ToQuaternion(CalculateEuler(direction)), interpolation);
+	UpdateTarget(player, boss);
 
 	offsetTransform_.UpdateMatrix();
 
 	UpdateShake();
 
-	camera_->GetTransformBuffer().transform.translate
-		= Lerp(camera_->GetTransformBuffer().transform.translate, shakeTarget_, 0.08f);
-
 	camera_->UpdateTranslate();
+	camera_->SetProjection({ 16.0f, 9.0f }, forcusLength_, 0.01f, 1000.0f);
 
 	dof_->SetForcus(camera_, player->GetOperator()->get_transform().GetWorldPosition());
 }
@@ -129,4 +119,51 @@ void GameCamera::UpdateShake() {
 	} else {
 		shakeTarget_ = { -fixedStrength.x, -fixedStrength.y, 0.0f };
 	}
+
+	camera_->GetTransformBuffer().transform.translate
+		= Lerp(camera_->GetTransformBuffer().transform.translate, shakeTarget_, 0.08f);
+}
+
+void GameCamera::UpdateTarget(PlayerManager* player, BossManager* boss) {
+
+	Vector3f playerPosition = player->GetOperator()->get_transform().GetWorldPosition();
+	Vector3f bossPosition   = boss->GetBoss()->GetPosition();
+
+	Vector3f lerp = Lerp(playerPosition, bossPosition, halfway);
+	target_ = lerp;
+	target_.y = std::max(Length(bossPosition - playerPosition), 12.0f);
+
+	transform_.transform.translate = Lerp(transform_.transform.translate, target_, interpolation);
+	transform_.UpdateMatrix();
+	offsetTransform_.UpdateMatrix();
+
+	Vector3f direction = Normalize(lerp - offsetTransform_.GetWorldPosition());
+
+	offsetTransform_.transform.rotate
+		= Slerp(offsetTransform_.transform.rotate, ToQuaternion(CalculateEuler(direction)), interpolation);
+}
+
+void GameCamera::UpdateZoom(PlayerManager* player) {
+
+	auto gamepad = Sxavenger::GetInput()->GetGamepadInput(0);
+	bool isPress = gamepad->IsPressButton(XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER);
+
+	if (isPress && player->CanShot()) {
+		zoomTimer_.AddDeltaTime();
+		zoomTimer_.time = std::clamp(zoomTimer_.time, 0.0f, zoomTime_.time);
+
+		float t = std::lerp(0.0f, 0.2f, zoomTimer_.time / zoomTime_.time);
+
+		forcusLength_ = std::lerp(forcusLength_, 24.0f, t);
+
+	} else {
+
+		zoomTimer_.SubtractDeltaTime();
+		zoomTimer_.time = std::clamp(zoomTimer_.time, 0.0f, zoomTime_.time);
+
+		float t = std::lerp(0.0f, 0.2f, 1.0f - zoomTimer_.time / zoomTime_.time);
+
+		forcusLength_ = std::lerp(forcusLength_, 20.0f, t);
+	}
+	
 }
