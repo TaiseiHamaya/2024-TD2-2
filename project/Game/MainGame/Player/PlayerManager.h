@@ -14,6 +14,8 @@
 //* game
 #include <Game/MainGame/Effect/Cursol.h>
 
+class GameCamera;
+
 class PlayerManager : public BaseBehavior {
 public:
 	PlayerManager() = default;
@@ -29,6 +31,8 @@ public:
 	void marge_collision();
 
 	Player* GetOperator() const { return operatePlayer; }
+
+	bool CanShot() const;
 
 private:
 	void input();
