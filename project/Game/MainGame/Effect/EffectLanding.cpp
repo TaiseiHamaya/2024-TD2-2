@@ -54,7 +54,7 @@ void EffectLanding::Update() {
 
 		float t = element.aliveTimer.time / element.aliveTime.time;
 
-		element.transform.scale = Lerp(kUnit3, kOrigin3, EaseOutQuad(t));
+		element.transform.scale = Lerp(kUnit3, kOrigin3, EaseInExpo(t));
 	}
 
 	// 描画設定
@@ -116,7 +116,7 @@ void EffectLanding::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 
 void EffectLanding::CreateParticle(const Vector3f& position, const Vector3f& velocity) {
 	auto& element = elements_.emplace_back();
-	element.aliveTime = { 2.0f };
+	element.aliveTime = { 1.0f };
 
 	element.transform.translate = position;
 	element.velocity = velocity;
