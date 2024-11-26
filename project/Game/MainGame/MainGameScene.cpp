@@ -11,11 +11,16 @@
 void MainGameScene::Init() {
 	sSystemConsole->GetGameCamera()->Reset();
 
+	gameCamera_ = std::make_unique<GameCamera>();
+	gameCamera_->Init();
+	gameCamera_->SetToConsole();
+
 	playerManager = std::make_unique<PlayerManager>();
 	playerManager->initialize();
 
 	bossManager = std::make_unique<BossManager>();
 	bossManager->initialize(playerManager.get());
+	bossManager->GetBoss()->SetGacamera(gameCamera_.get());
 
 	field_ = std::make_unique<Field>();
 	field_->Init();
@@ -23,9 +28,6 @@ void MainGameScene::Init() {
 
 	//SystemConsole::GetInstance()->GetGameCamera()->SetTransform(kUnit3, Vector3{ 45.0f * kDegToRad ,0.0f,0.0f }, Vector3{ 0,10,-10 });
 
-	gameCamera_ = std::make_unique<GameCamera>();
-	gameCamera_->Init();
-	gameCamera_->SetToConsole();
 }
 
 void MainGameScene::Term() {

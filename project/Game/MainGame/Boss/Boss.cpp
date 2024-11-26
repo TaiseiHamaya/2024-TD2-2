@@ -8,6 +8,7 @@
 #include <Lib/Adapter/Random/Random.h>
 
 #include "BossBehavior/BaseBossBehavior.h"
+#include "Game/MainGame/Camera/GameCamera.h"
 
 Boss::Boss(int32_t hitpoint_) :
 	hitpoint(hitpoint_) {
@@ -92,6 +93,14 @@ void Boss::HitReactionUpdate() {
 	color_.color.g = t;
 	color_.color.b = t;
 	color_.Transfer();
+}
+
+void Boss::ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength) {
+	if (camera_ == nullptr) {
+		return;
+	}
+
+	camera_->SetShake(time, subdivision, strength);
 }
 
 bool Boss::is_end_behavior() const {
