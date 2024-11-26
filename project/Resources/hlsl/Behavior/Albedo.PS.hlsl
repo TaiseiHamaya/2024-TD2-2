@@ -24,6 +24,7 @@ AdaptiveOutput main(PSInput input) {
 
 	output.color = gAlbedo.Sample(gSampler, input.texcoord) * gColor.color;
 
+	CheckDiscard(output.color);
 	return output;
 	
 }

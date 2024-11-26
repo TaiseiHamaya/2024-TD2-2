@@ -24,6 +24,10 @@ Boss::Boss(int32_t hitpoint_) :
 	collider_->SetTargetTypeId(ColliderType::ColliderTypePlayerAttack);
 
 	exporter_.TryLoadFromJson();
+
+	landing_ = std::make_unique<EffectLanding>();
+	landing_->Init();
+	SetChild(landing_.get());
 }
 
 Boss::~Boss() noexcept {
@@ -44,6 +48,8 @@ void Boss::update() {
 	if (behavior) {
 		behavior->move();
 	}
+
+	landing_->Update();
 }
 
 void Boss::update_matrix() {
@@ -70,6 +76,10 @@ void Boss::finalize() {
 void Boss::SetAttributeImGui() {
 	ImGui::Text("%f", behavior->get_timer().time);
 	ImGui::Text("%d", hitpoint);
+}
+
+void Boss::CreateLandingParticle() {
+	landing_->CreateParticle(12, transform_.GetWorldPosition(), { 0.0f, 1.0f, 0.0f });
 }
 
 bool Boss::is_end_behavior() const {

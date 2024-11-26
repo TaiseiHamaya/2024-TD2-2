@@ -14,5 +14,6 @@ void BossBehaviorJumpJump::move() {
 
 	if (timer.time >= JumpTime) {
 		isEnd = true;
+		boss->CreateLandingParticle();
 	}
 }

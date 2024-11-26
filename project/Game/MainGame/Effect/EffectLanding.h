@@ -10,9 +10,9 @@
 #include <Engine/System/Performance.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// EffectLaunding class
+// EffectLanding class
 ////////////////////////////////////////////////////////////////////////////////////////////
-class EffectLaunding
+class EffectLanding
 	: public ModelInstanceBehavior {
 public:
 
@@ -20,8 +20,8 @@ public:
 	// public methods
 	//=========================================================================================
 
-	EffectLaunding()  = default;
-	~EffectLaunding() { Term(); }
+	EffectLanding()  = default;
+	~EffectLanding() { Term(); }
 
 	void Init();
 
@@ -30,6 +30,8 @@ public:
 	void Update();
 
 	void DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) override;
+
+	void CreateParticle(uint32_t count, const Vector3f& position, const Vector3f& direction);
 
 private:
 
@@ -48,7 +50,7 @@ private:
 	// private variables
 	//=========================================================================================
 
-	static const uint32_t kInstanceCount_ = 16;
+	static const uint32_t kInstanceCount_ = 128;
 	uint32_t instanceIndex_ = 0;
 
 	std::list<Element> elements_;

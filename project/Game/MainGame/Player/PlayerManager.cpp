@@ -28,8 +28,6 @@ void PlayerManager::initialize() {
 	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
 	canEject = true;
 
-	SetToConsole("PlayerManager");
-
 	exporter_.TryLoadFromJson();
 
 	cursol_ = std::make_unique<Cursol>();

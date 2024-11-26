@@ -120,6 +120,10 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionThird.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueStart.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.cpp" />
     <ClCompile Include="Engine\Game\Behavior\ModelInstanceBehavior.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.cpp" />
@@ -236,7 +240,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Boss\BossManager.cpp" />
     <ClCompile Include="Game\MainGame\Camera\GameCamera.cpp" />
     <ClCompile Include="Game\MainGame\Effect\Cursol.cpp" />
-    <ClCompile Include="Game\MainGame\Effect\EffectLaunding.cpp" />
+    <ClCompile Include="Game\MainGame\Effect\EffectLanding.cpp" />
     <ClCompile Include="Game\MainGame\Field.cpp" />
     <ClCompile Include="Game\MainGame\MainGameScene.cpp" />
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
@@ -269,6 +273,10 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateKnockback.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTonguePlay.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueStart.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionSecond.h" />
     <ClInclude Include="Engine\Game\Behavior\ModelInstanceBehavior.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorKnockback.h" />
@@ -373,7 +381,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Boss\BossManager.h" />
     <ClInclude Include="Game\MainGame\Camera\GameCamera.h" />
     <ClInclude Include="Game\MainGame\Effect\Cursol.h" />
-    <ClInclude Include="Game\MainGame\Effect\EffectLaunding.h" />
+    <ClInclude Include="Game\MainGame\Effect\EffectLanding.h" />
     <ClInclude Include="Game\MainGame\Field.h" />
     <ClInclude Include="Game\MainGame\MainGameScene.h" />
     <ClInclude Include="Game\MainGame\Player\Player.h" />
