@@ -51,7 +51,7 @@ std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& be
 			4.0f, 3.0f, playerManager); // 時間, 接近時間
 	}
 	else if (behaviorName == "JumpStomp") {
-		return std::make_unique<BossBehaviorJumpStomp>(1.0f); // 落下時間
+		return std::make_unique<BossBehaviorJumpStomp>(0.5f); // 落下時間
 	}
 
 	return nullptr;
