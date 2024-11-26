@@ -5,6 +5,8 @@
 
 #include <memory>
 
+#include <Game/MainGame/Effect/EffectLanding.h>
+
 class BaseBossBehavior;
 
 class Boss : public AnimationBehavior {
@@ -25,6 +27,8 @@ public:
 	void SetAttributeImGui() override;
 
 	Vector3f GetPosition() const { return transform_.GetWorldPosition(); }
+
+	void CreateLandingParticle();
 
 public:
 	bool is_end_behavior() const;
@@ -56,4 +60,6 @@ private:
 
 	DeltaTimePoint damagedInvincibleTimer;
 	std::unique_ptr<Collider> collider_;
+
+	std::unique_ptr<EffectLanding> landing_;
 };

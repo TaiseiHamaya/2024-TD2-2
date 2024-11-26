@@ -1,4 +1,4 @@
-#include "EffectLaunding.h"
+#include "EffectLanding.h"
 
 //-----------------------------------------------------------------------------------------
 // include
@@ -7,29 +7,37 @@
 #include <Engine/Game/SxavengerGame.h>
 #include <Engine/Console/SystemConsole.h>
 
+//* lib
+#include <Lib/Adapter/Random/Random.h>
+
 ////////////////////////////////////////////////////////////////////////////////////////////
-// EffectLaunding class methods
+// EffectLanding class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-void EffectLaunding::Init() {
-	SetName("EffectLaunding");
+void EffectLanding::Init() {
+	SetName("EffectLanding");
 	CreateInstance(kInstanceCount_);
 
 	for (uint32_t i = 0; i < kInstanceCount_; ++i) {
 		(*matrix_)[i].Transfer(Matrix::MakeAffine(kOrigin3, kOrigin3, kOrigin3));
 	}
 
+	material_.material.metallic  = 0.75f;
+	material_.material.roughness = 0.75f;
+	material_.Transfer();
+
 	ModelInstanceBehavior::model_ = SxavengerGame::LoadModel("resourcesData/gameScene/Model", "dust.obj");
 	ModelInstanceBehavior::TryLoadJson();
 
 	ModelInstanceBehavior::renderingFlag_ = kBehaviorRender_Systematic;
-}
-
-void EffectLaunding::Term() {
 
 }
 
-void EffectLaunding::Update() {
+void EffectLanding::Term() {
+
+}
+
+void EffectLanding::Update() {
 
 	elements_.remove_if([](Element& element) {
 		// timeの加算
@@ -45,6 +53,7 @@ void EffectLaunding::Update() {
 
 	// 描画設定
 	instanceIndex_ = 0;
+
 	for (auto& element : elements_) {
 		if (instanceIndex_ >= kInstanceCount_) {
 			break;
@@ -56,7 +65,7 @@ void EffectLaunding::Update() {
 
 }
 
-void EffectLaunding::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
+void EffectLanding::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 	if (model_ == nullptr) {
 		return; //!< modelが設定されていない
 	}
@@ -96,5 +105,17 @@ void EffectLaunding::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 
 			model_->GetMesh(i).DrawCall(instanceIndex_);
 		}
+	}
+}
+
+void EffectLanding::CreateParticle(uint32_t count, const Vector3f& position, const Vector3f& direction) {
+	for (uint32_t i = 0; i < count; ++i) {
+		auto& element = elements_.emplace_back();
+		element.aliveTime = { 2.0f };
+
+		element.transform.translate = position;
+
+		Quaternion random = ToQuaternion({ Random::Generate(-pi_v / 6.0f, pi_v / 6.0f), Random::Generate(-pi_v / 6.0f, pi_v / 6.0f), 0.0f });
+		element.velocity = RotateVector(direction, random);
 	}
 }
