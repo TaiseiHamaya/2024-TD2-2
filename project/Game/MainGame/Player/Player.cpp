@@ -17,7 +17,7 @@ void Player::initialize(const Vector3f& translate, float size_) {
 
 	++index;
 
-	set_model("player_move_gltf.gltf");
+	set_model("player_move.gltf");
 
 	set_sizing(size_);
 	transform_.transform.translate = translate;
@@ -41,7 +41,7 @@ void Player::update() {
 		if (stateQue.front()->is_end()) {
 			stateQue.pop_front();
 			if (stateQue.empty()) {
-				set_model("player_move_gltf.gltf");
+				set_model("player_move.gltf");
 			}
 			else {
 				set_model(stateQue.front()->get_model_name());
@@ -97,6 +97,7 @@ void Player::ungather() {
 
 void Player::take_damage() {
 	set_sizing(size - 0.5f);
+	DefaultInvincibleTime;
 }
 
 Vector3f Player::world_point() const {

@@ -47,6 +47,10 @@ private:
 	Animator* animator{ nullptr };
 	DeltaTimePoint animationTimer;
 
+	bool isInvincible;
+	DeltaTimePoint invincibleTimer;
+	DeltaTimePoint DefaultInvincibleTime;
+
 private:
 	inline static uint32_t index = 0;
 
