@@ -23,7 +23,7 @@ void Cursol::Init() {
 	material_.material.roughness = 0.75f;
 	material_.Transfer();
 
-	transform_.transform.scale = { 2.0f, 2.0f, 2.0f };
+	transform_.transform.scale = { 3.0f, 3.0f, 3.0f };
 	transform_.transform.translate.y = 0.12f;
 	transform_.UpdateMatrix();
 
