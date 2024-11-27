@@ -28,7 +28,7 @@ void BossActionManager::cancel_now_action() {
 	nowFlow = nullptr;
 }
 
-uint32_t BossActionManager::max_hitpoint() {
+float BossActionManager::max_hitpoint() {
 	return maxHitpoint;
 }
 

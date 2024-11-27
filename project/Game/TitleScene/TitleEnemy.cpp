@@ -21,6 +21,9 @@ void TitleEnemy::Init() {
 	AnimationBehavior::renderingFlag_ = kBehaviorRender_Systematic;
 
 	AnimationBehavior::TryLoadJson();
+
+	uvTransform_.transform.scale.x = 1.0f / 3.0f;
+	uvTransform_.Transfer();
 }
 
 void TitleEnemy::Term() {

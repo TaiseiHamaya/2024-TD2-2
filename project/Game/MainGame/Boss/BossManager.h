@@ -23,7 +23,7 @@ public:
 	void update_matrix();
 
 	void attack_hit_callback();
-	void damaged_hit_callback(int32_t damage, const Vector3f& playerTranslate);
+	void damaged_hit_callback(float damage, const Vector3f& playerTranslate);
 
 	void DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) override;
 

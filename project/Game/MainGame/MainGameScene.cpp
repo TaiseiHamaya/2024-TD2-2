@@ -114,7 +114,9 @@ void MainGameScene::collision_player_attack() {
 	std::list<Player>& players = playerManager->get_players();
 	for (auto& player : players) {
 		if (bossCollider->GetStates(player.get_attack_collider()).test(0)) {
-			bossManager->damaged_hit_callback(1, player.world_point());
+			float size = player.get_size();
+			float damage = std::lerp(Player::MinDamage, Player::MaxDamage, std::min(size / Player::DefaultSize, 1.0f));
+			bossManager->damaged_hit_callback(damage, player.world_point());
 		}
 	}
 }

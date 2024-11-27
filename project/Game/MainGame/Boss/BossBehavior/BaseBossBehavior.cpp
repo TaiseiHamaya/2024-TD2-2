@@ -1,6 +1,9 @@
 #include "BaseBossBehavior.h"
 
 void BaseBossBehavior::begin() {
+	if (isEnd) {
+		return;
+	}
 	timer.AddDeltaTime();
 }
 
