@@ -35,5 +35,7 @@ private:
 	std::unique_ptr<Skydome> skydome_;
 
 	std::unique_ptr<Audio> bgm_;
+
+	DeltaTimePoint endTimer;
 };
 

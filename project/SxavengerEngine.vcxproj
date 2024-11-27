@@ -120,6 +120,8 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\ClearScene\ClearPlayer.cpp" />
+    <ClCompile Include="Game\ClearScene\ClearScene.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionThird.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.cpp" />
@@ -279,6 +281,8 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\ClearScene\ClearPlayer.h" />
+    <ClInclude Include="Game\ClearScene\ClearScene.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.h" />
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\Tongue\BossBehaviorTongueEnd.h" />

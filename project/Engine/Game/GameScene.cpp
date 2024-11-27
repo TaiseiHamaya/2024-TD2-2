@@ -11,6 +11,7 @@
 //* other scene
 #include <Game/MainGame/MainGameScene.h>
 #include <Game/TitleScene/TitleScene.h>
+#include <Game/ClearScene/ClearScene.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // GameScene class methods
@@ -75,7 +76,8 @@ void GameScene::Run() {
 void GameScene::Init() {
 
 	manager_ = std::make_unique<SceneManager>();
-	manager_->Init<TitleScene>(); //!< startするsceneの設定
+	//manager_->Init<TitleScene>(); //!< startするsceneの設定
+	manager_->Init<ClearScene>(); //!< startするsceneの設定
 
 	atmosphericScattering_ = std::make_unique<AtmosphericScattering>();
 	atmosphericScattering_->Init();

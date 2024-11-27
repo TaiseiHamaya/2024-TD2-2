@@ -8,6 +8,7 @@
 
 #include "Game/MainGame/Player/PlayerState/PlayerStateKnockback.h"
 #include "Boss/BossBehavior/BaseBossBehavior.h"
+#include "Game/ClearScene/ClearScene.h"
 
 void MainGameScene::Init() {
 	sSystemConsole->GetGameCamera()->Reset();
@@ -72,6 +73,14 @@ void MainGameScene::Update() {
 	collision();
 
 	gameCamera_->Update(playerManager.get(), bossManager.get());
+
+	if (bossManager->is_end_all()) {
+		endTimer.AddDeltaTime();
+	}
+
+	if (endTimer.time > 1.0f) {
+		SetNextScene<ClearScene>();
+	}
 }
 
 void MainGameScene::Draw() {
