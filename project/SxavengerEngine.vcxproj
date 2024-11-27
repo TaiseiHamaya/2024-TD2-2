@@ -245,6 +245,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Field.cpp" />
     <ClCompile Include="Game\MainGame\MainGameScene.cpp" />
     <ClCompile Include="Game\MainGame\Player\Player.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerAutomationPop.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\BasePlayerState.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateEjection.cpp" />
     <ClCompile Include="Game\MainGame\Skydome.cpp" />
@@ -274,6 +275,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Player\PlayerManager.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateGather.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateKnockback.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
@@ -389,6 +391,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Field.h" />
     <ClInclude Include="Game\MainGame\MainGameScene.h" />
     <ClInclude Include="Game\MainGame\Player\Player.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerAutomationPop.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\BasePlayerState.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateEjection.h" />
     <ClInclude Include="Game\MainGame\Skydome.h" />
@@ -421,6 +424,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClInclude Include="Game\MainGame\Player\PlayerManager.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateGather.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateKnockback.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />
