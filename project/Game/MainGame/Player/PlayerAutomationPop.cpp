@@ -36,7 +36,7 @@ std::list<Player> PlayerAutomationPop::pop(const DeltaTimePoint& transitionTimer
 	std::list<Player> result;
 	while (next != popGroups[key].end() && next->delay >= transitionTimer.time) {
 		auto& newValue = result.emplace_back();
-		newValue.initialize(Vector3f{ next->xzPosition.x, 10.0f, next->xzPosition.y }, 0.4f);
+		newValue.initialize(Vector3f{ next->xzPosition.x, 10.0f, next->xzPosition.y }, 0.4f); // ここ大きさ(m)
 		++next;
 	}
 	return result;
@@ -66,7 +66,7 @@ void PlayerAutomationPop::export_json() {
 		const auto& values = group.second;
 
 
-		for (int i = 0;  const auto & value : values) {
+		for (int i = 0; const auto & value : values) {
 			auto& groupJson = root[name][std::format("{:02}", i)];
 			groupJson["XZPosition"] = JsonAdapter::ToJson(value.xzPosition);
 			groupJson["Delay"] = value.delay;
@@ -93,6 +93,10 @@ void PlayerAutomationPop::SetAttributeImGui() {
 
 			if (ImGui::Button("Add")) {
 				data.emplace_back();
+			}
+			ImGui::SameLine();
+			if (ImGui::Button("Delete")) {
+				data.pop_back();
 			}
 
 			ImGui::TreePop();
