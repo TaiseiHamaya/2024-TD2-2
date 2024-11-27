@@ -2,12 +2,12 @@
 
 #include "../BossBehavior/BaseBossBehavior.h"
 #include "../BossBehavior/BossBehaviorStay.h"
-#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
-#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
 #include "../BossBehavior/Rush/BossBehaviorRushEnd.h"
-#include "../BossBehavior/Tongue/BossBehaviorTongueStart.h"
-#include "../BossBehavior/Tongue/BossBehaviorTonguePlay.h"
+#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
+#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
 #include "../BossBehavior/Tongue/BossBehaviorTongueEnd.h"
+#include "../BossBehavior/Tongue/BossBehaviorTonguePlay.h"
+#include "../BossBehavior/Tongue/BossBehaviorTongueStart.h"
 
 #include <Lib/MyMath.h>
 
@@ -15,13 +15,14 @@ BossActionThird::BossActionThird() {
 	defaultAction = std::make_unique<ActionFlow>();
 	defaultAction->flowName.emplace_back("Stay");
 
-	auto& newFlow = flows.emplace_back();
+	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"RushStartL", "RushPlay", "RushEnd",
 		"Stay",
 		"TongueStart", "TonguePlay", "TongueEnd" };
 	newFlow.coolTime = 5.0f;
+	maxHitpoint = 10;
 }
 
 std::unique_ptr<BaseBossBehavior> BossActionThird::create(const std::string& behaviorName) {
