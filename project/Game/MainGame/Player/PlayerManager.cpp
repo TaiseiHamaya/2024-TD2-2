@@ -22,7 +22,7 @@ void PlayerManager::initialize() {
 
 	exporter_.GetFromStash("EjectPressTime", &EjectPressTime, 1);
 	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
-	exporter_.GetFromStash("EjectLengthParSecond", &EjectMaxDistance, 1);
+	exporter_.GetFromStash("EjectMinDistance", &EjectMinDistance, 1);
 
 	exporter_.GetFromStash("MinDamage", &Player::MinDamage, 1);
 	exporter_.GetFromStash("MaxDamage", &Player::MaxDamage, 1);
