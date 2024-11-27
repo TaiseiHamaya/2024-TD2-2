@@ -52,6 +52,8 @@ private:
 	DeltaTimePoint invincibleTimer;
 	DeltaTimePoint DefaultInvincibleTime;
 
+	const uint32_t kInvincibleDivisionNum_ = 64;
+
 private:
 	inline static uint32_t index = 0;
 
