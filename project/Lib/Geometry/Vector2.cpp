@@ -30,3 +30,10 @@ float Dot(const Vector2f& x, const Vector2f& y) {
 float Cross(const Vector2f& x, const Vector2f& y) {
 	return x.x * y.y - x.y * y.x;
 }
+
+Vector2f Lerp(const Vector2f& x, const Vector2f& y, float t) {
+	return {
+		std::lerp(x.x, y.x, t),
+		std::lerp(x.y, y.y, t),
+	};
+}

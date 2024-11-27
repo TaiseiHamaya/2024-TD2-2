@@ -59,6 +59,8 @@ public:
 	CineCamera* GetGameCamera() const { return gameCamera_.get(); }
 	DebugCamera3D* GetSceneCamera() const { return sceneCamera_.get(); }
 
+	SxavengerFrame* GetGameFrame() const { return gameFrame_.get(); }
+
 	//!< singleton
 	// TODO: SxavengerEngineの関数として入れてもいいかも
 	static SystemConsole* const GetInstance();

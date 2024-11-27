@@ -7,12 +7,20 @@
 #include "BossBehavior/BossBehaviorKnockback.h"
 #include "BossBehavior/BossBehaviorStay.h"
 
+#include <Engine/Game/SxavengerGame.h>
+#include <Engine/System/Sxavenger.h>
+
+#include <Engine/System/Performance.h>
+#include <Lib/Easing.h>
+
 void BossManager::initialize(const PlayerManager* player) {
 	boss = std::make_unique<Boss>();
 	boss->SetToConsole();
 
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
+
+	BaseBehavior::renderingFlag_ = kBehaviorRender_LateAdaptive;
 
 	phase = 0;
 	isPhaseTransition = false;
@@ -21,6 +29,9 @@ void BossManager::initialize(const PlayerManager* player) {
 
 	SetName("BossManager");
 	SetToConsole();
+
+	hpFrameTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
+	hpTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar1.png");
 }
 
 void BossManager::begin() {
@@ -79,6 +90,31 @@ void BossManager::damaged_hit_callback(int32_t damage, const Vector3f& playerTra
 			boss->set_behavior(std::make_unique<BossBehaviorKnockback>(direction));
 			bossActionManager->cancel_now_action();
 		}
+	}
+}
+
+void BossManager::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
+
+	auto drawer = SxavengerGame::GetSpriteCommon();
+
+	{
+		Vector2f position = { static_cast<float>(kWindowSize.x) - hpFrameTexture_->GetSize().x, kWindowSize.y / 2.0f - hpFrameTexture_->GetSize().y / 2.0f };
+		Vector2f size = {
+			static_cast<float>(hpFrameTexture_->GetSize().x),
+			std::lerp(0.0f, static_cast<float>(hpFrameTexture_->GetSize().y), static_cast<float>(boss->GetHitPoint()) / bossActionManager->max_hitpoint())
+		};
+
+		drawer->DrawSprite(
+			position, size, hpTexture_->GetGPUHandleSRV()
+		);
+	}
+
+	{
+		Vector2f position = { kWindowSize.x - hpFrameTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
+
+		drawer->DrawSprite(
+			position, hpFrameTexture_->GetSize(), { 0.5f, 0.5f }, hpFrameTexture_->GetGPUHandleSRV()
+		);
 	}
 }
 

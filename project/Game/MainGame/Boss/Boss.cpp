@@ -15,7 +15,7 @@ Boss::Boss() {
 	// モデル設定
 
 	transform_.UpdateMatrix();
-	renderingFlag_ = kBehaviorRender_Systematic | kBehaviorRender_Adaptive;
+	renderingFlag_ = kBehaviorRender_Systematic;
 
 	TryLoadJson();
 
@@ -34,9 +34,6 @@ Boss::Boss() {
 	shadow_ = std::make_unique<Shadow>();
 	shadow_->Init();
 	SetChild(shadow_.get());
-
-	hpFrameTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
-
 
 	damagedInvincibleTimer.time = 0;
 }
@@ -111,17 +108,6 @@ void Boss::ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength)
 	}
 
 	camera_->SetShake(time, subdivision, strength);
-}
-
-void Boss::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
-
-	/*auto drawer = SxavengerGame::GetSpriteCommon();
-
-	Vector2f position = { kWindowSize.x - hpFrameTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
-
-	drawer->DrawSprite(
-		position, hpFrameTexture_->GetSize(), { 0.5f, 0.5f }, hpFrameTexture_->GetGPUHandleSRV()
-	);*/
 }
 
 bool Boss::is_end_behavior() const {
