@@ -131,3 +131,5 @@ float Dot(const Vector2f& x, const Vector2f& y);
 
 float Cross(const Vector2f& x, const Vector2f& y);
 
+Vector2f Lerp(const Vector2f& x, const Vector2f& y, float t);
+

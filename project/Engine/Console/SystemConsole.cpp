@@ -41,7 +41,7 @@ void SystemConsole::Term() {
 }
 
 void SystemConsole::UpdateConsole() {
-
+#ifdef _DEBUG
 	UpdateConsoleShortcut();
 
 	DisplayMainMenu();
@@ -59,6 +59,7 @@ void SystemConsole::UpdateConsole() {
 		RenderingConsole::UpdateConsole();
 		ProcessConsole::UpdateConsole();
 	}
+#endif
 }
 
 void SystemConsole::Draw() {

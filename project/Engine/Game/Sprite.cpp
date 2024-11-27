@@ -189,10 +189,10 @@ void SpriteCommon::SetHandle(uint32_t index, const D3D12_GPU_DESCRIPTOR_HANDLE& 
 
 void SpriteCommon::SetTexcoordClip(int32_t index, const Vector2f& leftTopUV, const Vector2f& sizeUV, const Vector2f& pivot) {
 
-	float left   = 0.0f - pivot.x + leftTopUV.x;
-	float right  = 1.0f - pivot.x + leftTopUV.x + sizeUV.x;
-	float top    = 0.0f - pivot.y + leftTopUV.y;
-	float bottom = 1.0f - pivot.y + leftTopUV.y + sizeUV.y;
+	float left   = pivot.x + leftTopUV.x;
+	float right  = pivot.x + leftTopUV.x + sizeUV.x;
+	float top    = pivot.y + leftTopUV.y;
+	float bottom = pivot.y + leftTopUV.y + sizeUV.y;
 
 	(*elements_[index].vertex)[LEFTTOP].texcoord     = { left, top };
 	(*elements_[index].vertex)[LEFTBOTTOM].texcoord  = { left, bottom };
