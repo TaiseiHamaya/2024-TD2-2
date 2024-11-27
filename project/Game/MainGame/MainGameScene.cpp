@@ -35,6 +35,16 @@ void MainGameScene::Init() {
 	skydome_->Init();
 	skydome_->SetToConsole();
 
+	Sxavenger::CreateAudio("enemy_damage.wav");
+	Sxavenger::CreateAudio("enemy_bite.wav");
+	Sxavenger::CreateAudio("enemy_jump.wav");
+	Sxavenger::CreateAudio("enemy_landing.wav");
+	Sxavenger::CreateAudio("enemy_tongue.wav");
+	Sxavenger::CreateAudio("enemy_tongue_end.wav");
+
+	bgm_ = Sxavenger::GetAudio("gameBGM.wav");
+	bgm_->SetVolume(0.2f);
+	bgm_->PlayAudio();
 }
 
 void MainGameScene::Term() {

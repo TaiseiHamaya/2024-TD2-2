@@ -98,6 +98,11 @@ void Player::update_matrix() {
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
 		animator_->Update(animationTimer, i, true);
 	}
+
+	if (animationTimer > animator_->GetAnimationDuration(0)) {
+		animationTimer.time = std::fmod(animationTimer.time, animator_->GetAnimationDuration(0).time);
+		Sxavenger::PlayAudioOneShot("player_jump.wav", 0.2f);
+	}
 }
 
 void Player::operate_update(const Vector2f& input) {

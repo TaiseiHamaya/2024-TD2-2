@@ -153,6 +153,7 @@ void Boss::set_behavior(std::unique_ptr<BaseBossBehavior> behavior_) {
 
 void Boss::take_damage(int32_t damage) {
 	hitpoint -= damage;
+	Sxavenger::PlayAudioOneShot("enemy_damage.wav", 0.2f);
 }
 
 void Boss::set_model(const std::string& file) {

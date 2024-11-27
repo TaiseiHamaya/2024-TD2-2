@@ -33,5 +33,7 @@ private:
 	std::unique_ptr<GameCamera> gameCamera_;
 	std::unique_ptr<PlayerAutomationPop> playerAutomationPop;
 	std::unique_ptr<Skydome> skydome_;
+
+	std::unique_ptr<Audio> bgm_;
 };
 

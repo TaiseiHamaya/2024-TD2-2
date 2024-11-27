@@ -243,6 +243,8 @@ void PlayerManager::eject() {
 
 	// 次の操作キャラクターの設定
 	search_operate_player();
+
+	Sxavenger::PlayAudioOneShot("player_injection.wav", 0.2f);
 }
 
 void PlayerManager::search_operate_player() {
