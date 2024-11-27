@@ -46,6 +46,7 @@ private:
 	Vector3f offset_ = { 0.0f, 8.0f, 0.0f };
 
 	std::array<Texture*, 2> textures_ = {};
+	std::array<Texture*, 2> texturesKey_ = {};
 
 	DeltaTimePoint displayTimer_ = {};
 
