@@ -18,6 +18,9 @@ void BossManager::initialize(const PlayerManager* player) {
 	isPhaseTransition = false;
 
 	initialize_action();
+
+	SetName("BossManager");
+	SetToConsole();
 }
 
 void BossManager::begin() {
@@ -126,4 +129,26 @@ void BossManager::initialize_action() {
 		break;
 	}
 	boss->reset_hitpoint(bossActionManager->max_hitpoint());
+}
+
+void BossManager::SetAttributeImGui() {
+	ImGui::Text("Phase");
+	bool isChanged = false;
+	if (ImGui::RadioButton("First", phase == 0)) {
+		phase = 0;
+		isChanged = true;
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Second", phase == 1)) {
+		phase = 1;
+		isChanged = true;
+	}
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Third", phase == 2)) {
+		phase = 2;
+		isChanged = true;
+	}
+	if (isChanged) {
+		initialize_action();
+	}
 }

@@ -17,6 +17,9 @@
 	"ModelSize": [
 		1.440000057220459
 	],
+	"MoveSpeed": [
+		10.0
+	],
 	"SizeParSec": [
 		2.0
 	]

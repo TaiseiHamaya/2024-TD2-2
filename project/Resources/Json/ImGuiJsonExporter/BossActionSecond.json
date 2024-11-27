@@ -1,0 +1,32 @@
+{
+	"ApproachSpeed": [
+		3.0
+	],
+	"ApproachTime": [
+		3.0
+	],
+	"FlyingTime": [
+		4.0
+	],
+	"JumpHeight": [
+		10.0
+	],
+	"LookAtStartTime": [
+		1.0
+	],
+	"RushLength": [
+		5.0
+	],
+	"RushSpeed": [
+		10.0
+	],
+	"RushStartTime": [
+		2.0
+	],
+	"StayTime": [
+		3.0
+	],
+	"StompTime": [
+		0.5
+	]
+}

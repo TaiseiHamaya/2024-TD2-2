@@ -1,0 +1,17 @@
+{
+	"LookAtStartTime": [
+		1.0
+	],
+	"RushLength": [
+		15.0
+	],
+	"RushSpeed": [
+		10.0
+	],
+	"RushStartTime": [
+		2.0
+	],
+	"StayTime": [
+		4.0
+	]
+}
