@@ -1168,7 +1168,7 @@
 	"images":[
 		{
 			"mimeType":"image/png",
-			"name":"enemy.png",
+			"name":"enemy_png",
 			"uri":"enemy_png.png"
 		}
 	],
