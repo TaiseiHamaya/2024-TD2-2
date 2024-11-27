@@ -37,7 +37,9 @@ void BossManager::update() {
 		return;
 	}
 	boss->update();
-	bossActionManager->update();
+	if (bossActionManager) {
+		bossActionManager->update();
+	}
 
 	// トランジション開始
 	if (boss->is_dead() && !isPhaseTransition) {
@@ -53,7 +55,9 @@ void BossManager::update() {
 	}
 	// 通常処理
 	if (boss->is_end_behavior()) {
-		boss->set_behavior(bossActionManager->next());
+		if (bossActionManager) {
+			boss->set_behavior(bossActionManager->next());
+		}
 	}
 
 }

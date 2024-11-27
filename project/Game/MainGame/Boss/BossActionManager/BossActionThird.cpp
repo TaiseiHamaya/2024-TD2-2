@@ -19,8 +19,9 @@ BossActionThird::BossActionThird() {
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"RushStartL", "RushPlay", "RushEnd",
-		"Stay",
-		"TongueStart", "TonguePlay", "TongueEnd" };
+		"TongueStart", "TonguePlay", "TongueEnd",
+		"Stay"
+	};
 	newFlow.coolTime = 5.0f;
 	maxHitpoint = 10;
 

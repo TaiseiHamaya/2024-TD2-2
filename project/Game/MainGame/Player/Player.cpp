@@ -63,7 +63,8 @@ void Player::update() {
 		velocity = stateQue.front()->velocity();
 	}
 	transform_.transform.translate += velocity * Performance::GetDeltaTime(s).time;
-	if (transform_.transform.translate.y < 0) {
+
+	if (transform_.transform.translate.y < 0 || stateQue.empty()) {
 		transform_.transform.translate.y = 0;
 	}
 
