@@ -89,24 +89,28 @@ void MainGameScene::collision() {
 void MainGameScene::collision_boss_attack() {
 	Collider* bossCollider = bossManager->get_attack_collider();
 	std::list<Player>& players = playerManager->get_players();
-	for (auto& player : players) {
+	for (auto player = players.begin(); player != players.end(); ++player) {
 		// 攻撃コライダがアクティブ時はダメージを受けない
-		if (player.is_invincible()) {
+		if (player->is_invincible()) {
 			continue;
 		}
 		// 衝突判定
-		else if (player.get_hit_collider()->GetStates(bossCollider).test(0)) {
+		else if (player->get_hit_collider()->GetStates(bossCollider).test(0)) {
 			// プレイヤー側の処理
 			// 向き取得
-			Vector3f direction = player.get_transform().GetWorldPosition() - bossManager->GetBoss()->GetPosition();
+			Vector3f direction = player->get_transform().GetWorldPosition() - bossManager->GetBoss()->GetPosition();
 			direction.y = 0;
 			// 正規化
 			direction = Length(direction) >= 0.05f ? Normalize(direction) : Vector3f{ 0, 0, 1 };
 			// ステータス設定
-			player.push_state(
+			player->push_state(
 				std::make_unique<PlayerState::Knockback>(direction)
 			);
-			player.take_damage();
+			player->take_damage();
+
+			if (player->get_size() <= Player::MinSize) {
+				players.erase(player);
+			}
 
 			// 敵側の処理
 			bossManager->attack_hit_callback();
