@@ -14,6 +14,9 @@ void Player::initialize(const Vector3f& translate, float size_) {
 	hitCollider->SetColliderBoundingSphere();
 	hitCollider->SetTypeId(ColliderType::ColliderTypePlayerHit);
 	hitCollider->SetTargetTypeId(ColliderType::ColliderTypeBossAttack | ColliderType::ColliderTypePlayerHit);
+	hitCollider->SetOnCollisionEnter([&](_MAYBE_UNUSED Collider* const other) {
+
+	});
 
 	DefaultInvincibleTime.time = 3.0f;
 
