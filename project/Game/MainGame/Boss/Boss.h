@@ -14,7 +14,7 @@ class BaseBossBehavior;
 
 class Boss : public AnimationBehavior {
 public:
-	Boss(int32_t hitpoint);
+	Boss();
 	~Boss() noexcept;
 
 	Boss(const Boss&) = delete;
@@ -57,6 +57,7 @@ public:
 	std::unique_ptr<BaseBossBehavior>& get_behavior() { return behavior; };
 	const std::unique_ptr<BaseBossBehavior>& get_behavior() const { return behavior; };
 	void hit_callback();
+	void reset_hitpoint(uint32_t hitpoint_);
 
 private:
 	bool isInvincible{ false };

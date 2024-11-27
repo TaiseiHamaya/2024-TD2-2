@@ -27,6 +27,8 @@ public:
 	std::unique_ptr<BaseBossBehavior> next();
 	void cancel_now_action();
 
+	uint32_t max_hitpoint();
+
 protected:
 	virtual std::unique_ptr<BaseBossBehavior> create(const std::string& behaviorName) = 0;
 
@@ -34,8 +36,9 @@ private:
 	ActionFlow* select_action_flow();
 
 protected:
-	std::vector<ActionFlow> flows;
+	std::vector<ActionFlow> actionFlows;
 	std::unique_ptr<ActionFlow> defaultAction;
+	uint32_t maxHitpoint{30};
 
 private:
 	ActionFlow* nowFlow{ nullptr };

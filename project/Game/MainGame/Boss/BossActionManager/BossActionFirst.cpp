@@ -1,4 +1,4 @@
-#include "BossActionOne.h"
+#include "BossActionFirst.h"
 
 #include "../BossBehavior/BaseBossBehavior.h"
 #include "../BossBehavior/BossBehaviorStay.h"
@@ -8,16 +8,17 @@
 
 #include <Lib/MyMath.h>
 
-BossActionOne::BossActionOne() {
+BossActionFirst::BossActionFirst() {
 	defaultAction = std::make_unique<ActionFlow>();
 	defaultAction->flowName.emplace_back("Stay");
 
-	auto& newFlow = flows.emplace_back();
+	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = { "RushStartR", "RushPlay", "RushEnd","RushStartB", "RushPlay", "RushEnd","RushStartR", "RushPlay", "RushEnd", "Stay" };
 	newFlow.coolTime = 5.0f;
+	maxHitpoint = 3;
 }
 
-std::unique_ptr<BaseBossBehavior> BossActionOne::create(const std::string& behaviorName) {
+std::unique_ptr<BaseBossBehavior> BossActionFirst::create(const std::string& behaviorName) {
 	if (behaviorName == "Stay") {
 		return std::make_unique<BossBehaviorStay>(3.0f, playerManager);
 	}

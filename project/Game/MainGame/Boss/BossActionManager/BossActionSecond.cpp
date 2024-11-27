@@ -2,12 +2,12 @@
 
 #include "../BossBehavior/BaseBossBehavior.h"
 #include "../BossBehavior/BossBehaviorStay.h"
-#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
-#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
-#include "../BossBehavior/Rush/BossBehaviorRushEnd.h"
-#include "../BossBehavior/Jump/BossBehaviorJumpJump.h"
 #include "../BossBehavior/Jump/BossBehaviorJumpFly.h"
+#include "../BossBehavior/Jump/BossBehaviorJumpJump.h"
 #include "../BossBehavior/Jump/BossBehaviorJumpStomp.h"
+#include "../BossBehavior/Rush/BossBehaviorRushEnd.h"
+#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
+#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
 
 #include <Lib/MyMath.h>
 
@@ -15,7 +15,7 @@ BossActionSecond::BossActionSecond() {
 	defaultAction = std::make_unique<ActionFlow>();
 	defaultAction->flowName.emplace_back("Stay");
 
-	auto& newFlow = flows.emplace_back();
+	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"RushStartB", "RushPlay", "RushEnd",
@@ -23,6 +23,7 @@ BossActionSecond::BossActionSecond() {
 		"Stay",
 		"JumpJump", "JumpFly", "JumpStomp"};
 	newFlow.coolTime = 5.0f;
+	maxHitpoint = 5;
 }
 
 std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& behaviorName) {

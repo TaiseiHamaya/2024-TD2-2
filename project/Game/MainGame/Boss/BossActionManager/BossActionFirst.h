@@ -2,10 +2,10 @@
 
 #include "BossActionManager.h"
 
-class BossActionOne final : public BossActionManager {
+class BossActionFirst final : public BossActionManager {
 public:
-	BossActionOne();
-	~BossActionOne() = default;
+	BossActionFirst();
+	~BossActionFirst() = default;
 
 private:
 	std::unique_ptr<BaseBossBehavior> create(const std::string& behaviorName);
