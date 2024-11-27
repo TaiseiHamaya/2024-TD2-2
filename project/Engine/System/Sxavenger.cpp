@@ -208,6 +208,10 @@ Input* SxavengerEngine::GetInput() {
 	return sInput.get();
 }
 
+void SxavengerEngine::CreateAudio(const std::string& filename) {
+	sAudioManager->LoadAudioBuffer(filename);
+}
+
 std::unique_ptr<Audio> SxavengerEngine::GetAudio(const std::string& filename, bool isLoop) {
 	return sAudioManager->GetAudio(filename, isLoop);
 }

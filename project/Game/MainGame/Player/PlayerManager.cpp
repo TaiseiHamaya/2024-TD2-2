@@ -79,6 +79,10 @@ void PlayerManager::update() {
 	}
 
 	cursol_->Update(operatePlayer->world_point());
+
+	if (operatePlayer->IsLanding()) {
+		Sxavenger::PlayAudioOneShot("player_jump.wav", 0.2f);
+	}
 }
 
 void PlayerManager::update_matrix() {
@@ -246,6 +250,8 @@ void PlayerManager::eject() {
 
 	// 次の操作キャラクターの設定
 	search_operate_player();
+
+	Sxavenger::PlayAudioOneShot("player_injection.wav", 0.2f);
 }
 
 void PlayerManager::search_operate_player() {

@@ -16,6 +16,7 @@ BossBehaviorTonguePlay::BossBehaviorTonguePlay(float length, float Time_) :
 
 	Vector3f forward = RotateVector({ 0,0,1 }, startRotation);
 	apply_collider(forward);
+	Sxavenger::PlayAudioOneShot("enemy_tongue.wav", 0.2f);
 }
 
 void BossBehaviorTonguePlay::move() {

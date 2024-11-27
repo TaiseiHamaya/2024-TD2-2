@@ -38,6 +38,10 @@ void TitleScene::Init() {
 	skydome_->SetToConsole();
 
 	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, { 0.0f, -0.281157285f, 0.0f, 0.959661603f }, {15.6f, 5.5f, -31.77f });
+
+	bgm_ = Sxavenger::GetAudio("titleBGM.wav", true);
+	bgm_->SetVolume(0.2f);
+	bgm_->PlayAudio();
 }
 
 void TitleScene::Term() {
@@ -49,7 +53,9 @@ void TitleScene::Update() {
 	enemy_->Update();
 	player_->Update();
 
-	if (Sxavenger::IsTriggerKey(DIK_SPACE)) {
+	auto input = Sxavenger::GetInput()->GetGamepadInput(0);
+
+	if (input->IsTriggerButton(XINPUT_GAMEPAD_A)) {
 		SetNextScene<MainGameScene>();
 	}
 

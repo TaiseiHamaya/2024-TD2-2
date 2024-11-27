@@ -23,6 +23,7 @@ void BossBehaviorJumpStomp::move() {
 		isEnd = true;
 		CreateStompEffect();
 		boss->ShakeCamera({ 0.3f }, 6, 20.0f);
+		Sxavenger::PlayAudioOneShot("enemy_landing.wav", 0.2f);
 	}
 }
 

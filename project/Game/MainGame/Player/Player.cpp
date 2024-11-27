@@ -107,6 +107,13 @@ void Player::update_matrix() {
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
 		animator_->Update(animationTimer, i, true);
 	}
+
+	isLanding_ = false;
+
+	if (animationTimer > animator_->GetAnimationDuration(0)) {
+		animationTimer.time = std::fmod(animationTimer.time, animator_->GetAnimationDuration(0).time);
+		isLanding_ = true;
+	}
 }
 
 void Player::operate_update(const Vector2f& input) {
