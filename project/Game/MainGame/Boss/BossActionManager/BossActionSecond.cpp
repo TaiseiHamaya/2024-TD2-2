@@ -18,7 +18,9 @@ BossActionSecond::BossActionSecond() {
 	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
+		"StayShort",
 		"RushStartB", "RushPlay", "RushEnd",
+		"StayShort",
 		"RushStartR", "RushPlay", "RushEnd",
 		"Stay",
 		"JumpJump", "JumpFly", "JumpStomp"};
@@ -71,6 +73,9 @@ std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& be
 	}
 	else if (behaviorName == "JumpStomp") {
 		return std::make_unique<BossBehaviorJumpStomp>(StompTime); // 落下時間
+	}
+	else if (behaviorName == "StayShort") {
+		return std::make_unique<BossBehaviorStay>(0.1f, playerManager);
 	}
 
 	return nullptr;
