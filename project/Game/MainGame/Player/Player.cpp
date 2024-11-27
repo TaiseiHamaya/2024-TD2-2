@@ -3,6 +3,8 @@
 #include <Engine/Game/SxavengerGame.h>
 #include <Engine/System/Performance.h>
 
+#include <Lib/Easing.h>
+
 #include "PlayerState/PlayerStateGather.h"
 
 void Player::initialize(const Vector3f& translate, float size_) {
@@ -39,6 +41,7 @@ void Player::begin() {
 
 	invincibleTimer.SubtractDeltaTime();
 	if (invincibleTimer.time <= 0) {
+		invincibleTimer.time = 0.0f;
 		isInvincible = false;
 	}
 }
@@ -60,6 +63,12 @@ void Player::update() {
 		velocity = stateQue.front()->velocity();
 	}
 	transform_.transform.translate += velocity * Performance::GetDeltaTime(s).time;
+
+	float flashingColor = std::lerp(1.0f, 12.0f, invincibleTimer.time / DefaultInvincibleTime.time);
+	color_.color.r = flashingColor;
+	color_.color.g = flashingColor;
+	color_.color.b = flashingColor;
+	color_.Transfer();
 }
 
 void Player::update_matrix() {
