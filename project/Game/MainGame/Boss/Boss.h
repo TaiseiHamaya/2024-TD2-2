@@ -38,6 +38,8 @@ public:
 	void SetGacamera(GameCamera* camera) { camera_ = camera; }
 	void ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength);
 
+	void DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) override;
+
 public:
 	bool is_end_behavior() const;
 	void set_behavior(std::unique_ptr<BaseBossBehavior> behavior_);
@@ -76,5 +78,8 @@ private:
 
 	std::unique_ptr<Shadow> shadow_;
 
-	//* hit effect reaction *//
+	//* 2D UI *//
+
+	Texture* hpFrameTexture_;
+	Texture* hpTexture_;
 };

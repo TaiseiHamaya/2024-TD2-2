@@ -12,6 +12,11 @@ _DXROBJECT_USING
 #include <Engine/Beta/DepthRenderTarget.h>
 #include <Engine/Beta/SceneRenderTarget.h>
 
+//=========================================================================================
+// static variables
+//=========================================================================================
+
+const DxObject::Devices::DxLeakChecker DirectXCommon::leakChecher_ = {};
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // DirectXCommon class
