@@ -42,4 +42,5 @@ private:
 	std::unique_ptr<TitlePlayer> player_;
 	std::unique_ptr<TitleBoard> board_;
 
+
 };

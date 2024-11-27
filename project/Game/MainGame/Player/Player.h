@@ -64,4 +64,5 @@ public:
 	inline static float ModelSize{ 2.0f };
 	inline static float DefaultSize{ 5.0f };
 	inline static float SizeParSec{ 1.f };
+	inline static float MoveSpeed{ 1.f };
 };

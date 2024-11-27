@@ -2,12 +2,12 @@
 
 #include "../BossBehavior/BaseBossBehavior.h"
 #include "../BossBehavior/BossBehaviorStay.h"
-#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
-#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
-#include "../BossBehavior/Rush/BossBehaviorRushEnd.h"
-#include "../BossBehavior/Jump/BossBehaviorJumpJump.h"
 #include "../BossBehavior/Jump/BossBehaviorJumpFly.h"
+#include "../BossBehavior/Jump/BossBehaviorJumpJump.h"
 #include "../BossBehavior/Jump/BossBehaviorJumpStomp.h"
+#include "../BossBehavior/Rush/BossBehaviorRushEnd.h"
+#include "../BossBehavior/Rush/BossBehaviorRushPlay.h"
+#include "../BossBehavior/Rush/BossBehaviorRushStart.h"
 
 #include <Lib/MyMath.h>
 
@@ -15,7 +15,7 @@ BossActionSecond::BossActionSecond() {
 	defaultAction = std::make_unique<ActionFlow>();
 	defaultAction->flowName.emplace_back("Stay");
 
-	auto& newFlow = flows.emplace_back();
+	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"RushStartB", "RushPlay", "RushEnd",
@@ -23,36 +23,73 @@ BossActionSecond::BossActionSecond() {
 		"Stay",
 		"JumpJump", "JumpFly", "JumpStomp"};
 	newFlow.coolTime = 5.0f;
+	maxHitpoint = 5;
+
+	SetName("BossActionSecond");
+	exporter_.TryLoadFromJson();
+
+	exporter_.GetFromStash("StayTime", &StayTime, 1);
+
+	exporter_.GetFromStash("LookAtStartTime", &LookAtStartTime, 1);
+	exporter_.GetFromStash("RushStartTime", &RushStartTime, 1);
+	exporter_.GetFromStash("RushSpeed", &RushSpeed, 1);
+	exporter_.GetFromStash("RushLength", &RushLength, 1);
+
+	exporter_.GetFromStash("JumpHeight", &JumpHeight, 1);
+	exporter_.GetFromStash("FlyingTime", &FlyingTime, 1);
+	exporter_.GetFromStash("ApproachTime", &ApproachTime, 1);
+	exporter_.GetFromStash("ApproachSpeed", &ApproachSpeed, 1);
+	exporter_.GetFromStash("StompTime", &StompTime, 1);
+
+	SetToConsole();
 }
 
 std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& behaviorName) {
 	if (behaviorName == "Stay") {
-		return std::make_unique<BossBehaviorStay>(3.0f, playerManager); // 待機時間, 2つ目は必要なのでこれ
+		return std::make_unique<BossBehaviorStay>(StayTime, playerManager); // 待機時間, 2つ目は必要なのでこれ
 	}
 	else if (behaviorName == "RushStartR") {
 		return std::make_unique<BossBehaviorRushStart>(
-			MakeAxisAngle({ 0,1,0 }, pi_v / 2), 1.0f, 2.0f);
+			MakeAxisAngle({ 0,1,0 }, pi_v / 2), LookAtStartTime, RushStartTime);
 	}
 	else if (behaviorName == "RushStartB") {
 		return std::make_unique<BossBehaviorRushStart>(
-			MakeAxisAngle({ 0,1,0 }, pi_v), 1.0f, 2.0f); // 向き, 回転開始までの時間, 全体の時間
+			MakeAxisAngle({ 0,1,0 }, pi_v), LookAtStartTime, RushStartTime); // 向き, 回転開始までの時間, 全体の時間
 	}
 	else if (behaviorName == "RushPlay") {
-		return std::make_unique<BossBehaviorRushPlay>(3.0f, 5.0f); // 突進長, 速度
+		return std::make_unique<BossBehaviorRushPlay>(RushLength, RushSpeed); // 突進長, 速度
 	}
 	else if (behaviorName == "RushEnd") {
 		return std::make_unique<BossBehaviorRushEnd>();
 	}
 	else if (behaviorName == "JumpJump") {
-		return std::make_unique<BossBehaviorJumpJump>(10.0f); // 高さ
+		return std::make_unique<BossBehaviorJumpJump>(JumpHeight); // 高さ
 	}
 	else if (behaviorName == "JumpFly") {
 		return std::make_unique<BossBehaviorJumpFly>(
-			4.0f, 3.0f, playerManager); // 時間, 接近時間
+			FlyingTime, ApproachTime, ApproachSpeed, playerManager); // 時間, 接近時間
 	}
 	else if (behaviorName == "JumpStomp") {
-		return std::make_unique<BossBehaviorJumpStomp>(0.5f); // 落下時間
+		return std::make_unique<BossBehaviorJumpStomp>(StompTime); // 落下時間
 	}
 
 	return nullptr;
+}
+
+void BossActionSecond::SetAttributeImGui() {
+	exporter_.DragFloat("StayTime", &StayTime, 0.1f);
+	exporter_.DragFloat("LookAtStartTime", &LookAtStartTime, 0.1f);
+	exporter_.DragFloat("RushStartTime", &RushStartTime, 0.1f);
+	exporter_.DragFloat("RushSpeed", &RushSpeed, 0.1f);
+	exporter_.DragFloat("RushLength", &RushLength, 0.1f);
+
+	exporter_.DragFloat("JumpHeight", &JumpHeight, 0.1f);
+	exporter_.DragFloat("FlyingTime", &FlyingTime, 0.1f);
+	exporter_.DragFloat("ApproachTime", &ApproachTime, 0.1f);
+	exporter_.DragFloat("ApproachSpeed", &ApproachSpeed, 0.1f);
+	exporter_.DragFloat("StompTime", &StompTime, 0.1f);
+
+	if (ImGui::Button("Export")) {
+		exporter_.OutputToJson();
+	}
 }

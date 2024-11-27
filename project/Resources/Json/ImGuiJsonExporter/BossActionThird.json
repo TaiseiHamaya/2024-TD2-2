@@ -1,0 +1,23 @@
+{
+	"ColliderLength": [
+		20.0
+	],
+	"LookAtStartTime": [
+		1.0
+	],
+	"RushLength": [
+		5.0
+	],
+	"RushSpeed": [
+		10.0
+	],
+	"RushStartTime": [
+		2.0
+	],
+	"StayTime": [
+		3.0
+	],
+	"TurnTime": [
+		1.0
+	]
+}

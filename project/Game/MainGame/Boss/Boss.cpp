@@ -10,8 +10,7 @@
 #include "BossBehavior/BaseBossBehavior.h"
 #include "Game/MainGame/Camera/GameCamera.h"
 
-Boss::Boss(int32_t hitpoint_) :
-	hitpoint(hitpoint_) {
+Boss::Boss() {
 	SetName("Boss");
 	// モデル設定
 
@@ -38,6 +37,8 @@ Boss::Boss(int32_t hitpoint_) :
 
 	hpFrameTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
 
+
+	damagedInvincibleTimer.time = 0;
 }
 
 Boss::~Boss() noexcept {
@@ -178,4 +179,8 @@ Collider* Boss::get_attack_collider() const {
 void Boss::hit_callback() {
 	isInvincible = true;
 	damagedInvincibleTimer.time = 1.0f;
+}
+
+void Boss::reset_hitpoint(uint32_t hitpoint_) {
+	hitpoint = hitpoint_;
 }

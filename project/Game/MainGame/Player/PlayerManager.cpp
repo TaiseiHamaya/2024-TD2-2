@@ -19,6 +19,7 @@ void PlayerManager::initialize() {
 	exporter_.GetFromStash("ModelSize", &Player::ModelSize, 1);
 	exporter_.GetFromStash("DefaultSize", &Player::DefaultSize, 1);
 	exporter_.GetFromStash("SizeParSec", &Player::SizeParSec, 1);
+	exporter_.GetFromStash("MoveSpeed", &Player::MoveSpeed, 1);
 
 	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
 	exporter_.GetFromStash("EjectLengthParSecond", &EjectLengthParSecond, 1);
@@ -236,11 +237,12 @@ void PlayerManager::SetAttributeImGui() {
 	ImGui::Text("%d", players.size());
 	ImGui::Text("%f", aimingTimer.time);
 	ImGui::Separator();
-	exporter_.DragFloat("MaxSize", &Player::maxSize, 0.05f);
-	exporter_.DragFloat("MinSize", &Player::minSize, 0.05f);
-	exporter_.DragFloat("ModelSize", &Player::ModelSize, 0.05f);
-	exporter_.DragFloat("DefaultSize", &Player::DefaultSize, 0.05f);
-	exporter_.DragFloat("SizeParSec", &Player::SizeParSec, 0.05f);
+	exporter_.DragFloat("MaxSize", &Player::maxSize, 0.1f);
+	exporter_.DragFloat("MinSize", &Player::minSize, 0.1f);
+	exporter_.DragFloat("ModelSize", &Player::ModelSize, 0.1f);
+	exporter_.DragFloat("DefaultSize", &Player::DefaultSize, 0.1f);
+	exporter_.DragFloat("SizeParSec", &Player::SizeParSec, 0.1f);
+	exporter_.DragFloat("MoveSpeed", &Player::MoveSpeed, 0.1f);
 
 	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
 	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
