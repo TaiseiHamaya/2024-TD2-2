@@ -14,6 +14,7 @@ BossBehaviorRushPlay::BossBehaviorRushPlay(float RushLength_, float RushSpeed_) 
 	attackCollider->SetTypeId(ColliderTypeBossAttack);
 	attackCollider->SetTargetTypeId(ColliderTypePlayerHit);
 	attackCollider->SetColliderBoundingSphere({ .radius = 3.0f });
+	Sxavenger::PlayAudioOneShot("enemy_bite.wav", 0.2f);
 }
 
 void BossBehaviorRushPlay::move() {
@@ -35,6 +36,7 @@ void BossBehaviorRushPlay::move() {
 	if (animationDurationCount_ < static_cast<uint32_t>(timer.time / (boss->get_animator()->GetAnimationDuration(0).time / 4.0f))) {
 		animationDurationCount_ = static_cast<uint32_t>(timer.time / (boss->get_animator()->GetAnimationDuration(0).time / 4.0f));
 		RushEffect();
+		Sxavenger::PlayAudioOneShot("enemy_bite.wav", 0.2f);
 	}
 }
 
