@@ -75,6 +75,7 @@ std::unique_ptr<BaseBossBehavior> BossActionThird::create(const std::string& beh
 	return nullptr;
 }
 
+#ifdef _DEBUG
 void BossActionThird::SetAttributeImGui() {
 	exporter_.DragFloat("StayTime", &StayTime, 0.1f);
 	exporter_.DragFloat("LookAtStartTime", &LookAtStartTime, 0.1f);
@@ -90,3 +91,4 @@ void BossActionThird::SetAttributeImGui() {
 		exporter_.OutputToJson();
 	}
 }
+#endif

@@ -41,8 +41,6 @@ private:
 	std::string key;
 	std::vector<PopData>::iterator next;
 
-#ifdef _DEBUG
 private:
-	std::string file{"PlayerAutomationPop.json"};
-#endif // _DEBUG
+	std::string file{ "PlayerAutomationPop.json" };
 };

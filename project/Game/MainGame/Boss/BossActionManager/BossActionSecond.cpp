@@ -81,6 +81,8 @@ std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& be
 	return nullptr;
 }
 
+#ifdef DEBUG
+
 void BossActionSecond::SetAttributeImGui() {
 	exporter_.DragFloat("StayTime", &StayTime, 0.1f);
 	exporter_.DragFloat("LookAtStartTime", &LookAtStartTime, 0.1f);
@@ -98,3 +100,5 @@ void BossActionSecond::SetAttributeImGui() {
 		exporter_.OutputToJson();
 	}
 }
+
+#endif // DEBUG
