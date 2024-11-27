@@ -30,8 +30,12 @@ void BossManager::initialize(const PlayerManager* player) {
 	SetName("BossManager");
 	SetToConsole();
 
-	hpFrameTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
-	hpTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar1.png");
+	hpFrameTexture_     = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
+	hpFrameBackTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar_back.png");
+
+	hpTexture_[0] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar1.png");
+	hpTexture_[1] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar2.png");
+	hpTexture_[2] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar3.png");
 }
 
 void BossManager::begin() {
@@ -98,18 +102,17 @@ void BossManager::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
 	auto drawer = SxavengerGame::GetSpriteCommon();
 
 	{
-		Vector2f position = { static_cast<float>(kWindowSize.x) - hpFrameTexture_->GetSize().x, kWindowSize.y / 2.0f - hpFrameTexture_->GetSize().y / 2.0f };
-		Vector2f size = {
-			static_cast<float>(hpFrameTexture_->GetSize().x),
-			std::lerp(0.0f, static_cast<float>(hpFrameTexture_->GetSize().y), static_cast<float>(boss->GetHitPoint()) / bossActionManager->max_hitpoint())
-		};
+
+		Vector2f position = { kWindowSize.x - hpFrameBackTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
 
 		drawer->DrawSprite(
-			position, size, hpTexture_->GetGPUHandleSRV()
+			position, hpFrameBackTexture_->GetSize(), { 0.5f, 0.5f }, hpFrameBackTexture_->GetGPUHandleSRV(), { 0.2f, 0.2f, 0.2f, 1.0f }
 		);
 	}
 
-	{
+	DrawHP(phase);
+
+	{ //!< health point frame
 		Vector2f position = { kWindowSize.x - hpFrameTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
 
 		drawer->DrawSprite(
@@ -165,6 +168,35 @@ void BossManager::initialize_action() {
 		break;
 	}
 	boss->reset_hitpoint(bossActionManager->max_hitpoint());
+}
+
+void BossManager::DrawHP(int32_t wave) {
+	auto drawer = SxavengerGame::GetSpriteCommon();
+
+	// back
+	if (wave < MaxWave - 1) {
+		int32_t nextWave = wave + 1;
+
+		Vector2f position = { kWindowSize.x - hpTexture_[nextWave]->GetSize().x / 2.0f, kWindowSize.y / 2.0f};
+
+		drawer->DrawSprite(
+			position, hpTexture_[nextWave]->GetSize(), {0.5f, 0.5f}, hpTexture_[nextWave]->GetGPUHandleSRV()
+		);
+	}
+
+	// front
+	Vector2f frameSize = hpTexture_[wave]->GetSize();
+
+	float hpT = (boss->GetHitPoint()) / static_cast<float>(bossActionManager->max_hitpoint());
+	hpT = std::clamp(hpT + 0.1f, 0.0f, 1.0f);
+
+	Vector2f position = { kWindowSize.x - frameSize.x, kWindowSize.y / 2.0f + frameSize.y / 2.0f };
+	Vector2f size = { frameSize.x, -std::lerp(0.0f, frameSize.y, hpT) };
+
+	drawer->DrawSpriteClip(
+		position, size, { 0.0f, 0.0f }, { 1.0f, hpT }, hpTexture_[wave]->GetGPUHandleSRV()
+	);
+	
 }
 
 void BossManager::SetAttributeImGui() {

@@ -38,6 +38,8 @@ private:
 	void next_phase();
 	void initialize_action();
 
+	void DrawHP(int32_t wave);
+
 #ifdef _DEBUG
 public:
 	void SetAttributeImGui() override;
@@ -55,5 +57,6 @@ private:
 	//* hp bar *//
 
 	Texture* hpFrameTexture_;
-	Texture* hpTexture_;
+	Texture* hpFrameBackTexture_;
+	std::array<Texture*, MaxWave> hpTexture_;
 };
