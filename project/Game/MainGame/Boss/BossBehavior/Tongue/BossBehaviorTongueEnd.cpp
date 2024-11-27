@@ -4,7 +4,7 @@
 
 BossBehaviorTongueEnd::BossBehaviorTongueEnd() {
 	boss->set_model("enemy_tongue_end.gltf");
-	Sxavenger::PlayAudioOneShot("enemy_tongue_end.wav", 0.2f);
+	Sxavenger::PlayAudioOneShot("enemy_tongue_end.wav", 0.4f);
 }
 
 void BossBehaviorTongueEnd::move() {
