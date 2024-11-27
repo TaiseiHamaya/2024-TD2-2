@@ -25,6 +25,8 @@ public:
 	void attack_hit_callback();
 	void damaged_hit_callback(int32_t damage, const Vector3f& playerTranslate);
 
+	void DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) override;
+
 public:
 	bool is_end_all() const;
 	bool is_Invincible() const;
@@ -37,6 +39,8 @@ public:
 private:
 	void next_phase();
 	void initialize_action();
+
+	void DrawHP(int32_t wave);
 
 #ifdef _DEBUG
 public:
@@ -52,5 +56,12 @@ private:
 
 	bool isEndAll{ false };
 
+	//* hp bar *//
+
+	Texture* hpFrameTexture_;
+	Texture* hpFrameBackTexture_;
+	std::array<Texture*, MaxWave> hpTexture_;
+
+  
 	PlayerAutomationPop* playerAutomationPop;
 };

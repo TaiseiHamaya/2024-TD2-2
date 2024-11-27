@@ -9,13 +9,22 @@
 
 #include "../Player/PlayerAutomationPop.h"
 
-void BossManager::initialize(const PlayerManager* player, PlayerAutomationPop* playerAutomationPop_) {
+#include <Engine/Game/SxavengerGame.h>
+#include <Engine/System/Sxavenger.h>
+
+
+#include <Engine/System/Performance.h>
+#include <Lib/Easing.h>
+
+void BossManager::initialize(const PlayerManager* player) {
 	boss = std::make_unique<Boss>();
 	boss->SetToConsole();
 
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
 	playerAutomationPop = playerAutomationPop_;
+
+	BaseBehavior::renderingFlag_ = kBehaviorRender_LateAdaptive;
 
 	phase = 0;
 	isPhaseTransition = false;
@@ -24,6 +33,13 @@ void BossManager::initialize(const PlayerManager* player, PlayerAutomationPop* p
 
 	SetName("BossManager");
 	SetToConsole();
+
+	hpFrameTexture_     = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_frame.png");
+	hpFrameBackTexture_ = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar_back.png");
+
+	hpTexture_[0] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar1.png");
+	hpTexture_[1] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar2.png");
+	hpTexture_[2] = Sxavenger::LoadTexture("resourcesData/gameScene/Model/HP_bar3.png");
 }
 
 void BossManager::begin() {
@@ -89,6 +105,30 @@ void BossManager::damaged_hit_callback(int32_t damage, const Vector3f& playerTra
 	}
 }
 
+void BossManager::DrawAdaptive(_MAYBE_UNUSED const Camera3D* camera) {
+
+	auto drawer = SxavengerGame::GetSpriteCommon();
+
+	{
+
+		Vector2f position = { kWindowSize.x - hpFrameBackTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
+
+		drawer->DrawSprite(
+			position, hpFrameBackTexture_->GetSize(), { 0.5f, 0.5f }, hpFrameBackTexture_->GetGPUHandleSRV(), { 0.2f, 0.2f, 0.2f, 1.0f }
+		);
+	}
+
+	DrawHP(phase);
+
+	{ //!< health point frame
+		Vector2f position = { kWindowSize.x - hpFrameTexture_->GetSize().x / 2.0f, kWindowSize.y / 2.0f };
+
+		drawer->DrawSprite(
+			position, hpFrameTexture_->GetSize(), { 0.5f, 0.5f }, hpFrameTexture_->GetGPUHandleSRV()
+		);
+	}
+}
+
 bool BossManager::is_end_all() const {
 	return isEndAll;
 }
@@ -140,6 +180,35 @@ void BossManager::initialize_action() {
 		break;
 	}
 	boss->reset_hitpoint(bossActionManager->max_hitpoint());
+}
+
+void BossManager::DrawHP(int32_t wave) {
+	auto drawer = SxavengerGame::GetSpriteCommon();
+
+	// back
+	if (wave < MaxWave - 1) {
+		int32_t nextWave = wave + 1;
+
+		Vector2f position = { kWindowSize.x - hpTexture_[nextWave]->GetSize().x / 2.0f, kWindowSize.y / 2.0f};
+
+		drawer->DrawSprite(
+			position, hpTexture_[nextWave]->GetSize(), {0.5f, 0.5f}, hpTexture_[nextWave]->GetGPUHandleSRV()
+		);
+	}
+
+	// front
+	Vector2f frameSize = hpTexture_[wave]->GetSize();
+
+	float hpT = (boss->GetHitPoint()) / static_cast<float>(bossActionManager->max_hitpoint());
+	hpT = std::clamp(hpT + 0.1f, 0.0f, 1.0f);
+
+	Vector2f position = { kWindowSize.x - frameSize.x, kWindowSize.y / 2.0f + frameSize.y / 2.0f };
+	Vector2f size = { frameSize.x, -std::lerp(0.0f, frameSize.y, hpT) };
+
+	drawer->DrawSpriteClip(
+		position, size, { 0.0f, 0.0f }, { 1.0f, hpT }, hpTexture_[wave]->GetGPUHandleSRV()
+	);
+	
 }
 
 void BossManager::SetAttributeImGui() {
