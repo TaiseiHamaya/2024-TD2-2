@@ -6,6 +6,7 @@ BossBehaviorJumpJump::BossBehaviorJumpJump(float JumpHeight_) :
 	JumpHeight(JumpHeight_) {
 	boss->set_model("enemy_jump.gltf");
 	JumpTime = boss->get_animator()->GetAnimationDuration(0).time;
+	Sxavenger::PlayAudioOneShot("enemy_jump.wav", 0.2f);
 }
 
 void BossBehaviorJumpJump::move() {
@@ -14,5 +15,6 @@ void BossBehaviorJumpJump::move() {
 
 	if (timer.time >= JumpTime) {
 		isEnd = true;
+		
 	}
 }

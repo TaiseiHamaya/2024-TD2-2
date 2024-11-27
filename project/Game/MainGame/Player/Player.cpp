@@ -107,6 +107,11 @@ void Player::update_matrix() {
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
 		animator_->Update(animationTimer, i, true);
 	}
+
+	if (animationTimer > animator_->GetAnimationDuration(0)) {
+		animationTimer.time = std::fmod(animationTimer.time, animator_->GetAnimationDuration(0).time);
+		Sxavenger::PlayAudioOneShot("player_jump.wav", 0.2f);
+	}
 }
 
 void Player::operate_update(const Vector2f& input) {
@@ -115,6 +120,12 @@ void Player::operate_update(const Vector2f& input) {
 	}
 	Vector3f moveDirection = { input.x, 0.0f, input.y };
 	velocity = moveDirection * MoveSpeed;
+
+	if (Length(moveDirection) >= 0) {
+		Quaternion lookAt = LookAt({ 0,0,1 }, Normalize(moveDirection));
+		transform_.transform.rotate =
+			Slerp(transform_.transform.rotate, lookAt, 0.5f);
+	}
 }
 
 void Player::ungather() {

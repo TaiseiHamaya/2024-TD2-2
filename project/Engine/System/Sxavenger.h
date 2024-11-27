@@ -124,6 +124,8 @@ public:
 	// Audio option
 	//-----------------------------------------------------------------------------------------
 
+	static void CreateAudio(const std::string& filename);
+
 	static std::unique_ptr<Audio> GetAudio(const std::string& filename, bool isLoop = false);
 
 	static void PlayAudioOneShot(const std::string& filename, float volume = 1.0f);

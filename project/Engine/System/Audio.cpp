@@ -180,7 +180,7 @@ void Audio::ResetAudio() {
 // AudioManager class methods
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-const std::string AudioManager::directory_ = "resources/sounds/";
+const std::string AudioManager::directory_ = "resourcesData/gameScene/Sound/";
 
 void AudioManager::Init() {
 	InitXAudio2();
@@ -200,8 +200,7 @@ void AudioManager::Term() {
 void AudioManager::LoadAudioBuffer(const std::string& filename) {
 	std::string lower = ToLower(filename);
 
-	auto it = buffers_.find(lower);
-	if (it != buffers_.end()) {
+	if (buffers_.contains(lower)) {
 		return; //!< すでにbufferが存在している
 	}
 
@@ -217,8 +216,7 @@ const AudioBuffer* AudioManager::GetAudioBuffer(const std::string& filename) {
 
 	std::string lower = ToLower(filename);
 
-	auto it = buffers_.find(lower);
-	if (it == buffers_.end()) { //!< bufferが存在しない場合
+	if (!buffers_.contains(lower)) { //!< bufferが存在しない場合
 		LoadAudioBuffer(lower);
 	}
 

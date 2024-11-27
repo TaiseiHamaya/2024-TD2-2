@@ -24,6 +24,9 @@ void PlayerManager::initialize() {
 	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
 	exporter_.GetFromStash("EjectLengthParSecond", &EjectMaxDistance, 1);
 
+	exporter_.GetFromStash("MinDamage", &Player::MinDamage, 1);
+	exporter_.GetFromStash("MaxDamage", &Player::MaxDamage, 1);
+
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
 	operatePlayer->initialize(Vector3f{ 0.0f,0.0f,-30.0f }, Player::DefaultSize);
@@ -243,6 +246,8 @@ void PlayerManager::eject() {
 
 	// 次の操作キャラクターの設定
 	search_operate_player();
+
+	Sxavenger::PlayAudioOneShot("player_injection.wav", 0.2f);
 }
 
 void PlayerManager::search_operate_player() {
@@ -270,6 +275,9 @@ void PlayerManager::SetAttributeImGui() {
 	exporter_.DragFloat("EjectPressTime", &EjectPressTime, 0.01f);
 	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.1f);
 	exporter_.DragFloat("EjectMinDistance", &EjectMinDistance, 0.1f);
+
+	exporter_.DragFloat("MinDamage", &Player::MinDamage, 0.1f);
+	exporter_.DragFloat("MaxDamage", &Player::MaxDamage, 0.1f);
 
 	if (ImGui::Button("output parameter")) {
 		exporter_.OutputToJson();

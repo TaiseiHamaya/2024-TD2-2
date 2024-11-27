@@ -35,6 +35,16 @@ void MainGameScene::Init() {
 	skydome_->Init();
 	skydome_->SetToConsole();
 
+	Sxavenger::CreateAudio("enemy_damage.wav");
+	Sxavenger::CreateAudio("enemy_bite.wav");
+	Sxavenger::CreateAudio("enemy_jump.wav");
+	Sxavenger::CreateAudio("enemy_landing.wav");
+	Sxavenger::CreateAudio("enemy_tongue.wav");
+	Sxavenger::CreateAudio("enemy_tongue_end.wav");
+
+	bgm_ = Sxavenger::GetAudio("gameBGM.wav");
+	bgm_->SetVolume(0.2f);
+	bgm_->PlayAudio();
 }
 
 void MainGameScene::Term() {
@@ -114,7 +124,9 @@ void MainGameScene::collision_player_attack() {
 	std::list<Player>& players = playerManager->get_players();
 	for (auto& player : players) {
 		if (bossCollider->GetStates(player.get_attack_collider()).test(0)) {
-			bossManager->damaged_hit_callback(1, player.world_point());
+			float size = player.get_size();
+			float damage = std::lerp(Player::MinDamage, Player::MaxDamage, std::min(size / Player::DefaultSize, 1.0f));
+			bossManager->damaged_hit_callback(damage, player.world_point());
 		}
 	}
 }

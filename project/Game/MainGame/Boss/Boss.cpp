@@ -114,7 +114,7 @@ void Boss::finalize() {
 
 void Boss::SetAttributeImGui() {
 	ImGui::Text("%f", behavior->get_timer().time);
-	ImGui::Text("%d", hitpoint);
+	ImGui::Text("%f", hitpoint);
 }
 
 void Boss::CreateLandingParticle(const Vector3f& velocity) {
@@ -158,8 +158,9 @@ void Boss::set_phase_uv(uint32_t phase) {
 	uvTransform_.transform.translate.x = static_cast<float>(phase) / 3.0f;
 }
 
-void Boss::take_damage(int32_t damage) {
+void Boss::take_damage(float damage) {
 	hitpoint -= damage;
+	Sxavenger::PlayAudioOneShot("enemy_damage.wav", 0.2f);
 }
 
 void Boss::set_model(const std::string& file) {
@@ -201,6 +202,6 @@ void Boss::hit_callback() {
 	damagedInvincibleTimer.time = 1.0f;
 }
 
-void Boss::reset_hitpoint(uint32_t hitpoint_) {
+void Boss::reset_hitpoint(float hitpoint_) {
 	hitpoint = hitpoint_;
 }

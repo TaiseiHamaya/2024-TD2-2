@@ -92,7 +92,7 @@ void BossManager::attack_hit_callback() {
 	}
 }
 
-void BossManager::damaged_hit_callback(int32_t damage, const Vector3f& playerTranslate) {
+void BossManager::damaged_hit_callback(float damage, const Vector3f& playerTranslate) {
 	if (boss) {
 		boss->hit_callback();
 		boss->take_damage(damage);
@@ -189,6 +189,9 @@ void BossManager::initialize_action() {
 
 void BossManager::DrawHP(int32_t wave) {
 	auto drawer = SxavengerGame::GetSpriteCommon();
+	if (wave == MaxWave) {
+		return;
+	}
 
 	// back
 	if (wave < MaxWave - 1) {

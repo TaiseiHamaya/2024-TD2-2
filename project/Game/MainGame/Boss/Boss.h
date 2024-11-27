@@ -51,7 +51,7 @@ public:
 	void set_phase_uv(uint32_t phase);
 
 public:
-	void take_damage(int32_t damage);
+	void take_damage(float damage);
 	void set_model(const std::string& file);
 	bool is_dead() const;
 	bool is_invincible() const;
@@ -65,14 +65,14 @@ public:
 	std::unique_ptr<BaseBossBehavior>& get_behavior() { return behavior; };
 	const std::unique_ptr<BaseBossBehavior>& get_behavior() const { return behavior; };
 	void hit_callback();
-	void reset_hitpoint(uint32_t hitpoint_);
+	void reset_hitpoint(float hitpoint_);
 
-	int32_t GetHitPoint() const { return hitpoint; }
+	float GetHitPoint() const { return hitpoint; }
 
 private:
 	bool isInvincible{ false };
 	bool isDestroy{ false };
-	int32_t hitpoint;
+	float hitpoint;
 
 	//Animator* animator;
 	std::unique_ptr<BaseBossBehavior> behavior;
