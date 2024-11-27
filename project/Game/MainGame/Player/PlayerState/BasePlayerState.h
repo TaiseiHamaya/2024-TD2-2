@@ -30,6 +30,7 @@ protected:
 	void create_collider();
 
 public:
+	void end_force() { isEnd = true; };
 	bool is_end() const { return isEnd; };
 
 protected:

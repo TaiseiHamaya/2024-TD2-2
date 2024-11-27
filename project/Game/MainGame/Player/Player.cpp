@@ -62,10 +62,19 @@ void Player::update() {
 	if (!stateQue.empty()) {
 		velocity = stateQue.front()->velocity();
 	}
-	transform_.transform.translate += velocity * Performance::GetDeltaTime(s).time;
+	Vector3f& translate = transform_.transform.translate;
+	translate += velocity * Performance::GetDeltaTime(s).time;
 
-	if (transform_.transform.translate.y < 0 || stateQue.empty()) {
-		transform_.transform.translate.y = 0;
+	float wall = 40;
+	if (Length(translate) > wall - size / 2) {
+		translate = Normalize(translate) * (wall - size / 2);
+		if (!stateQue.empty()) {
+			stateQue.front()->end_force();
+		}
+	}
+
+	if (translate.y < 0 || stateQue.empty()) {
+		translate.y = 0;
 	}
 
 	color_.color = { 1.0f, 1.0f, 1.0f, 1.0f };

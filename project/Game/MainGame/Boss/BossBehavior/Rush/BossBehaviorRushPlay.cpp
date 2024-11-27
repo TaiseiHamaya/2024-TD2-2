@@ -17,12 +17,18 @@ BossBehaviorRushPlay::BossBehaviorRushPlay(float RushLength_, float RushSpeed_) 
 }
 
 void BossBehaviorRushPlay::move() {
+	Vector3f& translate = boss->get_transform().transform.translate;
 	// 移動処理
-	boss->get_transform().transform.translate += direction * RushSpeed * Performance::GetDeltaTime(s).time;
+	translate += direction * RushSpeed * Performance::GetDeltaTime(s).time;
 	rushAmount += RushSpeed * Performance::GetDeltaTime(s).time;
 
 	// 終了条件
-	if (rushAmount >= RushLength || isHitCollision) {
+	float length = Length(translate);
+	if (rushAmount >= RushLength || isHitCollision || length >= 38.0f) {
+		if (length >= 38.0f) {
+			Vector3f normalized = Normalize(translate);
+			translate = normalized * 37.0f;
+		}
 		isEnd = true;
 	}
 
