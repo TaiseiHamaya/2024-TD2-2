@@ -115,6 +115,12 @@ void Player::operate_update(const Vector2f& input) {
 	}
 	Vector3f moveDirection = { input.x, 0.0f, input.y };
 	velocity = moveDirection * MoveSpeed;
+
+	if (Length(moveDirection) >= 0) {
+		Quaternion lookAt = LookAt({ 0,0,1 }, Normalize(moveDirection));
+		transform_.transform.rotate =
+			Slerp(transform_.transform.rotate, lookAt, 0.5f);
+	}
 }
 
 void Player::ungather() {
