@@ -16,7 +16,7 @@
 #include <Engine/System/Performance.h>
 #include <Lib/Easing.h>
 
-void BossManager::initialize(const PlayerManager* player) {
+void BossManager::initialize(const PlayerManager* player, PlayerAutomationPop* playerAutomationPop_) {
 	boss = std::make_unique<Boss>();
 	boss->SetToConsole();
 
