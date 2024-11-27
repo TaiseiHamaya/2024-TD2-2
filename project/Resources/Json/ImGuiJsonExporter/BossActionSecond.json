@@ -1,6 +1,6 @@
 {
 	"ApproachSpeed": [
-		10.0
+		20.0
 	],
 	"ApproachTime": [
 		3.0
@@ -18,7 +18,7 @@
 		30.0
 	],
 	"RushSpeed": [
-		25.0
+		35.0
 	],
 	"RushStartTime": [
 		2.0
