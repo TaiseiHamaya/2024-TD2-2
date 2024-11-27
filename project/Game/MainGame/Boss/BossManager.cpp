@@ -6,6 +6,7 @@
 
 #include "BossBehavior/BossBehaviorKnockback.h"
 #include "BossBehavior/BossBehaviorStay.h"
+#include "BossBehavior/BossBehaviorAnimation.h"
 
 #include "../Player/PlayerAutomationPop.h"
 
@@ -163,18 +164,22 @@ void BossManager::initialize_action() {
 	switch (phase) {
 	case 0: // P1
 		bossActionManager = std::make_unique<BossActionFirst>();
-		boss->set_behavior(std::make_unique<BossBehaviorStay>(5.0f, nullptr));
+		boss->set_behavior(std::make_unique<BossBehaviorAnimation>("enemy_gameStart.gltf"));
+		boss->set_phase_uv(phase);
 		break;
 	case 1: // P2
 		bossActionManager = std::make_unique<BossActionSecond>();
-		boss->set_behavior(std::make_unique<BossBehaviorStay>(5.0f, nullptr));
+		boss->set_behavior(std::make_unique<BossBehaviorAnimation>("enemy_gameStart.gltf"));
+		boss->set_phase_uv(phase);
 		break;
 	case 2: // P3
 		bossActionManager = std::make_unique<BossActionThird>();
-		boss->set_behavior(std::make_unique<BossBehaviorStay>(5.0f, nullptr));
+		boss->set_behavior(std::make_unique<BossBehaviorAnimation>("enemy_gameStart.gltf"));
+		boss->set_phase_uv(phase);
 		break;
 	case MaxWave:
 		bossActionManager.reset();
+		boss->set_behavior(std::make_unique<BossBehaviorAnimation>("enemy_death.gltf"));
 		//boss->set_behavior(std::make_unique<>());
 		return;
 		break;

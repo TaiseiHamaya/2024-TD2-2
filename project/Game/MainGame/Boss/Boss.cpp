@@ -60,6 +60,8 @@ Boss::Boss() {
 	CreateAnimation("enemy_tongue.gltf");
 	CreateAnimation("enemy_tongue_end.gltf");
 	CreateAnimation("enemy_damage_small.gltf");
+	uvTransform_.transform.scale.x = 1 / 3.0f;
+	damagedInvincibleTimer.time = 0;
 }
 
 Boss::~Boss() noexcept {
@@ -88,13 +90,14 @@ void Boss::update() {
 
 void Boss::update_matrix() {
 	transform_.UpdateMatrix();
+	uvTransform_.Transfer();
 	collider_->SetColliderPosition(transform_.GetWorldPosition());
 	// アニメーション更新
 	if (!animator_) {
 		return;
 	}
 	for (uint32_t i = 0; i < animator_->GetAnimationSize(); ++i) {
-		animator_->Update(behavior->get_timer() , i, true);
+		animator_->Update(behavior->get_timer(), i, true);
 	}
 	//animator_->Update(behavior->get_timer(), 0, true);
 
@@ -149,6 +152,10 @@ bool Boss::is_end_behavior() const {
 
 void Boss::set_behavior(std::unique_ptr<BaseBossBehavior> behavior_) {
 	behavior = std::move(behavior_);
+}
+
+void Boss::set_phase_uv(uint32_t phase) {
+	uvTransform_.transform.translate.x = static_cast<float>(phase) / 3.0f;
 }
 
 void Boss::take_damage(int32_t damage) {

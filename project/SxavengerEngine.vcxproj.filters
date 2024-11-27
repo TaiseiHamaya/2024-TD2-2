@@ -170,6 +170,7 @@
     <ClCompile Include="Game\MainGame\Player\PlayerAutomationPop.cpp" />
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.cpp" />
     <ClCompile Include="Game\MainGame\Skydome.cpp" />
+    <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Beta\DepthRenderTarget.h" />
@@ -328,6 +329,7 @@
     <ClInclude Include="Game\MainGame\Player\PlayerAutomationPop.h" />
     <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.h" />
     <ClInclude Include="Game\MainGame\Skydome.h" />
+    <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

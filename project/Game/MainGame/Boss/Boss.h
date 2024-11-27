@@ -48,6 +48,7 @@ public:
 public:
 	bool is_end_behavior() const;
 	void set_behavior(std::unique_ptr<BaseBossBehavior> behavior_);
+	void set_phase_uv(uint32_t phase);
 
 public:
 	void take_damage(int32_t damage);
