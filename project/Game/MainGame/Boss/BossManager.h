@@ -1,11 +1,13 @@
 #pragma once
 
+#include <Engine/Game/Behavior/BaseBehavior.h>
+
 #include "Boss.h"
 #include "BossActionManager/BossActionManager.h"
 
 class PlayerManager;
 
-class BossManager {
+class BossManager : public BaseBehavior {
 public:
 	BossManager() = default;
 	~BossManager() = default;
@@ -33,6 +35,11 @@ public:
 private:
 	void next_phase();
 	void initialize_action();
+
+#ifdef _DEBUG
+public:
+	void SetAttributeImGui() override;
+#endif // _DEBUG
 
 private:
 	std::unique_ptr<Boss> boss;
