@@ -26,7 +26,7 @@ void PlayerManager::initialize() {
 
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
-	operatePlayer->initialize(kOrigin3, Player::DefaultSize);
+	operatePlayer->initialize(Vector3f{ 0.0f,0.0f,-30.0f }, Player::DefaultSize);
 	canEject = true;
 
 	exporter_.TryLoadFromJson();
