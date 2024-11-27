@@ -33,6 +33,10 @@ void TitleScene::Init() {
 	board_->Init();
 	board_->SetToConsole();
 
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Init();
+	skydome_->SetToConsole();
+
 	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, { 0.0f, -0.281157285f, 0.0f, 0.959661603f }, {15.6f, 5.5f, -31.77f });
 }
 
