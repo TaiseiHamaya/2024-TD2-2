@@ -14,7 +14,7 @@ void BossManager::initialize(const PlayerManager* player) {
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
 
-	phase = 3;
+	phase = 0;
 	isPhaseTransition = false;
 
 	initialize_action();
