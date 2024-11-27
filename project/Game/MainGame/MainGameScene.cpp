@@ -108,11 +108,13 @@ void MainGameScene::collision_boss_attack() {
 			);
 			player->take_damage();
 
-			if (playerManager->get_operate_player() == std::to_address(player)) {
-				playerManager->search_operate_player();
-			}
+			Player* playerAddress = std::to_address(player);
 			if (player->get_size() <= Player::MinSize) {
 				players.erase(player);
+			}
+
+			if (playerManager->get_operate_player() == playerAddress) {
+				playerManager->search_operate_player();
 			}
 
 			// 敵側の処理
