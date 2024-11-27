@@ -21,7 +21,7 @@ BossActionFirst::BossActionFirst() {
 		"RushStartR", "RushPlay", "RushEnd",
 		"Stay" };
 	newFlow.coolTime = 1.0f;
-	maxHitpoint = 3;
+	maxHitpoint = 5;
 
 	SetName("BossActionFirst");
 	exporter_.TryLoadFromJson();
