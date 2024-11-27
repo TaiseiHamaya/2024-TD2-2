@@ -70,8 +70,9 @@ private:
 	std::list<Player> players;
 	Player* operatePlayer;
 
-	float EjectMaxDistance{ 3.0f };
-	float EjectLengthParSecond{ 3.0f };
+	float EjectPressTime;
+	float EjectMaxDistance{ 10.0f };
+	float EjectMinDistance{ 1.0f };
 
 	std::unique_ptr<Cursol> cursol_;
 };

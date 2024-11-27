@@ -8,6 +8,12 @@
 	"EjectMaxDistance": [
 		20.0
 	],
+	"EjectMinDistance": [
+		1.0
+	],
+	"EjectPressTime": [
+		3.0
+	],
 	"MaxSize": [
 		5.0
 	],
