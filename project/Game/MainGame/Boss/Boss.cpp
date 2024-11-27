@@ -36,6 +36,30 @@ Boss::Boss() {
 	SetChild(shadow_.get());
 
 	damagedInvincibleTimer.time = 0;
+
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_stay.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_rush_start.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_rush.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_rush_end.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_jump.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_fly.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_stomp.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_tongue_start.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_tongue.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_tongue_end.gltf");
+	SxavengerGame::LoadModel("resourcesData/gameScene/model", "enemy_damage_small.gltf");
+
+	CreateAnimation("enemy_stay.gltf");
+	CreateAnimation("enemy_rush_start.gltf");
+	CreateAnimation("enemy_rush.gltf");
+	CreateAnimation("enemy_rush_end.gltf");
+	CreateAnimation("enemy_jump.gltf");
+	CreateAnimation("enemy_fly.gltf");
+	CreateAnimation("enemy_stomp.gltf");
+	CreateAnimation("enemy_tongue_start.gltf");
+	CreateAnimation("enemy_tongue.gltf");
+	CreateAnimation("enemy_tongue_end.gltf");
+	CreateAnimation("enemy_damage_small.gltf");
 }
 
 Boss::~Boss() noexcept {
@@ -110,6 +134,15 @@ void Boss::ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength)
 	camera_->SetShake(time, subdivision, strength);
 }
 
+void Boss::CreateAnimation(const std::string& filename) {
+	if (!models.contains(filename)) {
+		auto& newModels = models.emplace(filename, AnimationModel{}).first->second;
+		newModels.model = SxavengerGame::LoadModel("ResourcesData/GameScene/Model", filename);
+		newModels.model->ApplyMeshShader();
+		newModels.animator = std::make_unique<Animator>(newModels.model);
+	}
+}
+
 bool Boss::is_end_behavior() const {
 	return behavior->is_end();
 }
@@ -122,13 +155,7 @@ void Boss::take_damage(int32_t damage) {
 	hitpoint -= damage;
 }
 
-struct AnimationModel {
-	Model* model;
-	std::unique_ptr<Animator> animator;
-};
-
 void Boss::set_model(const std::string& file) {
-	static std::unordered_map<std::string, AnimationModel> models;
 	if (!models.contains(file)) {
 		auto& newModels = models.emplace(file, AnimationModel{}).first->second;
 		newModels.model = SxavengerGame::LoadModel("ResourcesData/GameScene/Model", file);

@@ -12,6 +12,11 @@ class GameCamera;
 
 class BaseBossBehavior;
 
+struct AnimationModel {
+	Model* model;
+	std::unique_ptr<Animator> animator;
+};
+
 class Boss : public AnimationBehavior {
 public:
 	Boss();
@@ -37,6 +42,8 @@ public:
 
 	void SetGacamera(GameCamera* camera) { camera_ = camera; }
 	void ShakeCamera(DeltaTimePoint time, int32_t subdivision, float strength);
+
+	void CreateAnimation(const std::string& filename);
 
 public:
 	bool is_end_behavior() const;
@@ -77,4 +84,6 @@ private:
 	GameCamera* camera_ = nullptr;
 
 	std::unique_ptr<Shadow> shadow_;
+
+	std::unordered_map<std::string, AnimationModel> models;
 };
