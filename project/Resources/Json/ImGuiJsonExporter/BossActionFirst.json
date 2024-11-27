@@ -6,12 +6,12 @@
 		30.0
 	],
 	"RushSpeed": [
-		25.0
+		40.0
 	],
 	"RushStartTime": [
 		2.0
 	],
 	"StayTime": [
-		4.0
+		1.0
 	]
 }

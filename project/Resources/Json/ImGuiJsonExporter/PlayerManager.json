@@ -9,13 +9,7 @@
 		20.0
 	],
 	"EjectMinDistance": [
-		1.0
-	],
-	"EjectPressTime": [
-		3.0
-	],
-	"EjectMinDistance": [
-		1.0
+		0.20000000298023224
 	],
 	"EjectPressTime": [
 		3.0
@@ -24,7 +18,7 @@
 		5.0
 	],
 	"MinSize": [
-		0.4000000059604645
+		0.800000011920929
 	],
 	"ModelSize": [
 		1.440000057220459
