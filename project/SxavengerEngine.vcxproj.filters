@@ -167,6 +167,8 @@
     <ClCompile Include="Game\MainGame\Boss\BossActionManager\BossActionThird.cpp" />
     <ClCompile Include="Game\MainGame\UI\ControlExplain.cpp" />
     <ClCompile Include="Game\MainGame\Effect\Shadow.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerAutomationPop.cpp" />
+    <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.cpp" />
     <ClCompile Include="Game\MainGame\Skydome.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +325,8 @@
     <ClInclude Include="Game\MainGame\Boss\BossActionManager\BossActionThird.h" />
     <ClInclude Include="Game\MainGame\UI\ControlExplain.h" />
     <ClInclude Include="Game\MainGame\Effect\Shadow.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerAutomationPop.h" />
+    <ClInclude Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.h" />
     <ClInclude Include="Game\MainGame\Skydome.h" />
   </ItemGroup>
   <ItemGroup>

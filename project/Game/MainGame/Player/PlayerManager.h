@@ -32,6 +32,8 @@ public:
 
 	Player* GetOperator() const { return operatePlayer; }
 
+	void spawn(std::list<Player>&& spawnPlayers);
+
 	bool CanShot() const;
 
 private:
@@ -48,7 +50,7 @@ private:
 	/// </summary>
 	void eject();
 
-	void search_operate_player();
+		void search_operate_player();
 
 #ifdef _DEBUG
 public:

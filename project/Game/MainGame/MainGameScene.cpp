@@ -7,6 +7,7 @@
 #include <Lib/Geometry/MathLib.h>
 
 #include "Game/MainGame/Player/PlayerState/PlayerStateKnockback.h"
+#include "Boss/BossBehavior/BaseBossBehavior.h"
 
 void MainGameScene::Init() {
 	sSystemConsole->GetGameCamera()->Reset();
@@ -18,8 +19,10 @@ void MainGameScene::Init() {
 	playerManager = std::make_unique<PlayerManager>();
 	playerManager->initialize();
 
+	playerAutomationPop = std::make_unique<PlayerAutomationPop>();
+
 	bossManager = std::make_unique<BossManager>();
-	bossManager->initialize(playerManager.get());
+	bossManager->initialize(playerManager.get(), playerAutomationPop.get());
 	bossManager->GetBoss()->SetGacamera(gameCamera_.get());
 
 	field_ = std::make_unique<Field>();
@@ -44,6 +47,11 @@ void MainGameScene::Update() {
 	// 更新処理
 	playerManager->update();
 	bossManager->update();
+
+	if (bossManager->is_transition()) {
+		playerManager->spawn(playerAutomationPop->pop(bossManager->GetBoss()->get_behavior()->get_timer()));
+	}
+
 	// 行列更新
 	playerManager->update_matrix();
 	bossManager->update_matrix();
