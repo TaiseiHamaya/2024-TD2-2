@@ -18,7 +18,9 @@ BossActionThird::BossActionThird() {
 	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
+		"StayShort",
 		"RushStartL", "RushPlay", "RushEnd",
+		"StayShort",
 		"TongueStart", "TonguePlay", "TongueEnd",
 		"Stay"
 	};
@@ -66,10 +68,14 @@ std::unique_ptr<BaseBossBehavior> BossActionThird::create(const std::string& beh
 	else if (behaviorName == "TongueEnd") {
 		return std::make_unique<BossBehaviorTongueEnd>(); // 
 	}
+	else if (behaviorName == "StayShort") {
+		return std::make_unique<BossBehaviorStay>(0.1f, playerManager);
+	}
 
 	return nullptr;
 }
 
+#ifdef _DEBUG
 void BossActionThird::SetAttributeImGui() {
 	exporter_.DragFloat("StayTime", &StayTime, 0.1f);
 	exporter_.DragFloat("LookAtStartTime", &LookAtStartTime, 0.1f);
@@ -85,3 +91,4 @@ void BossActionThird::SetAttributeImGui() {
 		exporter_.OutputToJson();
 	}
 }
+#endif

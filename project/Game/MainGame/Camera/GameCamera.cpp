@@ -135,7 +135,7 @@ void GameCamera::UpdateTarget(PlayerManager* player, BossManager* boss) {
 
 	Vector3f lerp = Lerp(playerPosition, bossPosition, halfway);
 	target_ = lerp;
-	target_.y = std::max(Length(bossPosition - playerPosition), 12.0f);
+	target_.y = std::max(Length(bossPosition - playerPosition), 23.0f);
 
 	transform_.transform.translate = Lerp(transform_.transform.translate, target_, interpolation);
 	transform_.UpdateMatrix();

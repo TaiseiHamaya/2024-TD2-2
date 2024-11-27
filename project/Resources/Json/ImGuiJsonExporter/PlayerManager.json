@@ -3,22 +3,22 @@
 		7.0
 	],
 	"EjectLengthParSecond": [
-		7.0
+		5.0
 	],
 	"EjectMaxDistance": [
-		7.0
+		30.0
 	],
 	"EjectMinDistance": [
-		1.0
+		0.20000000298023224
 	],
 	"EjectPressTime": [
-		3.0
+		2.5
 	],
 	"MaxSize": [
 		5.0
 	],
 	"MinSize": [
-		2.0
+		0.800000011920929
 	],
 	"ModelSize": [
 		1.440000057220459
@@ -27,6 +27,6 @@
 		10.0
 	],
 	"SizeParSec": [
-		2.0
+		5.0
 	]
 }

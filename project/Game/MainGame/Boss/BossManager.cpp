@@ -216,6 +216,7 @@ void BossManager::DrawHP(int32_t wave) {
 	
 }
 
+#ifdef DEBUG
 void BossManager::SetAttributeImGui() {
 	ImGui::Text("Phase");
 	bool isChanged = false;
@@ -237,3 +238,6 @@ void BossManager::SetAttributeImGui() {
 		initialize_action();
 	}
 }
+
+
+#endif // DEBUG
