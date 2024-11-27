@@ -13,5 +13,5 @@ void PlayerState::Ejection::begin() {
 }
 
 Vector3f PlayerState::Ejection::velocity() {
-	return direction * 10.0f;
+	return direction * 15.0f;
 }

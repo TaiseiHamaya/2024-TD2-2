@@ -16,5 +16,5 @@ Vector3f PlayerState::Gather::velocity() {
 	Vector3f targetPosition = playerManager->get_operate_player()->get_transform().GetWorldPosition();
 	Vector3f direction = targetPosition - thisTransform->GetWorldPosition();
 	direction = Normalize(direction);
-	return direction * 5.0f;
+	return direction * 8.0f;
 }

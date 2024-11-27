@@ -1,30 +1,30 @@
 {
 	"ApproachSpeed": [
-		3.0
+		20.0
 	],
 	"ApproachTime": [
 		3.0
 	],
 	"FlyingTime": [
-		4.0
+		3.4000000953674316
 	],
 	"JumpHeight": [
-		10.0
+		12.0
 	],
 	"LookAtStartTime": [
 		1.0
 	],
 	"RushLength": [
-		5.0
+		45.0
 	],
 	"RushSpeed": [
-		10.0
+		40.0
 	],
 	"RushStartTime": [
 		2.0
 	],
 	"StayTime": [
-		3.0
+		1.0
 	],
 	"StompTime": [
 		0.5
