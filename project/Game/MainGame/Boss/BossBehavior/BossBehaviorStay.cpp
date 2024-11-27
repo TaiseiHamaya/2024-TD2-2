@@ -21,7 +21,7 @@ void BossBehaviorStay::move() {
 		Vector3f target = player->get_transform().GetWorldPosition() - boss->get_transform().GetWorldPosition();
 		if (Length(target) >= 0.1f) {
 			target = Normalize(target);
-			transform.rotate *= Slerp(Quaternion::Identity(), LookAt(forward, target), 0.1f);
+			transform.rotate *= Slerp(Quaternion::Identity(), LookAt(forward, target), 0.3f);
 		}
 	}
 	//終了したか判定

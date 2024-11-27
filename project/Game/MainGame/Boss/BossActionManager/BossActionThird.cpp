@@ -19,7 +19,7 @@ BossActionThird::BossActionThird() {
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"StayShort",
-		"RushStartL", "RushPlay", "RushEnd",
+		"RushStartF", "RushPlay", "RushEnd",
 		"StayShort",
 		"TongueStart", "TonguePlay", "TongueEnd",
 		"Stay"
@@ -49,9 +49,9 @@ std::unique_ptr<BaseBossBehavior> BossActionThird::create(const std::string& beh
 		return std::make_unique<BossBehaviorRushStart>(
 			MakeAxisAngle({ 0,1,0 }, pi_v / 2), LookAtStartTime, RushStartTime);
 	}
-	else if (behaviorName == "RushStartL") {
+	else if (behaviorName == "RushStartF") {
 		return std::make_unique<BossBehaviorRushStart>(
-			MakeAxisAngle({ 0,1,0 }, -pi_v / 2), LookAtStartTime, RushStartTime); // 向き, 回転開始までの時間, 全体の時間
+			Quaternion::Identity(), LookAtStartTime, RushStartTime); // 向き, 回転開始までの時間, 全体の時間
 	}
 	else if (behaviorName == "RushPlay") {
 		return std::make_unique<BossBehaviorRushPlay>(RushLength, RushSpeed); // 突進長, 速度
