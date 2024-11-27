@@ -136,6 +136,12 @@ void Player::ungather() {
 		const auto& itrType = typeid(*itr->get());
 		if (itrType == gatherType) {
 			itr = stateQue.erase(itr);
+			if (stateQue.empty()) {
+				set_model("player_move.gltf");
+			}
+			else {
+				set_model(stateQue.front()->get_model_name());
+			}
 		}
 		else {
 			++itr;
