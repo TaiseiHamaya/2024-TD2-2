@@ -179,7 +179,7 @@ void SystemConsole::DrawGame() {
 	gameFrame_->TransitionXclipseToAdaptive(); //!< Transition
 
 	//* adaptive
-	// TODO: Adaptive rendering
+	RenderingConsole::RenderAdaptive(gameFrame_.get());
 	gameFrame_->TransitionAdaptiveToVisual(); //!< Transition
 
 	//* visual
@@ -187,7 +187,7 @@ void SystemConsole::DrawGame() {
 	gameFrame_->TransitionVisualToAdaptive(); //!< Transition
 
 	//* late adaptive
-	RenderingConsole::RenderAdaptive(gameFrame_.get());
+	RenderingConsole::RenderLateAdaptive(gameFrame_.get());
 }
 
 void SystemConsole::DrawScene() {
@@ -211,7 +211,7 @@ void SystemConsole::DrawScene() {
 	sceneFrame_->TransitionXclipseToAdaptive(); //!< Transition
 
 	//* adaptive
-	// TODO: Adaptive rendering
+	RenderingConsole::RenderAdaptive(sceneFrame_.get());
 	sceneFrame_->TransitionAdaptiveToVisual(); //!< Transition
 
 	//* visual
@@ -219,7 +219,7 @@ void SystemConsole::DrawScene() {
 	sceneFrame_->TransitionVisualToAdaptive(); //!< Transition
 
 	//* late adaptive
-	RenderingConsole::RenderAdaptive(sceneFrame_.get());
+	RenderingConsole::RenderLateAdaptive(sceneFrame_.get());
 
 	{ //!< Debug情報
 		sceneFrame_->BeginAdaptive();

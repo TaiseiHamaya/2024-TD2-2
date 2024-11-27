@@ -57,6 +57,16 @@ void RenderingConsole::RenderAdaptive(SxavengerFrame* frame) {
 	frame->EndAdaptive();
 }
 
+void RenderingConsole::RenderLateAdaptive(SxavengerFrame* frame) {
+	frame->BeginAdaptive();
+
+	for (auto behavior : behaviors_) {
+		DrawLateAdaptiveBehavior(behavior, frame);
+	}
+
+	frame->EndAdaptive();
+}
+
 void RenderingConsole::SetupRaytracing() {
 	raytracingScene_->BeginSetupTLAS();
 
@@ -253,6 +263,16 @@ void RenderingConsole::DrawSystematicBehavior(BaseBehavior* behavior, SxavengerF
 
 void RenderingConsole::DrawAdaptiveBehavior(BaseBehavior* behavior, SxavengerFrame* frame) {
 	if (behavior->GetRenderingFlag() & kBehaviorRender_Adaptive) {
+		behavior->DrawAdaptive(frame->GetCamera());
+	}
+
+	for (auto child : behavior->GetChildren()) {
+		DrawAdaptiveBehavior(child, frame);
+	}
+}
+
+void RenderingConsole::DrawLateAdaptiveBehavior(BaseBehavior* behavior, SxavengerFrame* frame) {
+	if (behavior->GetRenderingFlag() & kBehaviorRender_LateAdaptive) {
 		behavior->DrawAdaptive(frame->GetCamera());
 	}
 
