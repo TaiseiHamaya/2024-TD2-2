@@ -25,7 +25,7 @@ BossActionSecond::BossActionSecond() {
 		"Stay",
 		"JumpJump", "JumpFly", "JumpStomp"};
 	newFlow.coolTime = 5.0f;
-	maxHitpoint = 5;
+	maxHitpoint = 7;
 
 	SetName("BossActionSecond");
 	exporter_.TryLoadFromJson();

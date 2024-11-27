@@ -28,6 +28,9 @@ void ControlExplain::Init() {
 
 	textures_[0] = Sxavenger::LoadTexture("resourcesData/GameScene/Model/control_explain1.png");
 	textures_[1] = Sxavenger::LoadTexture("resourcesData/GameScene/Model/control_explain2.png");
+
+	texturesKey_[0] = Sxavenger::LoadTexture("resourcesData/GameScene/Model/control_explain_key1.png");
+	texturesKey_[1] = Sxavenger::LoadTexture("resourcesData/GameScene/Model/control_explain_key2.png");
 }
 
 void ControlExplain::Term() {
@@ -66,6 +69,13 @@ void ControlExplain::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 
 	auto commandList = Sxavenger::GetCommandList();
 
+	Texture* texture = texturesKey_[textureIndex_];
+
+	auto input = Sxavenger::GetInput()->GetGamepadInput(0);
+	if (input->IsConnect()) {
+		texture = textures_[textureIndex_];
+	}
+
 	for (uint32_t i = 0; i < model_->GetMeshSize(); ++i) {
 		if (model_->GetMesh(i).IsCreateMeshlet()) {
 
@@ -75,7 +85,7 @@ void ControlExplain::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 			commandList->SetGraphicsRootConstantBufferView(5, camera->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootShaderResourceView(7, transform_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(8, uvTransform_.GetVirtualAddress());
-			commandList->SetGraphicsRootDescriptorTable(9, textures_[textureIndex_]->GetGPUHandleSRV());
+			commandList->SetGraphicsRootDescriptorTable(9, texture->GetGPUHandleSRV());
 			commandList->SetGraphicsRootConstantBufferView(10, material_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(11, color_.GetGPUVirtualAddress());
 
@@ -91,7 +101,7 @@ void ControlExplain::DrawSystematic(_MAYBE_UNUSED const Camera3D* camera) {
 			commandList->SetGraphicsRootConstantBufferView(0, camera->GetGPUVirtualAddress());
 			commandList->SetGraphicsRootShaderResourceView(1, transform_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(2, uvTransform_.GetVirtualAddress());
-			commandList->SetGraphicsRootDescriptorTable(3, textures_[textureIndex_]->GetGPUHandleSRV());
+			commandList->SetGraphicsRootDescriptorTable(3, texture->GetGPUHandleSRV());
 			commandList->SetGraphicsRootConstantBufferView(4, material_.GetGPUVirtualAddress());
 			commandList->SetGraphicsRootConstantBufferView(5, color_.GetGPUVirtualAddress());
 
