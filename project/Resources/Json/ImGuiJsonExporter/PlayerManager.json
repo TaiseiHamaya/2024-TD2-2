@@ -14,8 +14,14 @@
 	"EjectPressTime": [
 		2.5
 	],
+	"MaxDamage": [
+		3.0
+	],
 	"MaxSize": [
 		5.0
+	],
+	"MinDamage": [
+		0.6000000238418579
 	],
 	"MinSize": [
 		0.800000011920929
