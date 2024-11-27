@@ -86,7 +86,7 @@ void Player::operate_update(const Vector2f& input) {
 		return;
 	}
 	Vector3f moveDirection = { input.x, 0.0f, input.y };
-	velocity = moveDirection * 3.0f;
+	velocity = moveDirection * MoveSpeed;
 }
 
 void Player::ungather() {
