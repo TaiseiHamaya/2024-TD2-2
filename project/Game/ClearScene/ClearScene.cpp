@@ -21,7 +21,11 @@ void ClearScene::Init() {
 	clearPlayer->Init();
 	clearPlayer->SetToConsole();
 
-	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, MakeAxisAngle({1,0,0}, 0.4f), {0, 5, -10});
+	sprite = std::make_unique<ClearSprite>();
+	sprite->Init();
+	sprite->SetToConsole();
+
+	sSystemConsole->GetGameCamera()->SetTransform(kUnit3, MakeAxisAngle({1,0,0}, 0.4f), {0, 8, -15});
 }
 
 void ClearScene::Term() {
@@ -30,6 +34,7 @@ void ClearScene::Term() {
 void ClearScene::Update() {
 	field_->Update();
 	clearPlayer->Update();
+	sprite->Update(kOrigin3, sSystemConsole->GetGameCamera()->GetTransform().rotate);
 
 	auto input = Sxavenger::GetInput()->GetGamepadInput(0);
 	if (input->IsTriggerButton(XINPUT_GAMEPAD_A)) {

@@ -4,6 +4,7 @@
 
 #include <Game/MainGame/Field.h>
 #include "ClearPlayer.h"
+#include "ClearSprite.h"
 
 class ClearScene : public IScene {
 public:
@@ -23,4 +24,5 @@ public:
 private:
 	std::unique_ptr<Field> field_;
 	std::unique_ptr<ClearPlayer> clearPlayer;
+	std::unique_ptr<ClearSprite> sprite;
 };

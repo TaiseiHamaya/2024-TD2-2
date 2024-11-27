@@ -120,6 +120,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\ClearScene\ClearSprite.cpp" />
     <ClCompile Include="Game\ClearScene\ClearPlayer.cpp" />
     <ClCompile Include="Game\ClearScene\ClearScene.cpp" />
     <ClCompile Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.cpp" />
@@ -281,6 +282,7 @@ copy "$(SolutionDir)externals\assimp\lib\Release\assimp-vc143-mt.dll" "$(TargetD
     <ClCompile Include="Game\MainGame\Player\PlayerState\PlayerStateSpawn.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\ClearScene\ClearSprite.h" />
     <ClInclude Include="Game\ClearScene\ClearPlayer.h" />
     <ClInclude Include="Game\ClearScene\ClearScene.h" />
     <ClInclude Include="Game\MainGame\Boss\BossBehavior\BossBehaviorAnimation.h" />
