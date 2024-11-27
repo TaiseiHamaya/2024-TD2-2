@@ -166,6 +166,8 @@ void Player::set_model(const std::string& file) {
 
 void Player::SystemAttributeImGui() {
 	ModelBehavior::SystemAttributeImGui();
+	ImGui::Text("Size : %f", size);
+	ImGui::Text("Scaling : %f", scaling);
 	ImGui::DragFloat3("Velocity", &velocity.x, 0.1f);
 }
 
