@@ -44,7 +44,7 @@ void Teapot::SetAttributeImGui() {
 	exporter_.SliderUint2("test", &test_.x, 1, 10);
 
 	if (ImGui::Button("o")) {
-		exporter_.Output();
+		exporter_.OutputToJson();
 	}
 }
 
