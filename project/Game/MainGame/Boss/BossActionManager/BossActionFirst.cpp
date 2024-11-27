@@ -58,7 +58,7 @@ std::unique_ptr<BaseBossBehavior> BossActionFirst::create(const std::string& beh
 	return nullptr;
 }
 
-#ifdef DEBUG
+#ifdef _DEBUG
 void BossActionFirst::SetAttributeImGui() {
 	exporter_.DragFloat("StayTime", &StayTime, 0.1f);
 	exporter_.DragFloat("LookAtStartTime", &LookAtStartTime, 0.1f);
