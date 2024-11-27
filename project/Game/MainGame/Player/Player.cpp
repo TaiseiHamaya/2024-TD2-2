@@ -108,9 +108,11 @@ void Player::update_matrix() {
 		animator_->Update(animationTimer, i, true);
 	}
 
+	isLanding_ = false;
+
 	if (animationTimer > animator_->GetAnimationDuration(0)) {
 		animationTimer.time = std::fmod(animationTimer.time, animator_->GetAnimationDuration(0).time);
-		Sxavenger::PlayAudioOneShot("player_jump.wav", 0.2f);
+		isLanding_ = true;
 	}
 }
 

@@ -31,6 +31,8 @@ public:
 	float get_size() const { return size; };
 	bool is_invincible() const;
 
+	bool IsLanding() const { return isLanding_; }
+
 private:
 	void set_model(const std::string& file);
 
@@ -53,6 +55,8 @@ private:
 	DeltaTimePoint DefaultInvincibleTime;
 
 	const uint32_t kInvincibleDivisionNum_ = 64;
+
+	bool isLanding_ = false;
 
 private:
 	inline static uint32_t index = 0;
