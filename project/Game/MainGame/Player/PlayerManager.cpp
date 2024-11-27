@@ -7,6 +7,7 @@
 
 #include "PlayerState/PlayerStateEjection.h"
 #include "PlayerState/PlayerStateGather.h"
+#include "PlayerState/PlayerStateSpawn.h"
 
 PlayerManager::~PlayerManager() = default;
 
@@ -119,6 +120,18 @@ void PlayerManager::marge_collision() {
 
 	// 次の操作キャラクターの設定
 	search_operate_player();
+}
+
+void PlayerManager::spawn(std::list<Player>&& spawnPlayers) {
+	// stateの設定
+	for (auto& spawnPlayer : spawnPlayers) {
+		spawnPlayer.push_state(
+			std::make_unique<PlayerState::Spawn>()
+		);
+	}
+
+	// 移動
+	players.splice(players.end(), spawnPlayers);
 }
 
 bool PlayerManager::CanShot() const {

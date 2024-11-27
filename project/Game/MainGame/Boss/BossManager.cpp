@@ -7,12 +7,15 @@
 #include "BossBehavior/BossBehaviorKnockback.h"
 #include "BossBehavior/BossBehaviorStay.h"
 
-void BossManager::initialize(const PlayerManager* player) {
+#include "../Player/PlayerAutomationPop.h"
+
+void BossManager::initialize(const PlayerManager* player, PlayerAutomationPop* playerAutomationPop_) {
 	boss = std::make_unique<Boss>();
 	boss->SetToConsole();
 
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
+	playerAutomationPop = playerAutomationPop_;
 
 	phase = 0;
 	isPhaseTransition = false;
@@ -39,12 +42,12 @@ void BossManager::update() {
 	// トランジション開始
 	if (boss->is_dead() && !isPhaseTransition) {
 		next_phase();
+		playerAutomationPop->reset();
 	}
 	// トランジション終了
 	else if (isPhaseTransition && boss->is_end_behavior()) {
 		isPhaseTransition = false;
 		if (!bossActionManager) {
-			boss.reset();
 			isEndAll = true;
 		}
 	}
@@ -91,6 +94,10 @@ bool BossManager::is_Invincible() const {
 		return true;
 	}
 	return false;
+}
+
+bool BossManager::is_transition() const {
+	return isPhaseTransition && bossActionManager;
 }
 
 Collider* BossManager::get_attack_collider() const {

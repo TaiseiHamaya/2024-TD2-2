@@ -6,6 +6,7 @@
 #include "BossActionManager/BossActionManager.h"
 
 class PlayerManager;
+class PlayerAutomationPop;
 
 class BossManager : public BaseBehavior {
 public:
@@ -16,7 +17,7 @@ public:
 	BossManager& operator=(const BossManager&) = delete;
 
 public:
-	void initialize(const PlayerManager* player);
+	void initialize(const PlayerManager* player, PlayerAutomationPop* playerAutomationPop_);
 	void begin();
 	void update();
 	void update_matrix();
@@ -27,6 +28,7 @@ public:
 public:
 	bool is_end_all() const;
 	bool is_Invincible() const;
+	bool is_transition() const;
 	Collider* get_attack_collider() const;
 	Collider* get_hit_collider() const;
 
@@ -49,4 +51,6 @@ private:
 	static constexpr int32_t MaxWave{ 3 };
 
 	bool isEndAll{ false };
+
+	PlayerAutomationPop* playerAutomationPop;
 };
