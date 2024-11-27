@@ -12,9 +12,10 @@ BossActionFirst::BossActionFirst() {
 	defaultAction = std::make_unique<ActionFlow>();
 	defaultAction->flowName.emplace_back("Stay");
 
-	auto& newFlow = flows.emplace_back();
+	auto& newFlow = actionFlows.emplace_back();
 	newFlow.flowName = { "RushStartR", "RushPlay", "RushEnd","RushStartB", "RushPlay", "RushEnd","RushStartR", "RushPlay", "RushEnd", "Stay" };
 	newFlow.coolTime = 5.0f;
+	maxHitpoint = 3;
 }
 
 std::unique_ptr<BaseBossBehavior> BossActionFirst::create(const std::string& behaviorName) {

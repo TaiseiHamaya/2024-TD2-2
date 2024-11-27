@@ -15,18 +15,23 @@ BossBehaviorStay::BossBehaviorStay(float Time, const PlayerManager* playerManage
 void BossBehaviorStay::move() {
 	auto& transform = boss->get_transform().transform;
 	Vector3f forward = RotateVector({ 0,0,1 }, transform.rotate);
-	const Player* player = playerManager->get_operate_player();
-	Vector3f target =  player->get_transform().GetWorldPosition()- boss->get_transform().GetWorldPosition();
-	if (Length(target) >= 0.1f) {
-		target = Normalize(target);
-		transform.rotate *= Slerp(Quaternion::Identity(), LookAt(forward, target), 0.1f);
+	// プレイヤー方向を向く処理
+	if (playerManager) {
+		const Player* player = playerManager->get_operate_player();
+		Vector3f target = player->get_transform().GetWorldPosition() - boss->get_transform().GetWorldPosition();
+		if (Length(target) >= 0.1f) {
+			target = Normalize(target);
+			transform.rotate *= Slerp(Quaternion::Identity(), LookAt(forward, target), 0.1f);
+		}
 	}
+	//終了したか判定
 	if (timer.time >= stayTime) {
 		isEnd = true;
 	}
 
-	if (animationDurationCount_ < static_cast<uint32_t>(timer.time / boss->get_animator()->GetAnimationDuration(0).time)) {
-		animationDurationCount_ = static_cast<uint32_t>(timer.time / boss->get_animator()->GetAnimationDuration(0).time);
+	uint32_t AnimationParametric = static_cast<uint32_t>(timer.time / boss->get_animator()->GetAnimationDuration(0).time);
+	if (animationDurationCount_ < AnimationParametric) {
+		animationDurationCount_ = AnimationParametric;
 		CreateStayEffect();
 	}
 }
