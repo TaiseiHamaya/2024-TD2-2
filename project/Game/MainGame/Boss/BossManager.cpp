@@ -7,8 +7,11 @@
 #include "BossBehavior/BossBehaviorKnockback.h"
 #include "BossBehavior/BossBehaviorStay.h"
 
+#include "../Player/PlayerAutomationPop.h"
+
 #include <Engine/Game/SxavengerGame.h>
 #include <Engine/System/Sxavenger.h>
+
 
 #include <Engine/System/Performance.h>
 #include <Lib/Easing.h>
@@ -19,6 +22,7 @@ void BossManager::initialize(const PlayerManager* player) {
 
 	BaseBossBehavior::boss = boss.get();
 	BossActionManager::playerManager = player;
+	playerAutomationPop = playerAutomationPop_;
 
 	BaseBehavior::renderingFlag_ = kBehaviorRender_LateAdaptive;
 
@@ -49,23 +53,27 @@ void BossManager::update() {
 		return;
 	}
 	boss->update();
-	bossActionManager->update();
+	if (bossActionManager) {
+		bossActionManager->update();
+	}
 
 	// トランジション開始
 	if (boss->is_dead() && !isPhaseTransition) {
 		next_phase();
+		playerAutomationPop->reset();
 	}
 	// トランジション終了
 	else if (isPhaseTransition && boss->is_end_behavior()) {
 		isPhaseTransition = false;
 		if (!bossActionManager) {
-			boss.reset();
 			isEndAll = true;
 		}
 	}
 	// 通常処理
 	if (boss->is_end_behavior()) {
-		boss->set_behavior(bossActionManager->next());
+		if (bossActionManager) {
+			boss->set_behavior(bossActionManager->next());
+		}
 	}
 
 }
@@ -130,6 +138,10 @@ bool BossManager::is_Invincible() const {
 		return true;
 	}
 	return false;
+}
+
+bool BossManager::is_transition() const {
+	return isPhaseTransition && bossActionManager;
 }
 
 Collider* BossManager::get_attack_collider() const {

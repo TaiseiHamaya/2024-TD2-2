@@ -64,6 +64,10 @@ void Player::update() {
 	}
 	transform_.transform.translate += velocity * Performance::GetDeltaTime(s).time;
 
+	if (transform_.transform.translate.y < 0 || stateQue.empty()) {
+		transform_.transform.translate.y = 0;
+	}
+
 	color_.color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	if (invincibleTimer.time > 0) {
