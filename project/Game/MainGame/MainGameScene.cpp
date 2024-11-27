@@ -112,7 +112,7 @@ void MainGameScene::collision_boss_attack() {
 			if (player->get_size() <= Player::MinSize) {
 				players.erase(player);
 			}
-
+			// 削除されたプレイヤーが操作しているものだった場合、操作プレイヤーを探す
 			if (playerManager->get_operate_player() == playerAddress) {
 				playerManager->search_operate_player();
 			}

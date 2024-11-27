@@ -151,6 +151,7 @@ void PlayerManager::input() {
 		return;
 	}
 	const GamepadInput* gamepad = SxavengerEngine::GetInput()->GetGamepadInput(0);
+	const Input* input = SxavengerEngine::GetInput();
 	// 入力情報の取得
 	// スティック入力
 	inputStickL = gamepad->GetLStickNormalize();
@@ -158,18 +159,44 @@ void PlayerManager::input() {
 	// デッドゾーン以下の場合は0ベクトルにする
 	if (Length(inputStickL) <= 0.1f) {
 		inputStickL = { 0.0f,0.0f };
+		if (input->IsPressKey(DIK_W)) {
+			inputStickL.y += 1;
+		}
+		if (input->IsPressKey(DIK_S)) {
+			inputStickL.y -= 1;
+		}
+		if (input->IsPressKey(DIK_D)) {
+			inputStickL.x += 1;
+		}
+		if (input->IsPressKey(DIK_A)) {
+			inputStickL.x -= 1;
+		}
+		inputStickL = Normalize(inputStickL);
 	}
 	if (Length(inputStickR) <= 0.1f) {
 		inputStickR = { 0.0f,0.0f };
+		if (input->IsPressKey(DIK_W)) {
+			inputStickR.y += 1;
+		}
+		if (input->IsPressKey(DIK_S)) {
+			inputStickR.y -= 1;
+		}
+		if (input->IsPressKey(DIK_D)) {
+			inputStickR.x += 1;
+		}
+		if (input->IsPressKey(DIK_A)) {
+			inputStickR.x -= 1;
+		}
+		inputStickR = Normalize(inputStickR);
 	}
 
 	if (ejectBitset.none()) {
-		gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A));
+		gatherBitset.set(0, gamepad->IsPressButton(XINPUT_GAMEPAD_A) || input->IsPressKey(DIK_J));
 	}
 
 	if (CanShot()) {
 		auto ejectButton = XINPUT_GAMEPAD_RIGHT_SHOULDER | XINPUT_GAMEPAD_LEFT_SHOULDER;
-		ejectBitset.set(0, gamepad->IsPressButton(ejectButton));
+		ejectBitset.set(0, gamepad->IsPressButton(ejectButton) || input->IsPressKey(DIK_SPACE));
 	}
 
 	if (gatherBitset.test(0)) {
