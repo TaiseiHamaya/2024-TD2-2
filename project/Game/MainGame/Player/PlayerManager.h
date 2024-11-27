@@ -36,6 +36,8 @@ public:
 
 	bool CanShot() const;
 
+	void search_operate_player();
+
 private:
 	void input();
 
@@ -49,8 +51,6 @@ private:
 	/// プレイヤー分離放出
 	/// </summary>
 	void eject();
-
-		void search_operate_player();
 
 #ifdef _DEBUG
 public:

@@ -108,6 +108,9 @@ void MainGameScene::collision_boss_attack() {
 			);
 			player->take_damage();
 
+			if (playerManager->get_operate_player() == std::to_address(player)) {
+				playerManager->search_operate_player();
+			}
 			if (player->get_size() <= Player::MinSize) {
 				players.erase(player);
 			}
