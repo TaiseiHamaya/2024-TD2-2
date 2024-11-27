@@ -14,15 +14,14 @@ void PlayerManager::initialize() {
 	SetToConsole("PlayerManager");
 
 	exporter_.TryLoadFromJson();
-	exporter_.GetFromStash("MaxSize", &Player::maxSize, 1);
-	exporter_.GetFromStash("MinSize", &Player::minSize, 1);
+	exporter_.GetFromStash("MinSize", &Player::MinSize, 1);
 	exporter_.GetFromStash("ModelSize", &Player::ModelSize, 1);
 	exporter_.GetFromStash("DefaultSize", &Player::DefaultSize, 1);
-	exporter_.GetFromStash("SizeParSec", &Player::SizeParSec, 1);
 	exporter_.GetFromStash("MoveSpeed", &Player::MoveSpeed, 1);
 
+	exporter_.GetFromStash("EjectPressTime", &EjectPressTime, 1);
 	exporter_.GetFromStash("EjectMaxDistance", &EjectMaxDistance, 1);
-	exporter_.GetFromStash("EjectLengthParSecond", &EjectLengthParSecond, 1);
+	exporter_.GetFromStash("EjectLengthParSecond", &EjectMaxDistance, 1);
 
 	players.emplace_back();
 	operatePlayer = std::to_address(players.begin());
@@ -124,7 +123,7 @@ void PlayerManager::marge_collision() {
 
 bool PlayerManager::CanShot() const {
 	float playerSize = operatePlayer->get_size();
-	return gatherBitset.none() && playerSize >= Player::minSize * 2;
+	return gatherBitset.none() && playerSize >= Player::MinSize * 2;
 }
 
 void PlayerManager::input() {
@@ -182,6 +181,15 @@ void PlayerManager::ungather() {
 	}
 }
 
+template<typename T>
+float LerpInverse(const T& min, const T& max, const T& value) {
+	if (min == max) {
+		return min;
+	}
+
+	return (value - min) / (max - min);
+}
+
 void PlayerManager::eject() {
 	Vector3 forward = { inputStickR.x, 0.0f, inputStickR.y };
 
@@ -190,15 +198,19 @@ void PlayerManager::eject() {
 	}
 
 	float playerSize = operatePlayer->get_size();
-	float magnification = std::min(aimingTimer.time, (playerSize - Player::minSize) / Player::SizeParSec);
+	const float DefaultMaxSize = Player::DefaultSize - Player::MinSize;
+	const float MaxEjectSize = playerSize - Player::MinSize;
+	float maxParametric = LerpInverse(Player::MinSize, DefaultMaxSize, MaxEjectSize);
+	float parametric = std::min(maxParametric, aimingTimer.time / EjectPressTime);
+
 	// 大きさ算出
-	float ejectSize = magnification * Player::SizeParSec;
+	float ejectSize = std::lerp(Player::MinSize, DefaultMaxSize, parametric);
 	// 距離算出
-	float ejectDistance = EjectMaxDistance - magnification * EjectLengthParSecond;
-	float distance = playerSize / 2;
+	float ejectDistance = std::lerp(EjectMaxDistance, EjectMinDistance, std::min(parametric, 1.0f));
+	float EjectStartDistance = playerSize / 2;
 	// 開始位置
 	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
-		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * distance;
+		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * EjectStartDistance;
 	// 追加
 	Player& newPlayer = players.emplace_back();
 	newPlayer.initialize(separatedPlayerPosition, ejectSize);
@@ -237,15 +249,14 @@ void PlayerManager::SetAttributeImGui() {
 	ImGui::Text("%d", players.size());
 	ImGui::Text("%f", aimingTimer.time);
 	ImGui::Separator();
-	exporter_.DragFloat("MaxSize", &Player::maxSize, 0.1f);
-	exporter_.DragFloat("MinSize", &Player::minSize, 0.1f);
+	exporter_.DragFloat("MinSize", &Player::MinSize, 0.1f);
 	exporter_.DragFloat("ModelSize", &Player::ModelSize, 0.1f);
 	exporter_.DragFloat("DefaultSize", &Player::DefaultSize, 0.1f);
-	exporter_.DragFloat("SizeParSec", &Player::SizeParSec, 0.1f);
 	exporter_.DragFloat("MoveSpeed", &Player::MoveSpeed, 0.1f);
 
-	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.05f);
-	exporter_.DragFloat("EjectLengthParSecond", &EjectLengthParSecond, 0.05f);
+	exporter_.DragFloat("EjectPressTime", &EjectPressTime, 0.01f);
+	exporter_.DragFloat("EjectMaxDistance", &EjectMaxDistance, 0.1f);
+	exporter_.DragFloat("EjectMinDistance", &EjectMinDistance, 0.1f);
 
 	if (ImGui::Button("output parameter")) {
 		exporter_.OutputToJson();

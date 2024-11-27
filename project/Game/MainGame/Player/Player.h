@@ -59,10 +59,8 @@ private:
 	static float CreateScale(float size);
 
 public:
-	inline static float maxSize{ 5.0f };
-	inline static float minSize{ 0.5f };
+	inline static float MinSize{ 0.5f };
 	inline static float ModelSize{ 2.0f };
 	inline static float DefaultSize{ 5.0f };
-	inline static float SizeParSec{ 1.f };
 	inline static float MoveSpeed{ 1.f };
 };
