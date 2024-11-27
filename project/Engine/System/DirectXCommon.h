@@ -132,7 +132,7 @@ protected:
 
 	//* DXOBJECT
 
-	DxObject::Devices::DxLeakChecker leakChecher_;
+	static const DxObject::Devices::DxLeakChecker leakChecher_;
 
 	std::unique_ptr<DxObject::Devices>           devices_;
 	std::unique_ptr<DxObject::Command>           command_;
