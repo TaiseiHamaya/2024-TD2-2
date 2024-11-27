@@ -6,19 +6,19 @@
 		3.0
 	],
 	"FlyingTime": [
-		4.0
+		3.4000000953674316
 	],
 	"JumpHeight": [
-		10.0
+		12.0
 	],
 	"LookAtStartTime": [
 		1.0
 	],
 	"RushLength": [
-		30.0
+		45.0
 	],
 	"RushSpeed": [
-		35.0
+		40.0
 	],
 	"RushStartTime": [
 		2.0
