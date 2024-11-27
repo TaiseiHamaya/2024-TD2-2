@@ -67,10 +67,16 @@ void Player::update() {
 		transform_.transform.translate.y = 0;
 	}
 
-	float flashingColor = std::lerp(1.0f, 12.0f, invincibleTimer.time / DefaultInvincibleTime.time);
-	color_.color.r = flashingColor;
-	color_.color.g = flashingColor;
-	color_.color.b = flashingColor;
+	color_.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	if (invincibleTimer.time > 0) {
+		float t = invincibleTimer.time / DefaultInvincibleTime.time;
+
+		if (static_cast<uint32_t>(t * kInvincibleDivisionNum_) % 2 == 0) {
+			color_.color = { 12.0f, 12.0f, 12.0f, 1.0f };
+		}
+	}
+
 	color_.Transfer();
 }
 

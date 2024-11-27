@@ -4,33 +4,25 @@
 // include
 //-----------------------------------------------------------------------------------------
 //* base
-#include <Game/Scene/IScene.h>
-
-//* Game
-#include <Game/MainGame/Field.h>
-#include <Game/TitleScene/TitleEnemy.h>
-#include <Game/TitleScene/TitlePlayer.h>
-#include <Game/TitleScene/TitleBoard.h>
-#include <Game/MainGame/Skydome.h>
+#include <Engine/Game/Behavior/ModelBehavior.h>
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// TitleScene class
+// Skydome class
 ////////////////////////////////////////////////////////////////////////////////////////////
-class TitleScene
-	: public IScene {
+class Skydome
+	: public ModelBehavior {
 public:
 
 	//=========================================================================================
 	// public methods
 	//=========================================================================================
 
-	void Init() override;
+	Skydome()  = default;
+	~Skydome() { Term(); }
 
-	void Term() override;
+	void Init();
 
-	void Update() override;
-
-	void Draw() override;
+	void Term();
 
 private:
 
@@ -38,10 +30,5 @@ private:
 	// private variables
 	//=========================================================================================
 
-	std::unique_ptr<Field> field_;
-	std::unique_ptr<TitleEnemy> enemy_;
-	std::unique_ptr<TitlePlayer> player_;
-	std::unique_ptr<TitleBoard> board_;
-	std::unique_ptr<Skydome> skydome_;
 
 };

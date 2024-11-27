@@ -31,6 +31,10 @@ void MainGameScene::Init() {
 
 	//SystemConsole::GetInstance()->GetGameCamera()->SetTransform(kUnit3, Vector3{ 45.0f * kDegToRad ,0.0f,0.0f }, Vector3{ 0,10,-10 });
 
+	skydome_ = std::make_unique<Skydome>();
+	skydome_->Init();
+	skydome_->SetToConsole();
+
 }
 
 void MainGameScene::Term() {
