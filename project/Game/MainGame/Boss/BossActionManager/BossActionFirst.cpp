@@ -16,9 +16,9 @@ BossActionFirst::BossActionFirst() {
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"StayShort",
-		"RushStartB", "RushPlay", "RushEnd",
+		"RushStartL", "RushPlay", "RushEnd",
 		"StayShort",
-		"RushStartR", "RushPlay", "RushEnd",
+		"RushStartF", "RushPlay", "RushEnd",
 		"Stay" };
 	newFlow.coolTime = 1.0f;
 	maxHitpoint = 5;
@@ -42,8 +42,11 @@ std::unique_ptr<BaseBossBehavior> BossActionFirst::create(const std::string& beh
 	else if (behaviorName == "RushStartR") {
 		return std::make_unique<BossBehaviorRushStart>(MakeAxisAngle({ 0,1,0 }, pi_v / 2), LookAtStartTime, RushStartTime);
 	}
-	else if (behaviorName == "RushStartB") {
-		return std::make_unique<BossBehaviorRushStart>(MakeAxisAngle({ 0,1,0 }, pi_v), LookAtStartTime, RushStartTime);
+	else if (behaviorName == "RushStartF") {
+		return std::make_unique<BossBehaviorRushStart>(Quaternion::Identity(), LookAtStartTime, RushStartTime);
+	}
+	else if (behaviorName == "RushStartL") {
+		return std::make_unique<BossBehaviorRushStart>(MakeAxisAngle({ 0,1,0 }, -pi_v / 2), LookAtStartTime, RushStartTime);
 	}
 	else if (behaviorName == "RushPlay") {
 		return std::make_unique<BossBehaviorRushPlay>(RushLength, RushSpeed);
@@ -52,7 +55,7 @@ std::unique_ptr<BaseBossBehavior> BossActionFirst::create(const std::string& beh
 		return std::make_unique<BossBehaviorRushEnd>();
 	}
 	else if (behaviorName == "StayShort") {
-		return std::make_unique<BossBehaviorStay>(0.1f, playerManager);
+		return std::make_unique<BossBehaviorStay>(0.2f, playerManager);
 	}
 
 	return nullptr;

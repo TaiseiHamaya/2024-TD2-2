@@ -19,9 +19,9 @@ BossActionSecond::BossActionSecond() {
 	newFlow.flowName = {
 		"RushStartR", "RushPlay", "RushEnd",
 		"StayShort",
-		"RushStartB", "RushPlay", "RushEnd",
+		"RushStartL", "RushPlay", "RushEnd",
 		"StayShort",
-		"RushStartR", "RushPlay", "RushEnd",
+		"RushStartF", "RushPlay", "RushEnd",
 		"Stay",
 		"JumpJump", "JumpFly", "JumpStomp"};
 	newFlow.coolTime = 5.0f;
@@ -51,12 +51,13 @@ std::unique_ptr<BaseBossBehavior> BossActionSecond::create(const std::string& be
 		return std::make_unique<BossBehaviorStay>(StayTime, playerManager); // 待機時間, 2つ目は必要なのでこれ
 	}
 	else if (behaviorName == "RushStartR") {
-		return std::make_unique<BossBehaviorRushStart>(
-			MakeAxisAngle({ 0,1,0 }, pi_v / 2), LookAtStartTime, RushStartTime);
+		return std::make_unique<BossBehaviorRushStart>(MakeAxisAngle({ 0,1,0 }, pi_v / 2), LookAtStartTime, RushStartTime);
 	}
-	else if (behaviorName == "RushStartB") {
-		return std::make_unique<BossBehaviorRushStart>(
-			MakeAxisAngle({ 0,1,0 }, pi_v), LookAtStartTime, RushStartTime); // 向き, 回転開始までの時間, 全体の時間
+	else if (behaviorName == "RushStartF") {
+		return std::make_unique<BossBehaviorRushStart>(Quaternion::Identity(), LookAtStartTime, RushStartTime);
+	}
+	else if (behaviorName == "RushStartL") {
+		return std::make_unique<BossBehaviorRushStart>(MakeAxisAngle({ 0,1,0 }, -pi_v / 2), LookAtStartTime, RushStartTime);
 	}
 	else if (behaviorName == "RushPlay") {
 		return std::make_unique<BossBehaviorRushPlay>(RushLength, RushSpeed); // 突進長, 速度

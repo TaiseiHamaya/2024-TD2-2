@@ -230,7 +230,7 @@ void PlayerManager::eject() {
 	float EjectStartDistance = playerSize / 2;
 	// 開始位置
 	Vector3 separatedPlayerPosition = operatePlayer->world_point() +
-		RotateVector(forward, operatePlayer->get_transform().transform.rotate) * EjectStartDistance;
+		forward * EjectStartDistance;
 	// 追加
 	Player& newPlayer = players.emplace_back();
 	newPlayer.initialize(separatedPlayerPosition, ejectSize);
